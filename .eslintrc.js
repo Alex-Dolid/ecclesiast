@@ -1,5 +1,6 @@
 module.exports = {
   root: true,
+
   env: {
     browser: true,
     node: true,
@@ -16,7 +17,7 @@ module.exports = {
   },
 
   parserOptions: {
-    parser: "babel-eslint"
+    parser: '@typescript-eslint/parser'
   },
 
   // add your custom rules here
@@ -40,5 +41,11 @@ module.exports = {
         jest: true
       }
     },
+  ],
+
+  'extends': [
+    'plugin:vue/vue3-essential',
+    'eslint:recommended',
+    '@vue/typescript'
   ]
 };

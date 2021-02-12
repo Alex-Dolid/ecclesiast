@@ -1,0 +1,13 @@
+$extra-white: #ffffff;
+$extra-black: #000;
+
+
+// res
+$phoneWidth: 768px;
+$tabletWidth: 960px;
+$desktopWidth: 1366px;
+
+// media
+$phone: "max-width: " + ($phoneWidth - 1);
+$tablet: "max-width: " + ($tabletWidth - 1);
+$desktop: "max-width: " + ($desktopWidth - 1);

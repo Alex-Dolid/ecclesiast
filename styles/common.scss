@@ -28,6 +28,13 @@ button {
   outline: 0;
 }
 
+.divider {
+  margin-top: 15px;
+  background-color: rgba($extra-black, 0.5);
+  height: 2px;
+  width: 100%;
+}
+
 .page-width {
   max-width: 1280px;
   padding: 0 15px;

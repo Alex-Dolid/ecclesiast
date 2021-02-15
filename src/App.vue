@@ -1,6 +1,6 @@
 <template>
   <main class="page-width app">
-    <h1>Еклезіаст</h1>
+    <h1 class="app__heading">Еклезіаст</h1>
     <AppMainSearchForm @submitHandler="submitHandler" />
     <div class="cards-draft-bible">
       <AppCardDraftBible :bible-drafts="bibleDrafts" />
@@ -12,9 +12,9 @@
   // Core
   import { defineComponent, ref } from "vue";
   // Api
-  import api from "@/api";
+  import api from "./api";
   // Components
-  import { AppMainSearchForm, AppCardDraftBible } from "@/components";
+  import { AppMainSearchForm, AppCardDraftBible } from "./components";
   // Types
   // eslint-disable-next-line no-unused-vars
   import { AxiosResponse } from "axios";

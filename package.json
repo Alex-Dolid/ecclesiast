@@ -5,7 +5,7 @@
   "scripts": {
     "start": "vue-cli-service serve",
     "lint": "vue-cli-service lint",
-    "test": "yarn jest",
+    "test": "yarn jest --watch --cache",
     "build": "vue-cli-service build --mode production --dest build --target app"
   },
   "dependencies": {

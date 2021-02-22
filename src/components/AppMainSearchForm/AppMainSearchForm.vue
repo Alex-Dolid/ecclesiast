@@ -3,6 +3,7 @@
     <div class="main-form__search-field">
       <label for="search-field" class="main-form__search-field-label"/>
       <input
+        data-test-id="main-form-search-field"
         id="search-field"
         class="main-form__search-field-input"
         type="search"
@@ -10,7 +11,9 @@
         v-model="searchValue"
       />
     </div>
-    <button class="main-form__search-btn">Пошук</button>
+    <button data-test-id="main-form-search-btn" class="main-form__search-btn" type="button" @click="handleSubmit">
+      Пошук
+    </button>
   </form>
 </template>
 
@@ -23,7 +26,7 @@
 
     setup(props, { emit }) {
       const searchValue = ref<string>("");
-      const handleSubmit = (): void => emit("submitHandler", searchValue.value);
+      const handleSubmit = (): void => emit("onSubmitHandler", searchValue.value);
 
       return {
         searchValue,

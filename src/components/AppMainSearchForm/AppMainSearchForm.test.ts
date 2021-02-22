@@ -2,27 +2,30 @@
 import { mount } from "@vue/test-utils";
 // Components
 import AppMainSearchForm from "./AppMainSearchForm.vue";
-import { ref } from "vue";
 
 describe("AppMainSearchForm", () => {
-  it("init AppMainSearchForm layout", () => {
-    const wrapper = mount(AppMainSearchForm);
+  it("init AppMainSearchForm layout", async () => {
+    const wrapper: any = mount(AppMainSearchForm);
 
-    expect(wrapper.find<HTMLDivElement>("form.main-form").element).toBeTruthy();
-    expect(wrapper.find<HTMLDivElement>(".main-form__search-btn").element.innerHTML).toBe("Пошук");
+    expect(await wrapper.findByTestId("main-form-search-field").exists()).toBeTruthy();
+    expect(await wrapper.findByTestId("main-form-search-btn").element.innerHTML).toContain("Пошук");
   });
 
-  it("check for correctness of the entered data in input and change of reactive searchValue", (done) => {
-    const wrapper = mount(AppMainSearchForm);
-    const searchField = wrapper.find<HTMLInputElement>("#search-field");
+  it("check for correctness of the entered data in input and emits an events", async () => {
+    const wrapper: any = mount(AppMainSearchForm);
+    const searchField = await wrapper.findByTestId("main-form-search-field");
+    const value = "слово";
 
     expect(searchField.element.value).toBe("");
-    searchField.setValue("слово");
-    expect(searchField.element.value).toBe("слово");
 
-    setTimeout(() => {
-      wrapper.find(".main-form__search-btn").trigger("click");
-      done();
-    }, 500);
+    await searchField.setValue(value);
+
+    expect(searchField.element.value).toBe(value);
+
+    await wrapper.findByTestId("main-form-search-btn").trigger("click");
+
+    expect(wrapper.emitted()).toHaveProperty("onSubmitHandler");
+    expect(wrapper.emitted("onSubmitHandler")).toHaveLength(1);
+    expect(wrapper.emitted("onSubmitHandler")[0]).toEqual([value]);
   });
 });

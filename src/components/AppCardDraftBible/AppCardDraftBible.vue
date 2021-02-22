@@ -1,5 +1,5 @@
 <template>
-  <div class="divider"/>
+  <div data-test-id="divider" class="divider"/>
   <div class="card-draft-bible" v-for="draft of bibleDrafts" :key="draft.lank">
     <h4 class="card-draft-bible__title">
       <a

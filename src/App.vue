@@ -1,7 +1,7 @@
 <template>
   <main class="page-width app">
-    <h1 class="app__heading">Еклезіаст</h1>
-    <AppMainSearchForm @submitHandler="submitHandler" />
+    <h1 class="app__heading" data-test-id="app-heading">Еклезіаст</h1>
+    <AppMainSearchForm @onSubmitHandler="onSubmitHandler" />
     <div class="cards-draft-bible">
       <AppCardDraftBible :bible-drafts="bibleDrafts" />
     </div>
@@ -43,14 +43,14 @@
           }
         });
       };
-      const submitHandler = async (searchValue: string): Promise<void> => {
+      const onSubmitHandler = async (searchValue: string): Promise<void> => {
         const { data: { results } } = await getBibleDrafts(searchValue);
         bibleDrafts.value = results;
       };
 
       return {
         bibleDrafts,
-        submitHandler
+        onSubmitHandler
       }
     }
   });

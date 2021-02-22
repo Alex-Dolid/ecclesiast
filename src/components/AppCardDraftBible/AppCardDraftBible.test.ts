@@ -4,9 +4,9 @@ import { mount } from "@vue/test-utils";
 import AppDraftCardBible from "./AppCardDraftBible.vue";
 
 describe("AppDraftCardBible", () => {
-  it("init AppDraftCardBible layout", () => {
-    const wrapper = mount(AppDraftCardBible);
+  it("init AppDraftCardBible layout", async () => {
+    const wrapper: any = mount(AppDraftCardBible);
 
-    expect(wrapper.find<HTMLDivElement>(".divider").element).toBeTruthy();
+    expect(await wrapper.findByTestId("divider").exists()).toBeTruthy();
   });
 });

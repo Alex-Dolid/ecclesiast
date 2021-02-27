@@ -1,4 +1,4 @@
-import { Locale } from "@/types/locales";
+import { LocalesType } from "../types";
 
 export type Bible = {
   author: string,
@@ -7,7 +7,7 @@ export type Bible = {
   edition?: string,
   books: BibleBooks,
   src?: string,
-  lang: Locale
+  locale: LocalesType
 };
 
 export type BibleBooks = BibleBook[];

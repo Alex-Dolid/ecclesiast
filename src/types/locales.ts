@@ -1,11 +1,10 @@
-export type Locales = Locale[];
-
 export type Locale = {
-  code2: Locale2Codes,
-  code3: Locale3Codes,
+  code2: string,
+  code3: string,
   name: string,
 };
 
-export type Locale2Codes = "en" | "ru" | "uk";
-export type Locale3Codes = "eng" | "rus" | "ukr";
+export type Locales = Locale[];
+
+
 

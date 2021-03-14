@@ -1,10 +1,11 @@
-export type Locale = {
+export type LocaleType = {
+  _id: string,
   code2: string,
   code3: string,
   name: string,
 };
 
-export type Locales = Locale[];
+export type LocalesType = LocaleType[];
 
 
 

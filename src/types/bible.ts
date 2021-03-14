@@ -1,32 +1,39 @@
-import { LocalesType } from "../types";
+import { LocaleType } from "../types";
 
-export type Bible = {
+export type BibleType = {
+  _id: string,
   author: string,
   name: string,
-  translators: string[],
+  translators?: string[],
   edition?: string,
-  books: BibleBooks,
+  verses: BibleVersesType,
   src?: string,
-  locale: LocalesType
+  locale: LocaleType
 };
 
-export type BibleBooks = BibleBook[];
+export type BibleBooksType = BibleBookType[];
 
-export type BibleBook = {
+export type BibleBookType = {
+  _id: string
   name: string,
-  chapters: BibleChapters
+  locale: LocaleType
 };
 
-export type BibleChapters = BibleChapter[];
+export type BibleChaptersType = BibleChapterType[];
 
-export type BibleChapter = {
-  name: number,
-  verses: BibleVerses
+export type BibleChapterType = {
+  _id: string
+  name: number
 };
 
-export type BibleVerses = BibleVerse[];
+export type BibleVersesType = BibleVerseType[];
 
-export type BibleVerse = {
+export type BibleVerseType = {
+  _id: string,
   name: number,
   text: string
+  locale: LocaleType,
+  chapter: BibleChapterType,
+  book: BibleBookType,
+  bibleId: string
 };

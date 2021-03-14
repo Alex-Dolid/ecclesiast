@@ -1,2 +1,2 @@
-export { Locale as LocaleType, Locales as LocalesType } from "./locales";
-export { Bible as BibleType } from "./bible";
+export { LocaleType, LocalesType } from "./locales";
+export { BibleType } from "./bible";

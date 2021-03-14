@@ -3,7 +3,13 @@
     <h1 class="app__heading" data-test-id="app-heading">Еклезіаст</h1>
     <AppMainSearchForm @onSubmitHandler="onSubmitHandler" />
     <div class="cards-draft-bible">
-      <AppCardDraftBible :bible-drafts="bibleDrafts" />
+      <div data-test-id="divider" class="divider"/>
+      <AppVerseBibleCard
+        v-for="verse of bibleVerses"
+        :key="verse._id"
+        :title="`${verse.book.name} ${verse.chapter.name}:${verse.name}`"
+        :text="verse.text"
+      />
     </div>
   </main>
 </template>
@@ -14,42 +20,40 @@
   // Api
   import api from "./api";
   // Components
-  import { AppMainSearchForm, AppCardDraftBible } from "./components";
+  import { AppMainSearchForm, AppVerseBibleCard } from "./components";
   // Types
-  // eslint-disable-next-line no-unused-vars
   import { AxiosResponse } from "axios";
+  import { BibleVersesType } from "./types";
 
-  type BibleDraftsType = {
-    results: object[]
-  }
-
-  type AxiosBibleDraftsResponseType = AxiosResponse<BibleDraftsType>
+  type AxiosBibleDraftsResponseType = AxiosResponse<BibleVersesType>
 
   export default defineComponent({
     name: "App",
 
     components: {
       AppMainSearchForm,
-      AppCardDraftBible
+      AppVerseBibleCard
     },
 
     setup() {
-      let bibleDrafts = ref<object[]>([]);
+      let bibleVerses = ref<BibleVersesType>([]);
       const getBibleDrafts = async (searchValue: string): Promise<AxiosBibleDraftsResponseType> => {
-        return await api.get<BibleDraftsType>("/search/results/U/bible", {
+        return await api.get<BibleVersesType>("/bibles-verses", {
           params: {
-            sort: "rel",
-            q: searchValue
+            bibleId: "603bc7b5af76ed5056ef2072",
+            locale: "603b8eb78a66503fa663f124",
+            isTranslate: false,
+            text: searchValue
           }
         });
       };
       const onSubmitHandler = async (searchValue: string): Promise<void> => {
-        const { data: { results } } = await getBibleDrafts(searchValue);
-        bibleDrafts.value = results;
+        const { data } = await getBibleDrafts(searchValue);
+        bibleVerses.value = data;
       };
 
       return {
-        bibleDrafts,
+        bibleVerses,
         onSubmitHandler
       }
     }

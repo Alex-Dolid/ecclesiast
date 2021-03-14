@@ -1,12 +1,13 @@
 // Core
 import axios from "axios";
+// Config
+import { baseURL } from "./config";
 
 const instance = axios.create({
-  baseURL: "https://b.jw-cdn.org/apis",
+  baseURL,
   timeout: 30000,
   headers: {
     "Content-Type": "application/json",
-    "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJqdGkiOiIzN2RmNTJiYy1jM2JlLTQzYzgtYjc4Yi00MWU2NDViMmUwOGMiLCJzdWIiOiJ3d3cuancub3JnLXB1YmxpYyIsImlzcyI6IldlYlB1Ymxpc2hpbmc6cHJkIiwiaWF0IjoxNjE0MDAyNDI5LCJuYmYiOjE2MTQwMDI0MjksImV4cCI6MTYxNDYwNzIyOSwiYXVkIjpbIk11bHRpU2l0ZVNlYXJjaDpwcmQiLCJKV0JNZWRpYXRvcjpwcmQiLCJBbGVydHM6cHJkIiwiT21uaVNlYXJjaDpwcmQiXSwicGVybXMiOnsib21uaS1zZWFyY2giOnsic2l0ZXMiOlsiancub3JnOnByZCIsIndvbDpwcmQiXSwiZmlsdGVycyI6WyJhbGwiLCJwdWJsaWNhdGlvbnMiLCJ2aWRlb3MiLCJhdWRpbyIsImJpYmxlIiwiaW5kZXhlcyJdLCJ0YWdzIjp7ImV4Y2x1ZGVkIjpbIlNlYXJjaEV4Y2x1ZGUiLCJXV1dFeGNsdWRlIl19fSwic2VhcmNoIjp7ImZhY2V0cyI6W3sibmFtZSI6InR5cGUiLCJmaWVsZCI6InRhZ3MiLCJ2YWx1ZXMiOlsidHlwZTp2aWRlbyJdfV19fX0.SeoS6bx-nPrYoYQN9u3gbRptG-YkcUoxDfheF-McuAJhtD0n_BpB-DScLIj9diRhV7PsCsCF0x3Lh949T499KCFW83P_wr_xB8T5RU5Jx7PUsmLR3c5kjktQxoI1ZATk3jOiDpHlth5JoohJSahGiAQEIQcD_rWpMN-lVh1kRBB-ynHuiJh_OLa2Bba3n6eWos2bQeaD_FugMisVecuViFxGgwaZwPBOdCC-sS8hRB38BmfgYhuNaDUdowNQQVXGcml9ZqpJM9aR63CqYP7VoWT9RNh_IPncVyGxetdHP1XpBzgfF9z_A9k9Fv5HUa7T08i2QGDqCeYM1It7NVSmMw"
   }
 });
 

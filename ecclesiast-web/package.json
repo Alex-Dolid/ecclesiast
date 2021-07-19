@@ -3,37 +3,39 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "yarn jest && vue-cli-service serve",
+    "build": "vue-cli-service build --mode production --dest build --target app",
     "lint": "vue-cli-service lint",
-    "test": "yarn jest --watch --cache",
-    "build": "vue-cli-service build --mode production --dest build --target app"
+    "start": "yarn jest && vue-cli-service serve",
+    "test": "yarn jest --watch --cache"
   },
   "dependencies": {
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
-    "vue": "^3.0.0"
+    "vue": "^3.0.0",
+    "vuex": "^4.0.0-0"
   },
   "devDependencies": {
-    "@types/jest": "^25.2.1",
-    "@vue/test-utils": "^2.0.0-alpha.6",
-    "babel-jest": "^25.2.6",
-    "jest": "^25.2.7",
-    "ts-jest": "^25.3.1",
-    "vue-jest": "^5.0.0-alpha.0",
     "@babel/plugin-proposal-throw-expressions": "^7.12.1",
+    "@types/jest": "^25.2.1",
     "@typescript-eslint/eslint-plugin": "^2.33.0",
     "@typescript-eslint/parser": "^2.33.0",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-plugin-typescript": "~4.5.0",
+    "@vue/cli-plugin-vuex": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
     "@vue/compiler-sfc": "^3.0.0",
     "@vue/eslint-config-typescript": "^5.0.2",
+    "@vue/test-utils": "^2.0.0-alpha.6",
     "babel-eslint": "^10.1.0",
+    "babel-jest": "^25.2.6",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^7.0.0-0",
+    "jest": "^25.2.7",
     "sass": "^1.32.7",
     "sass-loader": "^10.1.1",
-    "typescript": "~3.9.3"
+    "ts-jest": "^25.3.1",
+    "typescript": "~3.9.3",
+    "vue-jest": "^5.0.0-alpha.0"
   }
 }

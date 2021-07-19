@@ -1,4 +1,4 @@
-import { LocaleType } from "../types";
+import { LocaleType } from "./index";
 
 export type BibleType = {
   _id: string,

@@ -40,8 +40,8 @@
       const getBibleDrafts = async (searchValue: string): Promise<AxiosBibleDraftsResponseType> => {
         return await api.get<BibleVersesType>("/bibles-verses", {
           params: {
-            bibleId: "603bc7b5af76ed5056ef2072",
-            locale: "603b8eb78a66503fa663f124",
+            bibleId: "60f5b326013ae001c46c3623",
+            locale: "60f59f58e5d1b0002957a2be",
             isTranslate: false,
             text: searchValue
           }

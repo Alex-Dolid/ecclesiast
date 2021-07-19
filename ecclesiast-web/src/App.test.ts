@@ -1,5 +1,5 @@
 // Core
-import { mount, VueWrapper } from "@vue/test-utils";
+import { mount } from "@vue/test-utils";
 // Components
 import App from "./App.vue";
 

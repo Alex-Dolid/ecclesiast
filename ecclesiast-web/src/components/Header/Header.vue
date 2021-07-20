@@ -1,7 +1,7 @@
 <template>
   <header class="header">
     <h1 class="header__head">Еклезіаст</h1>
-    <button class="header__button">Вхід</button>
+    <router-link class="header__button" to="/sign-in">Вхід</router-link>
   </header>
 </template>
 
@@ -15,6 +15,8 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
+@import "src/styles/style-guide/variables";
+
   .header {
     display: flex;
     justify-content: center;
@@ -28,6 +30,12 @@ export default defineComponent({
 
     &__button {
       margin-left: auto;
+      color: $green;
+      font-size: 18px;
+
+      &:hover {
+        text-decoration: underline;
+      }
     }
   }
 </style>

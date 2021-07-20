@@ -1,4 +1,2 @@
-// Store
-import store from "./store";
-
-export { store as authStore };
+export { default as authStore } from "./store";
+export { SignIn } from "./pages";

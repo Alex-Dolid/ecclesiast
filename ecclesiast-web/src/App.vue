@@ -1,6 +1,6 @@
 <template>
   <main class="page-width app">
-    <h1 class="app__heading" data-test-id="app-heading">Еклезіаст</h1>
+    <Header />
     <AppMainSearchForm @onSubmitHandler="onSubmitHandler" />
     <div class="cards-draft-bible">
       <div data-test-id="divider" class="divider"/>
@@ -20,7 +20,7 @@
   // Api
   import api from "./api";
   // Components
-  import { AppMainSearchForm, AppVerseBibleCard } from "./components";
+  import { AppMainSearchForm, AppVerseBibleCard, Header } from "./components";
   // Types
   import { AxiosResponse } from "axios";
   import { BibleVersesType } from "./types";
@@ -31,6 +31,7 @@
     name: "App",
 
     components: {
+      Header,
       AppMainSearchForm,
       AppVerseBibleCard
     },

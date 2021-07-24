@@ -1,6 +1,11 @@
 import state from "./state";
+import mutations from "./mutations";
+import { Module } from "../types";
 
-export default {
+const module: Module = {
   namespaced: true,
-  state: { ...state }
+  state: { ...state },
+  mutations: { ...mutations },
 }
+
+export default module;

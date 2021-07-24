@@ -2,16 +2,17 @@
 import { InjectionKey } from "vue";
 import { createStore, Store } from "vuex"
 // Stores
-import { authStore } from "../app/Auth";
-
-// define your typings for the store state
-export interface State {}
+import { authStore } from "@/app/Auth";
+// Types
+import { ModuleTree, RootState } from "@/types";
 
 // define injection key
-export const key: InjectionKey<Store<State>> = Symbol();
+export const key: InjectionKey<Store<RootState>> = Symbol();
 
-export default createStore<State>({
-  modules: {
-    auth: authStore
-  }
+const modules: ModuleTree = {
+  auth: authStore,
+};
+
+export default createStore<RootState>({
+  modules: { ...modules }
 })

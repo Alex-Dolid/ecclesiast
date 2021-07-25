@@ -4,5 +4,7 @@ import { RootState } from "@/types";
 
 type Module = _Module<State, RootState>;
 
-export { Mutations } from "./mutations";
+export { Mutations, MutationsNames } from "./mutations";
+export { Actions } from "./actions";
+export { UserAuth, User } from "./common";
 export { State, Module };

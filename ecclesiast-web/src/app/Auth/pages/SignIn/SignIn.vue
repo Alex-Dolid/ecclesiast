@@ -1,5 +1,7 @@
 <template>
-  <h1>SignIn</h1>
+  <main class="page-width sign-in">
+    <h1>SignIn</h1>
+  </main>
 </template>
 
 <script lang="ts">
@@ -11,6 +13,8 @@ export default defineComponent({
 })
 </script>
 
-<style scoped>
-
+<style scoped lang="scss">
+.sign-in {
+  text-align: center;
+}
 </style>

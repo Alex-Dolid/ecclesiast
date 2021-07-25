@@ -1,6 +1,9 @@
 import { Mutation } from "@/types";
 import { State, UserState } from "./state";
 
+export enum MutationsNames {
+  setUser = "setUser",
+}
 export type Mutations = {
-  setUser: Mutation<State, UserState>
+  [keyof in MutationsNames]: Mutation<State, UserState>
 }

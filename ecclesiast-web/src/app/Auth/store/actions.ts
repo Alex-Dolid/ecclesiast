@@ -13,7 +13,8 @@ const actions: Actions = {
       setToken(user.token);
       setLocalUser(user);
     } catch (error) {
-      console.error(error)
+      console.error(error);
+      throw error;
     }
   },
   clear: ({ commit }) => {

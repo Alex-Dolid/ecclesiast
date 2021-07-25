@@ -2,19 +2,67 @@
   <main class="page-width sign-in">
     <h1>SignIn</h1>
     <div class="sign-in-form">
-      <input type="email" class="sign-in-form__input" placeholder="Email">
-      <input type="password" class="sign-in-form__input" placeholder="Password">
-      <button class="sign-in-form__button">Sign In</button>
+      <input type="email" class="sign-in-form__input" placeholder="Email" v-model.trim="email">
+      <input type="password" class="sign-in-form__input" placeholder="Password" v-model.trim="password">
+      <button class="sign-in-form__button" @click="onSubmit" :disabled="loading">Sign In</button>
     </div>
   </main>
 </template>
 
 <script lang="ts">
 // Core
-import { defineComponent } from "vue";
+import { defineComponent, reactive, toRefs } from "vue";
+// Libs
+import { useRouter } from "vue-router";
+import { useStore } from "vuex";
+// Store
+import { key } from "@/store";
+// Types
+import { UserAuth } from "../../types";
+import { RoutesNames } from "@/router";
 
 export default defineComponent({
-  name: "SignIn"
+  name: "SignIn",
+
+  setup() {
+    const store = useStore(key);
+    const router = useRouter();
+
+    // state
+    const form = reactive({
+      email: "",
+      password: "",
+      loading: false,
+    });
+    const { email, password, loading } = toRefs(form);
+
+    // callbacks
+    const onSubmit = async () => {
+      const payload = {
+        email: email.value,
+        password: password.value
+      };
+
+      if (payload.email && payload.password) {
+        try {
+          loading.value = true;
+          await store.dispatch("auth/authAsync", payload as UserAuth);
+          await router.push(RoutesNames.Home);
+        } catch (error) {
+          console.error(error);
+        } finally {
+          loading.value = false;
+        }
+      }
+    }
+
+    return {
+      email,
+      password,
+      loading,
+      onSubmit
+    }
+  }
 })
 </script>
 

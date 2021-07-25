@@ -1,9 +1,10 @@
 // Core
 import axios from "axios";
-// Router
+// Libs
 import { useRouter } from "vue-router";
-// Store
 import { useStore } from "vuex";
+// Store
+import { key } from "@/store";
 // Api
 import authApi from "@/app/Auth/api"
 // Helpers
@@ -11,11 +12,11 @@ import { setToken, getToken } from "@/app/Auth";
 // Config
 import { baseURL } from "./config";
 // Types
-import { ResponseStatus, RootState } from "@/types";
+import { ResponseStatus } from "@/types";
 import { RoutesNames } from "@/router";
 
 const router = useRouter();
-const store = useStore<RootState>();
+const store = useStore(key);
 
 const instance = axios.create({
   baseURL,

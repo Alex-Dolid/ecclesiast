@@ -1,9 +1,8 @@
-export type LocaleType = {
-  _id: string,
-  code2: string,
-  code3: string,
-  name: string,
-};
+import { LocaleType as _LocaleType } from "../../../ecclesiast-api/src/bus/locales";
+
+type LocaleType = _LocaleType & { _id: string };
+
+export { LocaleType };
 
 export type LocalesType = LocaleType[];
 

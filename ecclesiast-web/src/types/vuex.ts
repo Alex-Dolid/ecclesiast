@@ -1,14 +1,16 @@
 import { ActionObject, CommitOptions, DispatchOptions, Module, Payload, Store } from "vuex";
 import { State as AuthState } from "@/app/Auth";
 import { State as BiblesState } from "@/app/Bibles";
+import { State as LocalesState } from "@/app/Locales";
 
 export type Mutation<S, P = unknown> = (state: S, payload: P) => void;
 
-export type RootState = AuthState & BiblesState;
+export type RootState = AuthState & BiblesState & LocalesState;
 
 export interface ModuleTree {
   auth: Module<AuthState, RootState>;
   bibles: Module<BiblesState, RootState>;
+  locales: Module<LocalesState, RootState>;
 }
 
 export interface Commit<P> {

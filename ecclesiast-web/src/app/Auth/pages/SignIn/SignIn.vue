@@ -19,7 +19,6 @@ import { useStore } from "vuex";
 import { key } from "@/store";
 // Types
 import { UserAuth } from "../../types";
-import { RoutesNames } from "@/router";
 
 export default defineComponent({
   name: "SignIn",
@@ -47,7 +46,7 @@ export default defineComponent({
         try {
           loading.value = true;
           await store.dispatch("auth/authAsync", payload as UserAuth);
-          await router.push(RoutesNames.Home);
+          await router.push("/admin");
         } catch (error) {
           console.error(error);
         } finally {

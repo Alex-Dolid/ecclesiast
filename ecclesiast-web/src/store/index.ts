@@ -1,6 +1,6 @@
 // Core
 import { InjectionKey } from "vue";
-import { createStore, Store } from "vuex"
+import { createStore, Store, useStore as baseUseStore } from "vuex"
 // Stores
 import { authStore } from "@/app/Auth";
 import { biblesStore } from "@/app/Bibles";
@@ -20,3 +20,7 @@ const modules: ModuleTree = {
 export default createStore<RootState>({
   modules: { ...modules }
 })
+
+export const useStore = () => {
+  return baseUseStore(key);
+}

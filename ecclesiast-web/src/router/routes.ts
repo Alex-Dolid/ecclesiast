@@ -1,5 +1,7 @@
 // Core
 import { RouteRecordRaw } from "vue-router";
+// Store
+import store from "@/store";
 // Pages
 import { Home } from "@/pages";
 // Routes
@@ -9,6 +11,7 @@ export enum RoutesNames {
   Home = "Home",
   SignIn = "SignIn",
   AdminPanel = "AdminPanel",
+  NotFound = "NotFound"
 }
 
 const routes: Array<RouteRecordRaw> = [
@@ -29,7 +32,21 @@ const routes: Array<RouteRecordRaw> = [
     path: "/admin",
     name: RoutesNames.AdminPanel,
     component: () => import(/* webpackChunkName: "AdminPanel" */ "@/pages/privates/AdminPanel"),
-    children: adminPanelRoutes
+    children: adminPanelRoutes,
+    beforeEnter: () => {
+      // TODO переробити доробити щоб працювали типи
+      // @ts-ignore
+      if (!store.state.auth.user) {
+        return { name: RoutesNames.Home }
+      }
+    }
+  },
+  {
+    path: "/:pathMatch(.*)*",
+    name: RoutesNames.NotFound,
+    redirect: {
+      name: RoutesNames.Home
+    }
   }
 ];
 

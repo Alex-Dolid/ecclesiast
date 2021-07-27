@@ -44,7 +44,7 @@ const processQueue = (err: Error | null): void => {
 
 instance.interceptors.response.use(response => response, error => {
   const originalRequest = error.config;
-  const { status } = error.response;
+  const { status } = error.response ?? error;
 
   if (status === ResponseStatus.Unauthorized && !originalRequest._retry) {
 
@@ -75,7 +75,7 @@ instance.interceptors.response.use(response => response, error => {
   } else if (status === ResponseStatus.BadToken) {
     localStorage.clear();
     store.dispatch("auth/clear");
-    router.push(RoutesNames.SignIn);
+    router.push({ name: RoutesNames.SignIn });
   }
 
   throw error;

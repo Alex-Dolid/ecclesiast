@@ -7,7 +7,7 @@
         :key="route.name"
         :to="`/admin/${route.path}`"
         class="nav__link"
-        active-class="nav__link_active"
+        exact-active-class="nav__link_active"
       >
         {{ route.meta.title }}
       </router-link>

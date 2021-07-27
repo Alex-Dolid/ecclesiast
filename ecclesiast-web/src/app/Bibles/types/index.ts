@@ -6,4 +6,4 @@ type Module = _Module<State, RootState>;
 
 export { State, Module };
 export { Mutations, MutationsNames } from "./mutations";
-export { Actions } from "./actions";
+export { Actions, ActionsNames } from "./actions";

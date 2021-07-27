@@ -12,4 +12,4 @@ const module: Module = {
   actions: { ...actions },
 };
 
-export default  module;
+export default module;

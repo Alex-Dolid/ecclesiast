@@ -1,11 +1,9 @@
 import { Action } from "@/types";
 
-type CRUDPayload = {
-  id: string;
-}
-export type CRUDActions<S, T, ACP> = {
-  createAsync: Action<S, T, ACP>;
-  updateAsync: Action<S, CRUDPayload & { payload: Partial<T>}, ACP>;
-  deleteAsync: Action<S, CRUDPayload, ACP>;
-  get: Action<S, Partial<CRUDPayload>, ACP>
+export type CRUDActions<S, T, ACP, ACD = unknown> = {
+  createAsync: Action<S, T, ACP, ACD>;
+  updateAsync: Action<S, { id: string; payload: Partial<T>}, ACP, ACD>;
+  deleteAsync: Action<S, { id: string }, ACP, ACD>;
+  getAllAsync: Action<S, unknown, ACP, ACD>
+  getByIdAsync: Action<S, { id: string }, ACP, ACD>
 }

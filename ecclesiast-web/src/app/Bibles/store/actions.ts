@@ -6,8 +6,8 @@ import { Actions, ActionsNames, MutationsNames } from "../types";
 const actions: Actions = {
   createAsync: async ({ commit, state }, payload) => {
     try {
-      const bible = await biblesApi.create(payload);
-      const bibles = state.bibles ? [...state.bibles, bible] : [bible];
+      const { data } = await biblesApi.create(payload);
+      const bibles = state.bibles ? [...state.bibles, data] : [data];
       commit(MutationsNames.setBibles, bibles);
     } catch (error) {
       console.error(error);
@@ -16,9 +16,9 @@ const actions: Actions = {
   },
   updateAsync: async ({ dispatch }, { id, payload }) => {
     try {
-      const bible = await biblesApi.update(id, payload);
+      const { data } = await biblesApi.update(id, payload);
 
-      await dispatch(ActionsNames.update, bible);
+      await dispatch(ActionsNames.update, data);
     } catch (error) {
       console.error(error);
       throw error;
@@ -37,9 +37,9 @@ const actions: Actions = {
   },
   getAllAsync: async ({ commit }) => {
     try {
-      const bibles = await biblesApi.getAll();
+      const { data } = await biblesApi.getAll();
 
-      commit(MutationsNames.setBibles, bibles);
+      commit(MutationsNames.setBibles, data);
     } catch (error) {
       console.error(error);
       throw error;
@@ -47,9 +47,9 @@ const actions: Actions = {
   },
   getByIdAsync: async ({ dispatch }, { id }) => {
     try {
-      const bible = await biblesApi.getById(id);
+      const { data } = await biblesApi.getById(id);
 
-      await dispatch(ActionsNames.update, bible);
+      await dispatch(ActionsNames.update, data);
     } catch (error) {
       console.error(error);
       throw error;

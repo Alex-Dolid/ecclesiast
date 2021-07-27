@@ -6,8 +6,8 @@ import { Actions, ActionsNames, MutationsNames } from "../types";
 const actions: Actions = {
   createAsync: async ({ commit, state }, payload) => {
     try {
-      const locale = await localesApi.create(payload);
-      const locales = state.locales ? [...state.locales, locale] : [locale];
+      const { data } = await localesApi.create(payload);
+      const locales = state.locales ? [...state.locales, data] : [data];
       commit(MutationsNames.setLocales, locales);
     } catch (error) {
       console.error(error);
@@ -16,9 +16,9 @@ const actions: Actions = {
   },
   updateAsync: async ({ dispatch }, { id, payload }) => {
     try {
-      const locale = await localesApi.update(id, payload);
+      const { data } = await localesApi.update(id, payload);
 
-      await dispatch(ActionsNames.update, locale);
+      await dispatch(ActionsNames.update, data);
     } catch (error) {
       console.error(error);
       throw error;
@@ -37,9 +37,9 @@ const actions: Actions = {
   },
   getAllAsync: async ({ commit }) => {
     try {
-      const locales = await localesApi.getAll();
+      const { data } = await localesApi.getAll();
 
-      commit(MutationsNames.setLocales, locales);
+      commit(MutationsNames.setLocales, data);
     } catch (error) {
       console.error(error);
       throw error;
@@ -47,9 +47,9 @@ const actions: Actions = {
   },
   getByIdAsync: async ({ dispatch }, { id }) => {
     try {
-      const locale = await localesApi.getById(id);
+      const { data } = await localesApi.getById(id);
 
-      await dispatch(ActionsNames.update, locale);
+      await dispatch(ActionsNames.update, data);
     } catch (error) {
       console.error(error);
       throw error;

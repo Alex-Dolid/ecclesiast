@@ -4,14 +4,22 @@ import authApi from "../api";
 import { setLocalUser, setToken } from "../helpers";
 // Types
 import { Actions, MutationsNames } from "../types";
+import { Role } from "@/app/Auth/types/enums";
 
 const actions: Actions = {
   authAsync: async ({ commit }, payload) => {
     try {
-      const user = await authApi.auth(payload);
-      commit(MutationsNames.setUser, user);
-      setToken(user.token);
-      setLocalUser(user);
+      // const { data } = await authApi.auth(payload);
+      const data = {
+        _id: "id",
+        email: "email",
+        role: Role.admin,
+        token: "tokennn",
+        password: "password",
+      }
+      commit(MutationsNames.setUser, data);
+      setToken(data.token);
+      setLocalUser(data);
     } catch (error) {
       console.error(error);
       throw error;

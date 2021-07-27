@@ -34,7 +34,6 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import(/* webpackChunkName: "AdminPanel" */ "@/pages/privates/AdminPanel"),
     children: adminPanelRoutes,
     beforeEnter: () => {
-      // TODO переробити доробити щоб працювали типи
       // @ts-ignore
       if (!store.state.auth.user) {
         return { name: RoutesNames.Home }

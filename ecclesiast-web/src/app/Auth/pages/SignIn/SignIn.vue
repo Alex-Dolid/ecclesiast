@@ -14,9 +14,8 @@
 import { defineComponent, reactive, toRefs } from "vue";
 // Libs
 import { useRouter } from "vue-router";
-import { useStore } from "vuex";
 // Store
-import { key } from "@/store";
+import { useStore } from "@/store";
 // Types
 import { UserAuth } from "../../types";
 
@@ -24,7 +23,7 @@ export default defineComponent({
   name: "SignIn",
 
   setup() {
-    const store = useStore(key);
+    const store = useStore();
     const router = useRouter();
 
     // state

@@ -7,9 +7,16 @@
 <script>
 // Core
 import { defineComponent } from "vue";
+// Store
+import { useStore } from "@/store";
 
 export default defineComponent({
-  name: "Locales"
+  name: "Locales",
+
+  setup() {
+    const store = useStore();
+    store.dispatch("locales/getAllAsync");
+  }
 });
 </script>
 

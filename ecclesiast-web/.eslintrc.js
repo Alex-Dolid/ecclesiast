@@ -9,16 +9,21 @@ module.exports = {
 
   extends: [
     "plugin:vue/vue3-essential",
-    "eslint:recommended"
+    "@vue/typescript",
+    "plugin:@typescript-eslint/recommended",
+    "eslint:recommended",
   ],
 
   globals: {
     _: true
   },
 
+  parser: "vue-eslint-parser",
   parserOptions: {
-    parser: '@typescript-eslint/parser'
+    project: "./tsconfig.eslint.json",
   },
+
+  plugins: ["@typescript-eslint"],
 
   // add your custom rules here
   rules: {
@@ -43,10 +48,4 @@ module.exports = {
       }
     },
   ],
-
-  'extends': [
-    'plugin:vue/vue3-essential',
-    'eslint:recommended',
-    '@vue/typescript'
-  ]
 };

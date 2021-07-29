@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ActionObject, CommitOptions, DispatchOptions, Module, Payload, Store } from "vuex";
 import { State as AuthState } from "@/app/Auth";
 import { State as BiblesState } from "@/app/Bibles";
@@ -5,7 +6,7 @@ import { State as LocalesState } from "@/app/Locales";
 
 export type Mutation<S, P = unknown> = (state: S, payload: P) => void;
 
-export type RootState = AuthState & BiblesState & LocalesState;
+export type RootState = { auth: AuthState } & { bibles: BiblesState } & { locales: LocalesState };
 
 export interface ModuleTree {
   auth: Module<AuthState, RootState>;

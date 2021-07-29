@@ -37,7 +37,6 @@ export default defineComponent({
 @import "src/styles/style-guide/variables";
 
 .admin-panel {
-  height: 100%;
   text-align: center;
 }
 

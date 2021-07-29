@@ -5,5 +5,5 @@ export enum MutationsNames {
   setUser = "setUser",
 }
 export type Mutations = {
-  [keyof in MutationsNames]: Mutation<State, UserState>
+  [keyof in MutationsNames]: Mutation<State, UserState>;
 }

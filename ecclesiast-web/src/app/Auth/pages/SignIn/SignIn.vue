@@ -35,7 +35,7 @@ export default defineComponent({
     const { email, password, loading } = toRefs(form);
 
     // callbacks
-    const onSubmit = async () => {
+    const onSubmit = async (): Promise<void> => {
       const payload = {
         email: email.value,
         password: password.value

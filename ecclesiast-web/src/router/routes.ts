@@ -26,15 +26,14 @@ const routes: Array<RouteRecordRaw> = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "SignIn" */ "@/app/Auth/pages/SignIn")
+    component: (): Promise<unknown> => import(/* webpackChunkName: "SignIn" */ "@/app/Auth/pages/SignIn")
   },
   {
     path: "/admin",
     name: RoutesNames.AdminPanel,
-    component: () => import(/* webpackChunkName: "AdminPanel" */ "@/pages/privates/AdminPanel"),
+    component: (): Promise<unknown> => import(/* webpackChunkName: "AdminPanel" */ "@/pages/privates/AdminPanel"),
     children: adminPanelRoutes,
-    beforeEnter: () => {
-      // @ts-ignore
+    beforeEnter: (): { name: string } | void  => {
       if (!store.state.auth.user) {
         return { name: RoutesNames.Home }
       }

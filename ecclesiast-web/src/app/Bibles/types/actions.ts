@@ -4,7 +4,7 @@ import { MutationsNames } from "./mutations";
 import { CRUDActions } from "@/app/types";
 
 type ACP = {
-  [MutationsNames.setBibles]: BiblesState
+  [MutationsNames.setBibles]: BiblesState;
 };
 
 export enum ActionsNames {
@@ -12,7 +12,7 @@ export enum ActionsNames {
 }
 
 type ACD = {
-  [ActionsNames.update]: BibleType
+  [ActionsNames.update]: BibleType;
 }
 export type Actions = CRUDActions<State, BibleType, ACP, ACD> & {
   update: Action<State, BibleType, ACP>;

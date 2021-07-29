@@ -37,7 +37,7 @@ export default defineComponent({
   },
 
   setup() {
-    let bibleVerses = ref<BibleVersesType>([]);
+    const bibleVerses = ref<BibleVersesType>([]);
     const getBibleDrafts = async (searchValue: string): Promise<AxiosBibleDraftsResponseType> => {
       return await api.get<BibleVersesType>("/bibles-verses", {
         params: {

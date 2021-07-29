@@ -1,5 +1,5 @@
 // Api
-import authApi from "../api";
+// import authApi from "../api";
 // Helpers
 import { setLocalUser, setToken } from "../helpers";
 // Types
@@ -7,7 +7,7 @@ import { Actions, MutationsNames } from "../types";
 import { Role } from "@/app/Auth/types/enums";
 
 const actions: Actions = {
-  authAsync: async ({ commit }, payload) => {
+  authAsync: async ({ commit }) => {
     try {
       // const { data } = await authApi.auth(payload);
       const data = {

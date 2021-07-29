@@ -10,7 +10,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "",
     name: RoutesNames.Home,
-    component: () => import(/* webpackChunkName: "AdminPanelHome" */ "@/pages/privates/AdminPanel/pages/Home"),
+    component: (): Promise<unknown> => import(/* webpackChunkName: "AdminPanelHome" */ "@/pages/privates/AdminPanel/pages/Home"),
     meta: {
       title: "Home"
     }
@@ -18,7 +18,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "locales",
     name: RoutesNames.Locales,
-    component: () => import(/* webpackChunkName: "AdminPanelLocales" */ "@/pages/privates/AdminPanel/pages/Locales"),
+    component: (): Promise<unknown> => import(/* webpackChunkName: "AdminPanelLocales" */ "@/pages/privates/AdminPanel/pages/Locales"),
     meta: {
       title: "Locales"
     }

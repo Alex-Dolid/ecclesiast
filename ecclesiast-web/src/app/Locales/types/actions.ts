@@ -4,7 +4,7 @@ import { MutationsNames } from "./mutations";
 import { CRUDActions } from "@/app/types";
 
 type ACP = {
-  [MutationsNames.setLocales]: LocalesState
+  [MutationsNames.setLocales]: LocalesState;
 };
 
 export enum ActionsNames {
@@ -12,7 +12,7 @@ export enum ActionsNames {
 }
 
 type ACD = {
-  [ActionsNames.update]: LocaleType
+  [ActionsNames.update]: LocaleType;
 }
 export type Actions = CRUDActions<State, LocaleType, ACP, ACD> & {
   update: Action<State, LocaleType, ACP>;

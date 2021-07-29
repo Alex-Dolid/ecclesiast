@@ -21,4 +21,4 @@ export default createStore<RootState>({
   modules: { ...modules }
 })
 
-export const useStore = () => baseUseStore(key);
+export const useStore = (): Store<RootState> => baseUseStore(key);

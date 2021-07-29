@@ -59,7 +59,7 @@ const actions: Actions = {
     let newBibles = bibles ? [...bibles] : null;
     if (newBibles) {
       const currentBibleIndex = newBibles.findIndex(item => item._id === bible._id);
-      if (currentBibleIndex) {
+      if (currentBibleIndex || currentBibleIndex === 0) {
         newBibles[currentBibleIndex] = { ...newBibles[currentBibleIndex], ...bible };
       } else {
         newBibles.push(bible);

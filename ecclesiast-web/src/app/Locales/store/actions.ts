@@ -59,7 +59,7 @@ const actions: Actions = {
     let newBibles = locales ? [...locales] : null;
     if (newBibles) {
       const currentBibleIndex = newBibles.findIndex(item => item._id === locale._id);
-      if (currentBibleIndex) {
+      if (currentBibleIndex || currentBibleIndex === 0) {
         newBibles[currentBibleIndex] = { ...newBibles[currentBibleIndex], ...locale };
       } else {
         newBibles.push(locale);

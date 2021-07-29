@@ -1,6 +1,6 @@
 <template>
   <li
-    v-for="item of preparedData"
+    v-for="item of state.preparedData"
     :key="item._id"
     class="li card"
   >
@@ -10,7 +10,7 @@
     <ul class="card__props">
       <li class="li" v-for="propName of item.propsNames" :key="propName">
         <span class="card__list-item">
-          <template v-if="!item.isEdit.value">
+          <template v-if="!item.isEdit">
             <span class="card__list-item-prop-name">{{ propName }}:</span> {{ item[propName] }}
           </template>
           <template v-else>
@@ -20,12 +20,12 @@
       </li>
     </ul>
     <div class="card__buttons">
-      <template v-if="!item.isEdit.value">
+      <template v-if="!item.isEdit">
         <button class="card__button" @click="onEdit(item._id)">Edit</button>
         <button class="card__button" @click="handleDelete(item._id)">X</button>
       </template>
       <template v-else>
-        <button class="card__button card__button_cancel" @click="onEdit(item._id)">Cancel</button>
+        <button class="card__button card__button_cancel" @click="onCancel(item._id)">Cancel</button>
         <button class="card__button card__button_save" @click="handleSave(item._id)">Save</button>
       </template>
     </div>
@@ -34,20 +34,25 @@
 
 <script lang="ts">
 // Core
-import { computed, defineComponent, PropType, ref } from "vue";
+import { defineComponent, PropType, reactive, watchEffect } from "vue";
+// Types
+import { MongooseDoc } from "@/types";
 
-type DataItem = {
+type DataItem = MongooseDoc & {
   _id: string;
   [key: string]: string | number;
 }
 export type Props = {
-  data: Array<DataItem>;
+  data: DataItem[];
 }
 type NewItem = DataItem & {
   propsNames?: string[];
-  isEdit?: { value: boolean };
-  [key: string]: string | number | string[] | object | undefined;
+  isEdit?: boolean;
+  [key: string]: string | number | string[] | object | undefined | boolean;
 };
+type State = {
+  preparedData: NewItem[];
+}
 
 export default defineComponent({
   name: "Card",
@@ -60,36 +65,50 @@ export default defineComponent({
   },
 
   setup(props, { emit }) {
-    const preparedData = computed(() => [...props.data].map((item) => {
+    const prepareData = (data: DataItem[]): NewItem[] => [...data].map((item) => {
       const newItem: NewItem = { ...item };
-      newItem.propsNames = Object.keys(item).filter(key => key !== "_id");
-      newItem.isEdit = ref(false);
+      const excludePropsNames = ["_id", "created", "modified", "__v"];
+      newItem.propsNames = Object.keys(item).filter(key => key !== "_id" && !excludePropsNames.includes(key));
+      newItem.isEdit = false;
       return newItem;
-    }))
+    })
+    const state = reactive<State>({
+      preparedData: []
+    });
 
-    const findItemById = (id: string): NewItem | void => preparedData.value.find(_item => _item._id === id);
+    watchEffect(() => state.preparedData = prepareData(props.data))
+
+    const findItemById = (id: string): NewItem | void => state.preparedData.find(_item => _item._id === id);
     const onEdit = (id: string): void => {
       const item = findItemById(id);
-      if (item && item.isEdit) {
-        item.isEdit.value = !item.isEdit.value;
+      if (item) {
+        item.isEdit = !item.isEdit;
       }
     };
-    const handleDelete = (id: string): void => emit("onDelete", id);
+    const handleDelete = (id: string): void => emit("delete", id);
+    const onCancel = (id: string): void => {
+      onEdit(id);
+      state.preparedData = prepareData(props.data);
+    };
     const handleSave = (id: string): void => {
       const item = findItemById(id);
       if (item) {
-        emit("onSave", item);
+        const newItem = { ...item };
+        delete newItem.isEdit;
+        delete newItem.propsNames;
+        emit("save", newItem);
       }
-      onEdit(id);
+      onCancel(id);
     };
 
     return {
-      preparedData,
+      state,
       onEdit,
       handleDelete,
-      handleSave
+      handleSave,
+      onCancel,
     }
-  }
+  },
 });
 </script>
 

@@ -23,25 +23,28 @@
 
 <script lang="ts">
 // Core
-import { defineComponent, PropType } from "vue";
+import { computed, defineComponent, PropType } from "vue";
+
+export type Props = {
+  data: Array<{ _id: string; [key: string]: string | number }>;
+}
 
 export default defineComponent({
   name: "Card",
 
   props: {
     data: {
-      /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-      type: Array as PropType<Array<{ _id: string; [key: string]: any }>>,
+      type: Array as PropType<Props["data"]>,
       required: true,
     },
   },
 
   setup(props) {
-    const preparedData = [...props.data].map((item) => {
-      const newItem = { ...item };
+    const preparedData = computed(() => [...props.data].map((item) => {
+      const newItem: { [key: string]: string | number | string[] } = { ...item };
       newItem.propsNames = Object.keys(item).filter(key => key !== "_id");
       return newItem;
-    });
+    }))
 
     return {
       preparedData

@@ -2,7 +2,7 @@
   <section class="admin-panel-locales">
     <h3>Locales</h3>
     <ul class="admin-panel-locales-list">
-      <Card :data="'null'" />
+      <Card :data="locales" />
     </ul>
   </section>
 </template>
@@ -13,7 +13,7 @@ import { defineComponent, computed } from "vue";
 // Store
 import { useStore } from "@/store";
 // Components
-import { Card } from "@/components";
+import { Card, CardProps } from "@/components";
 // Types
 import { LocalesState } from "@/app/Locales/types/state"
 
@@ -25,7 +25,8 @@ export default defineComponent({
 
     store.dispatch("locales/getAllAsync");
 
-    const locales = computed<LocalesState>(() => store.state.locales.locales)
+    const storeLocales = computed<LocalesState>(() => store.state.locales.locales)
+    const locales = computed<CardProps["data"]>(() => storeLocales.value ?? []);
 
     return {
       locales

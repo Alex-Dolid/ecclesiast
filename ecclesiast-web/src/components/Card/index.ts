@@ -1,1 +1,1 @@
-export { default } from "./Card.vue";
+export { default, Props } from "./Card.vue";

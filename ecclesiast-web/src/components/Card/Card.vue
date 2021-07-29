@@ -10,24 +10,44 @@
     <ul class="card__props">
       <li class="li" v-for="propName of item.propsNames" :key="propName">
         <span class="card__list-item">
-          <span class="card__list-item-prop-name">{{ propName }}:</span> {{ item[propName] }}
+          <template v-if="!item.isEdit.value">
+            <span class="card__list-item-prop-name">{{ propName }}:</span> {{ item[propName] }}
+          </template>
+          <template v-else>
+            <span class="card__list-item-prop-name">{{ propName }}:</span> <input type="text" v-model="item[propName]">
+          </template>
         </span>
       </li>
     </ul>
     <div class="card__buttons">
-      <button class="card__button">Edit</button>
-      <button class="card__button">X</button>
+      <template v-if="!item.isEdit.value">
+        <button class="card__button" @click="onEdit(item._id)">Edit</button>
+        <button class="card__button" @click="handleDelete(item._id)">X</button>
+      </template>
+      <template v-else>
+        <button class="card__button card__button_cancel" @click="onEdit(item._id)">Cancel</button>
+        <button class="card__button card__button_save" @click="handleSave(item._id)">Save</button>
+      </template>
     </div>
   </li>
 </template>
 
 <script lang="ts">
 // Core
-import { computed, defineComponent, PropType } from "vue";
+import { computed, defineComponent, PropType, ref } from "vue";
 
-export type Props = {
-  data: Array<{ _id: string; [key: string]: string | number }>;
+type DataItem = {
+  _id: string;
+  [key: string]: string | number;
 }
+export type Props = {
+  data: Array<DataItem>;
+}
+type NewItem = DataItem & {
+  propsNames?: string[];
+  isEdit?: { value: boolean };
+  [key: string]: string | number | string[] | object | undefined;
+};
 
 export default defineComponent({
   name: "Card",
@@ -39,15 +59,35 @@ export default defineComponent({
     },
   },
 
-  setup(props) {
+  setup(props, { emit }) {
     const preparedData = computed(() => [...props.data].map((item) => {
-      const newItem: { [key: string]: string | number | string[] } = { ...item };
+      const newItem: NewItem = { ...item };
       newItem.propsNames = Object.keys(item).filter(key => key !== "_id");
+      newItem.isEdit = ref(false);
       return newItem;
     }))
 
+    const findItemById = (id: string): NewItem | void => preparedData.value.find(_item => _item._id === id);
+    const onEdit = (id: string): void => {
+      const item = findItemById(id);
+      if (item && item.isEdit) {
+        item.isEdit.value = !item.isEdit.value;
+      }
+    };
+    const handleDelete = (id: string): void => emit("onDelete", id);
+    const handleSave = (id: string): void => {
+      const item = findItemById(id);
+      if (item) {
+        emit("onSave", item);
+      }
+      onEdit(id);
+    };
+
     return {
-      preparedData
+      preparedData,
+      onEdit,
+      handleDelete,
+      handleSave
     }
   }
 });
@@ -114,6 +154,14 @@ export default defineComponent({
     &:last-child {
       margin-right: 0;
       background: $red;
+    }
+
+    &_cancel {
+      background: $black !important;
+    }
+
+    &_save {
+      background: $green !important;
     }
   }
 }

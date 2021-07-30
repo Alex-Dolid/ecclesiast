@@ -40,7 +40,7 @@ import { MongooseDoc } from "@/types";
 
 type DataItem = MongooseDoc & {
   _id: string;
-  [key: string]: string | number;
+  [key: string]: string | number | string[] | object | undefined | boolean;
 }
 export type Props = {
   data: DataItem[];
@@ -48,7 +48,6 @@ export type Props = {
 type NewItem = DataItem & {
   propsNames?: string[];
   isEdit?: boolean;
-  [key: string]: string | number | string[] | object | undefined | boolean;
 };
 type State = {
   preparedData: NewItem[];

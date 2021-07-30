@@ -4,6 +4,7 @@ import { RouteRecordRaw } from "vue-router";
 enum RoutesNames {
   Home = "AdminPanelHome",
   Locales = "AdminPanelLocales",
+  Bibles = "AdminPanelBibles",
 }
 
 const routes: Array<RouteRecordRaw> = [
@@ -21,6 +22,14 @@ const routes: Array<RouteRecordRaw> = [
     component: (): Promise<unknown> => import(/* webpackChunkName: "AdminPanelLocales" */ "@/pages/privates/AdminPanel/pages/Locales"),
     meta: {
       title: "Locales"
+    }
+  },
+  {
+    path: "bibles",
+    name: RoutesNames.Bibles,
+    component: (): Promise<unknown> => import(/* webpackChunkName: "AdminPanelBibles" */ "@/pages/privates/AdminPanel/pages/Bibles"),
+    meta: {
+      title: "Bibles"
     }
   },
 ];

@@ -3,3 +3,4 @@ export { default as AppVerseBibleCard } from "./AppVerseBibleCard/AppVerseBibleC
 export { default as Header } from "./Header";
 export { default as Card, Props as CardProps } from "./Card";
 export { default as Loading } from "./Loading";
+export { default as CustomSelect, Props as CustomSelectProps } from "./Select";

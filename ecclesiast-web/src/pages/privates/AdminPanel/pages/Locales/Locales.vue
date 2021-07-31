@@ -17,7 +17,7 @@ import { useStore } from "@/store";
 // Components
 import { Card, CardProps, Loading } from "@/components";
 // Types
-import { LocalesState } from "@/app/Locales/types/state"
+import { LocalesState } from "@/app/Locales"
 import { LocaleType } from "@/types";
 
 export default defineComponent({

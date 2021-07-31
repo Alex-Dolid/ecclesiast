@@ -11,10 +11,21 @@
       <li class="li" v-for="propName of item.propsNames" :key="propName">
         <span class="card__list-item">
           <template v-if="!item.isEdit">
-            <span class="card__list-item-prop-name">{{ propName }}:</span> {{ item[propName] }}
+            <template v-if="item.config && item.config[propName]">
+              <span class="card__list-item-prop-name">{{ propName }}:</span> {{ item[propName].name }}
+            </template>
+            <template v-else>
+              <span class="card__list-item-prop-name">{{ propName }}:</span> {{ item[propName] }}
+            </template>
           </template>
           <template v-else>
-            <span class="card__list-item-prop-name">{{ propName }}:</span> <input type="text" v-model="item[propName]">
+            <span class="card__list-item-prop-name">{{ propName }}:</span>
+            <template v-if="item.config && item.config[propName]">
+              <CustomSelect :data="item.config[propName].data" />
+            </template>
+            <template v-else>
+              <input type="text" v-model="item[propName]">
+            </template>
           </template>
         </span>
       </li>
@@ -34,12 +45,15 @@
 
 <script lang="ts">
 // Core
-import { defineComponent, PropType, reactive, watchEffect } from "vue";
+import { defineComponent, PropType, reactive, watchEffect, defineAsyncComponent } from "vue";
 // Types
 import { MongooseDoc } from "@/types";
+// Components
+import { CustomSelectProps } from "@/components";
 
 type DataItem = MongooseDoc & {
   _id: string;
+  config?: Record<string, { component: "Select"; data: CustomSelectProps["data"] }>;
   [key: string]: string | number | string[] | object | undefined | boolean;
 }
 export type Props = {
@@ -55,10 +69,13 @@ type State = {
 
 export default defineComponent({
   name: "Card",
+  components: {
+    CustomSelect: defineAsyncComponent(() => import(/* webpackChunkName: "CustomSelect" */"@/components/Select")),
+  },
 
   props: {
     data: {
-      type: Array as PropType<Props["data"]>,
+      type: Object as PropType<Props["data"]>,
       required: true,
     },
   },
@@ -66,7 +83,7 @@ export default defineComponent({
   setup(props, { emit }) {
     const prepareData = (data: DataItem[]): NewItem[] => [...data].map((item) => {
       const newItem: NewItem = { ...item };
-      const excludePropsNames = ["_id", "created", "modified", "__v"];
+      const excludePropsNames = ["_id", "created", "modified", "__v", "config"];
       newItem.propsNames = Object.keys(item).filter(key => key !== "_id" && !excludePropsNames.includes(key));
       newItem.isEdit = false;
       return newItem;

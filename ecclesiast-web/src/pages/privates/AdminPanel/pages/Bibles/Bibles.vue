@@ -11,26 +11,63 @@
 
 <script lang="ts">
 // Core
-import { defineComponent, computed, ref } from "vue";
+import { defineComponent, computed, watchEffect, reactive, toRefs } from "vue";
 // Store
 import { useStore } from "@/store";
 // Components
 import { Card, CardProps, Loading } from "@/components";
 // Types
-import { BiblesState } from "@/app/Bibles/types/state"
+import { BiblesState } from "@/app/Bibles"
+import { LocalesState } from "@/app/Locales"
 import { BibleType } from "@/types";
+
+type State = {
+  bibles: CardProps["data"];
+  isLoading: boolean;
+}
 
 export default defineComponent({
   name: "Bibles",
   components: { Card, Loading },
+
   setup() {
     const store = useStore();
-    const isLoading = ref(true);
+    const { bibles, isLoading } = toRefs<State>(
+      reactive<State>({
+        bibles: [],
+        isLoading: true,
+      })
+    );
 
-    store.dispatch("bibles/getAllAsync").finally(() => isLoading.value = false);
+    store.dispatch("bibles/getAllAsync")
+      .then(() => store.dispatch("locales/getAllAsync"))
+      .finally(() => isLoading.value = false);
 
-    const storeBibles = computed<BiblesState>(() => store.state.bibles.bibles)
-    const bibles = computed<CardProps["data"]>(() => storeBibles.value ?? []);
+    const storeBibles = computed<BiblesState>(() => store.state.bibles.bibles);
+    const storeLocales = computed<LocalesState>(() => store.state.locales.locales);
+
+    watchEffect(() => {
+      const locales = storeLocales.value?.map(item => ({ value: item._id, name: item.name }));
+      if (locales && storeBibles.value) {
+        bibles.value = [...storeBibles.value].map(item => {
+          return {
+            ...item,
+            config: {
+              locale: {
+                component: "Select",
+                data: {
+                  id: `locales-${item._id}`,
+                  items: [...locales],
+                  value: item.locale._id,
+                  multiple: false,
+                }
+              },
+            },
+          };
+        });
+      }
+    });
+
 
     const handleSave = (item: BibleType): void => {
       isLoading.value = true;
@@ -41,7 +78,7 @@ export default defineComponent({
     return {
       bibles,
       handleSave,
-      isLoading
+      isLoading,
     }
   }
 });

@@ -3,7 +3,7 @@
     <h3>Bibles</h3>
     <Loading :is-loading="isLoading">
       <ul class="admin-panel-bibles-list">
-        <Card :data="bibles" @save="handleSave" />
+        <Card :data="bibles" @save="handleSave" @delete="handleDelete" />
       </ul>
     </Loading>
   </section>
@@ -73,12 +73,14 @@ export default defineComponent({
       isLoading.value = true;
       store.dispatch("bibles/updateAsync", { id: item._id, payload: item })
         .finally(() => isLoading.value = false);
-    }
+    };
+    const handleDelete = (id: string): Promise<void> => store.dispatch("bibles/deleteAsync", { id });
 
     return {
       bibles,
-      handleSave,
       isLoading,
+      handleSave,
+      handleDelete
     }
   }
 });

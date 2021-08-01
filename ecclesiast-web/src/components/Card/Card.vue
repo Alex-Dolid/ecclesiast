@@ -101,7 +101,12 @@ export default defineComponent({
         item.isEdit = !item.isEdit;
       }
     };
-    const handleDelete = (id: string): void => emit("delete", id);
+    const handleDelete = (id: string): void => {
+      const isConfirm = confirm("Are you sure?");
+      if (isConfirm) {
+        emit("delete", id);
+      }
+    };
     const onCancel = (id: string): void => {
       onEdit(id);
       state.preparedData = prepareData(props.data);

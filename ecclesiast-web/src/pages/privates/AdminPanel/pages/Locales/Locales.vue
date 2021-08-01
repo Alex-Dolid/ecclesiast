@@ -3,7 +3,7 @@
     <h3>Locales</h3>
     <Loading :is-loading="isLoading">
       <ul class="admin-panel-locales-list">
-        <Card :data="locales" @save="handleSave" />
+        <Card :data="locales" @save="handleSave" @delete="handleDelete" />
       </ul>
     </Loading>
   </section>
@@ -37,11 +37,13 @@ export default defineComponent({
       store.dispatch("locales/updateAsync", { id: item._id, payload: item })
         .finally(() => isLoading.value = false);
     }
+    const handleDelete = (id: string): Promise<void> => store.dispatch("locales/deleteAsync", { id });
 
     return {
       locales,
+      isLoading,
       handleSave,
-      isLoading
+      handleDelete
     }
   }
 });

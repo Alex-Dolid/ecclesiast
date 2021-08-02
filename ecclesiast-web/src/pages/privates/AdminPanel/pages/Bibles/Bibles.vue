@@ -56,10 +56,10 @@ export default defineComponent({
               locale: {
                 component: "Select",
                 data: {
-                  id: `locales-${item._id}`,
+                  id: item._id,
                   items: [...locales],
-                  value: item.locale._id,
-                  multiple: false,
+                  value: [item.locale._id ?? ""],
+                  multiple: true,
                 }
               },
             },

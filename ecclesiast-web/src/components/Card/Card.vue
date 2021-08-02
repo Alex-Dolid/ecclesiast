@@ -21,7 +21,7 @@
           <template v-else>
             <span class="card__list-item-prop-name">{{ propName }}:</span>
             <template v-if="item.config && item.config[propName]">
-              <CustomSelect :data="item.config[propName].data" />
+              <CustomSelect :data="item.config[propName].data" @selectChange="handleSelectChange(item._id, propName, $event)"  />
             </template>
             <template v-else>
               <input type="text" v-model="item[propName]">
@@ -121,6 +121,13 @@ export default defineComponent({
       }
       onCancel(id);
     };
+    const handleSelectChange = (itemId: string, propName: string, value?: string, ): void => {
+      const item = findItemById(itemId);
+
+      if (item && value) {
+        item[propName] = value;
+      }
+    }
 
     return {
       state,
@@ -128,6 +135,7 @@ export default defineComponent({
       handleDelete,
       handleSave,
       onCancel,
+      handleSelectChange
     }
   },
 });

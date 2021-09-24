@@ -3,6 +3,7 @@ module.exports = {
     "vuetify"
   ], */
   productionSourceMap: false,
+
   configureWebpack: {
     optimization: {
       splitChunks: {
@@ -21,4 +22,8 @@ module.exports = {
       },
     },
   },
+
+  transpileDependencies: [
+    'vuetify',
+  ],
 };

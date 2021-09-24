@@ -394,6 +394,14 @@
     "@babel/helper-plugin-utils" "^7.14.5"
     "@babel/plugin-syntax-private-property-in-object" "^7.14.5"
 
+"@babel/plugin-proposal-throw-expressions@^7.12.1":
+  version "7.14.5"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-throw-expressions/-/plugin-proposal-throw-expressions-7.14.5.tgz#9ba7f4e5baa4ce010d6e30c379791e81b10985e5"
+  integrity sha512-Db2JCIPhe409U3qy0sWpDun6Xa1k77TfNsKTzUY0PDRTpiho7e2uIhYMJVwGrHOkHRH03D6yQLZRosNahnpi1Q==
+  dependencies:
+    "@babel/helper-plugin-utils" "^7.14.5"
+    "@babel/plugin-syntax-throw-expressions" "^7.14.5"
+
 "@babel/plugin-proposal-unicode-property-regex@^7.14.5", "@babel/plugin-proposal-unicode-property-regex@^7.4.4":
   version "7.14.5"
   resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-unicode-property-regex/-/plugin-proposal-unicode-property-regex-7.14.5.tgz#0f95ee0e757a5d647f378daa0eca7e93faa8bbe8"
@@ -504,6 +512,13 @@
   version "7.14.5"
   resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-private-property-in-object/-/plugin-syntax-private-property-in-object-7.14.5.tgz#0dc6671ec0ea22b6e94a1114f857970cd39de1ad"
   integrity sha512-0wVnp9dxJ72ZUJDV27ZfbSj6iHLoytYZmh3rFcxNnvsJF3ktkzLDZPy/mA17HGsaQT3/DQsWYX1f1QGWkCoVUg==
+  dependencies:
+    "@babel/helper-plugin-utils" "^7.14.5"
+
+"@babel/plugin-syntax-throw-expressions@^7.14.5":
+  version "7.14.5"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-throw-expressions/-/plugin-syntax-throw-expressions-7.14.5.tgz#db96785d9131fa7e7868968e8a777ac6d3eda801"
+  integrity sha512-4aFC2goA9+JceXayipcSY017nGspvcAkzR+sdsT6hN4DUuHWvM88wdjf/Nxja5sTE7oYPmfuN84ViREdgjingw==
   dependencies:
     "@babel/helper-plugin-utils" "^7.14.5"
 

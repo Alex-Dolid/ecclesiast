@@ -1,18 +1,34 @@
 // Pages
-import Home from '@/pages/privates/Home.vue';
+import App from '@/App.vue';
 // Constants
 import { PAGES } from '@/router/constants';
 
 export default [
   {
-    ...PAGES.HOME,
-    component: Home,
+    path: '/',
+    children: [
+      {
+        ...PAGES.HOME,
+        component: () => import(/* webpackChunkName: "home" */ '../pages/privates/Home.vue'),
+      },
+    ],
+    // eslint-disable-next-line consistent-return
+    beforeEnter(to, from, next) {
+      if (!localStorage.getItem('auth')) {
+        return next({ name: PAGES.LOGIN.name });
+      }
+
+      next();
+    },
   },
   {
-    ...PAGES.LOGIN,
-    // route level code-splitting
-    // this generates a separate chunk (login.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "login" */ '../pages/publics/Login.vue'),
+    path: '/public',
+    component: App,
+    children: [
+      {
+        ...PAGES.LOGIN,
+        component: () => import(/* webpackChunkName: "login" */ '../pages/publics/Login.vue'),
+      },
+    ],
   },
 ];

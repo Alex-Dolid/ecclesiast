@@ -53,12 +53,12 @@
       >
         <nav-menu-link
           title="Login"
-          :to="{ name: 'pages-login' }"
+          :to="{ name: 'Login' }"
           target="_blank"
         ></nav-menu-link>
         <nav-menu-link
           title="Register"
-          :to="{ name: 'pages-register' }"
+          :to="{ name: 'Register' }"
           target="_blank"
         ></nav-menu-link>
         <nav-menu-link

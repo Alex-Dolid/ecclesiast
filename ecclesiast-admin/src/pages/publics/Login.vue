@@ -80,6 +80,7 @@
               block
               color="primary"
               class="mt-6"
+              @click="login"
             >
               Login
             </v-btn>
@@ -145,10 +146,16 @@
 </template>
 
 <script>
-// eslint-disable-next-line object-curly-newline
-import { mdiFacebook, mdiTwitter, mdiGithub, mdiGoogle, mdiEyeOutline, mdiEyeOffOutline } from '@mdi/js';
+// Icons
+import {
+  mdiFacebook, mdiTwitter, mdiGithub, mdiGoogle, mdiEyeOutline, mdiEyeOffOutline,
+} from '@mdi/js';
+// Constants
+import { PAGES } from '@/router/constants';
 
 export default {
+  name: 'Login',
+
   data: () => ({
     isPasswordVisible: false,
     email: '',
@@ -180,9 +187,20 @@ export default {
       mdiEyeOffOutline,
     },
   }),
+
+  methods: {
+    login() {
+      const { email, password } = this;
+
+      if (email && password) {
+        localStorage.setItem('auth', JSON.stringify({ email, password }));
+        this.$router.push({ name: PAGES.HOME.name });
+      }
+    },
+  },
 };
 </script>
 
 <style lang="scss">
-@import '~@/plugins/vuetify/default-preset/preset/pages/auth.scss';
+@import '@/plugins/vuetify/default-preset/preset/pages/auth.scss';
 </style>

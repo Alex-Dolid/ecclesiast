@@ -1,10 +1,10 @@
 export const PAGES = {
   HOME: {
-    path: '/',
+    path: '',
     name: 'Home',
   },
   LOGIN: {
-    path: '/login',
+    path: 'login',
     name: 'Login',
     meta: {
       layout: 'blank',

@@ -10,4 +10,11 @@ export const PAGES = {
       layout: 'blank',
     },
   },
+  ERROR: {
+    path: '/error-404',
+    name: 'Error',
+    meta: {
+      layout: 'blank',
+    },
+  },
 };

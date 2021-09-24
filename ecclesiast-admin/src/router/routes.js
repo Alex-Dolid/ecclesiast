@@ -1,5 +1,3 @@
-// Layouts
-import { LayoutContent } from '@/layouts';
 // Pages
 import App from '@/App.vue';
 // Constants
@@ -8,7 +6,7 @@ import { PAGES } from '@/router/constants';
 export default [
   {
     path: '/',
-    component: LayoutContent,
+    component: () => import(/* webpackChunkName: "layout-content" */ '../layouts/Content.vue'),
     children: [
       {
         ...PAGES.HOME,
@@ -33,5 +31,13 @@ export default [
         component: () => import(/* webpackChunkName: "login" */ '../pages/publics/Login.vue'),
       },
     ],
+  },
+  {
+    ...PAGES.ERROR,
+    component: () => import(/* webpackChunkName: "layout-error" */ '../layouts/Error.vue'),
+  },
+  {
+    path: '*',
+    redirect: 'error-404',
   },
 ];

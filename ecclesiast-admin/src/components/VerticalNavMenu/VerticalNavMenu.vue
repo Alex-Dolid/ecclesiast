@@ -25,7 +25,7 @@
         ></v-img>
         <v-slide-x-transition>
           <h2 class="app-title text--primary">
-            MATERIO
+            Ecclesiast
           </h2>
         </v-slide-x-transition>
       </router-link>

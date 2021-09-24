@@ -72,7 +72,7 @@
               href="https://themeselection.com"
               class="text-decoration-none"
               target="_blank"
-            >ThemeSelection</a></span>
+            >Ecclesiast</a></span>
           <span class="d-sm-inline d-none">
             <a
               href="https://themeselection.com/products/category/download-free-admin-templates/"

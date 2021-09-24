@@ -1,5 +1,7 @@
+// Core
 import Vue from 'vue';
 import Vuetify from 'vuetify/lib/framework';
+// Presets
 import preset from './default-preset/preset';
 
 Vue.use(Vuetify);

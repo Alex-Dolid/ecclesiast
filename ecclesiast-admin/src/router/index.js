@@ -1,5 +1,7 @@
+// Core
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+// Pages
 import Home from '../views/Home.vue';
 
 Vue.use(VueRouter);

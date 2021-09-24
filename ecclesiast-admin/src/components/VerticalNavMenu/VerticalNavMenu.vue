@@ -39,59 +39,8 @@
     >
       <nav-menu-link
         title="Dashboard"
-        :to="{ name: 'dashboard' }"
+        :to="{ name: '' }"
         :icon="icons.mdiHomeOutline"
-      ></nav-menu-link>
-      <nav-menu-link
-        title="Account Settings"
-        :to="{ name: 'pages-account-settings'}"
-        :icon="icons.mdiAccountCogOutline"
-      ></nav-menu-link>
-      <nav-menu-group
-        title="Pages"
-        :icon="icons.mdiFileOutline"
-      >
-        <nav-menu-link
-          title="Login"
-          :to="{ name: 'Login' }"
-          target="_blank"
-        ></nav-menu-link>
-        <nav-menu-link
-          title="Register"
-          :to="{ name: 'Register' }"
-          target="_blank"
-        ></nav-menu-link>
-        <nav-menu-link
-          title="Error"
-          :to="{ name: 'error-404' }"
-          target="_blank"
-        ></nav-menu-link>
-      </nav-menu-group>
-      <nav-menu-section-title title="USER INTERFACE"></nav-menu-section-title>
-      <nav-menu-link
-        title="Typography"
-        :to="{ name: 'typography' }"
-        :icon="icons.mdiAlphaTBoxOutline"
-      ></nav-menu-link>
-      <nav-menu-link
-        title="Icons"
-        :to="{ name: 'icons' }"
-        :icon="icons.mdiEyeOutline"
-      ></nav-menu-link>
-      <nav-menu-link
-        title="Cards"
-        :to="{ name: 'cards' }"
-        :icon="icons.mdiCreditCardOutline"
-      ></nav-menu-link>
-      <nav-menu-link
-        title="Tables"
-        :to="{ name: 'simple-table' }"
-        :icon="icons.mdiTable"
-      ></nav-menu-link>
-      <nav-menu-link
-        title="Form Layouts"
-        :to="{ name: 'form-layouts' }"
-        :icon="icons.mdiFormSelect"
       ></nav-menu-link>
     </v-list>
     <a
@@ -125,12 +74,10 @@ import {
   mdiAccountCogOutline,
 } from '@mdi/js';
 // Components
-import { NavMenuSectionTitle, NavMenuGroup, NavMenuLink } from './components';
+import { NavMenuLink } from './components';
 
 export default {
   components: {
-    NavMenuSectionTitle,
-    NavMenuGroup,
     NavMenuLink,
   },
   props: {

@@ -14,7 +14,7 @@
 import { mdiWeatherNight, mdiWeatherSunny } from '@mdi/js';
 
 export default {
-  setup: () => ({
+  data: () => ({
     icons: {
       mdiWeatherNight,
       mdiWeatherSunny,

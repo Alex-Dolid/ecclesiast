@@ -1,3 +1,5 @@
+// Layouts
+import { LayoutContent } from '@/layouts';
 // Pages
 import App from '@/App.vue';
 // Constants
@@ -6,6 +8,7 @@ import { PAGES } from '@/router/constants';
 export default [
   {
     path: '/',
+    component: LayoutContent,
     children: [
       {
         ...PAGES.HOME,

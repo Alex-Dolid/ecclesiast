@@ -6,14 +6,14 @@
 
 <script>
 // Layouts
-import { LayoutBlank, LayoutContent } from '@/layouts';
+import { LayoutBlank, LayoutDefault } from '@/layouts';
 
 export default {
   name: 'App',
 
   components: {
     LayoutBlank,
-    LayoutContent,
+    LayoutDefault,
   },
 
   data: () => ({
@@ -25,9 +25,9 @@ export default {
       // Handles initial route
       if (this.$route.name === null) return null;
 
-      if (this.$route.meta.layout === 'blank') return 'layout-blank';
+      if (this.$route.meta.layout === 'blank') return 'LayoutBlank';
 
-      return 'layout-content';
+      return 'LayoutDefault';
     },
   },
 };

@@ -1,3 +1,3 @@
-const { VuetifyPresetService } = require('@vuetify/cli-plugin-utils')
+const { VuetifyPresetService } = require('@vuetify/cli-plugin-utils');
 
-module.exports = api => VuetifyPresetService(api, 'master')
+module.exports = (api) => VuetifyPresetService(api, 'master');

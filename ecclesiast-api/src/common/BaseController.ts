@@ -1,7 +1,8 @@
 // Types
-import { IBaseModel } from "./BaseModel";
+import { Document } from "mongoose";
+import BaseModel, { IBaseModel } from "./BaseModel";
 
-interface IBaseController<T> {
+interface IBaseController<T> extends IBaseModel<T>{
   create: (payload: T) => Promise<T>;
   getAll: () => Promise<T[]>;
   getById: (_id: string) => Promise<T>;
@@ -9,8 +10,8 @@ interface IBaseController<T> {
   removeById: (_id: string) => Promise<T>;
 }
 
-export default class BaseController<T, M extends IBaseModel<T>> implements IBaseController<T> {
-  private readonly model: M;
+export default class BaseController<T, Doc extends Document & T, M extends BaseModel<T, Doc>> implements IBaseController<T> {
+  protected readonly model: M;
 
   constructor(params: { model: M }) {
     this.model = params.model;

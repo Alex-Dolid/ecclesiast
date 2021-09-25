@@ -1,8 +1,6 @@
 // Core
 import * as mongoose from "mongoose";
-import { Document, Schema } from "mongoose";
-// Odm
-import createOdm from "./createOdm";
+import { Document } from "mongoose";
 // Utils
 import { NotFoundError, ServerError } from "../utils";
 
@@ -14,13 +12,13 @@ export interface IBaseModel<T> {
   removeById: (_id: string) => Promise<T>;
 }
 
-export default class BaseModel<T extends Document & { _id?: string }> implements IBaseModel<T> {
-  private readonly odm: mongoose.Model<T>;
+export default class BaseModel<T, Doc extends Document & { _id?: string } & T> implements IBaseModel<T> {
+  protected readonly odm: mongoose.Model<Doc>;
 
-  constructor(params: { odm: { name: string; schema?: Schema; collection?: string; skipInit?: boolean } }) {
+  constructor(params: { odm: mongoose.Model<Doc> }) {
     const { odm } = params;
-    const { name, schema, collection, skipInit } = odm;
-    this.odm = createOdm<T>(name, schema, collection, skipInit);
+
+    this.odm = odm;
   }
 
   async create(payload: T): Promise<T> {

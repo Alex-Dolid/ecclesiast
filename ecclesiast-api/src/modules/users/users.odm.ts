@@ -2,6 +2,8 @@
 import * as mongoose from "mongoose";
 import { Document, Schema } from "mongoose";
 import { createOdm } from "../../common";
+// Constants
+import { COLLECTION_NAME } from "./constants";
 
 export type User = {
   _id?: string,
@@ -26,5 +28,4 @@ export const UserSchema: Schema = new mongoose.Schema(
   { timestamps: { createdAt: "created", updatedAt: "modified" } }
 );
 
-export const collectionName = "users";
-export const UsersOdm = createOdm<UserDoc>(collectionName, UserSchema);
+export const UsersOdm = createOdm<UserDoc>(COLLECTION_NAME, UserSchema);

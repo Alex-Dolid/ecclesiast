@@ -4,8 +4,11 @@ import { NextFunction, Request, Response } from "express";
 import dg from "debug";
 // Controllers
 import { UsersController } from "../users.controller";
+// Constants
+import { ROUTER } from "../../../constants";
+import { COLLECTION_NAME } from "../constants";
 
-const debug = dg("router:users");
+const debug = dg(`${ ROUTER.LOG_TITLE }:${ COLLECTION_NAME }`);
 
 export const get = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   debug(`${ req.method } - ${ req.originalUrl }`);

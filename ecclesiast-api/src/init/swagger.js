@@ -10,5 +10,5 @@ module.exports = {
       url: "http://localhost:3030"
     }
   ],
-  apis: [ "src/bus/**/sw.yaml", "src/bus/**/index.**" ]
+  apis: [ "src/modules/**/sw.yaml", "src/modules/**/index.**" ]
 };

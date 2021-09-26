@@ -30,6 +30,26 @@
           }
         }
       }
+    },
+    "/users": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get all users",
+        "responses": {
+          "200": {
+            "description": "Get all users data success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Users"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -58,6 +78,20 @@
               "type": "string"
             },
             "src": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "Users": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string"
+            },
+            "email": {
               "type": "string"
             }
           }

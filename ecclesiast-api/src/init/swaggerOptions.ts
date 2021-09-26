@@ -12,7 +12,7 @@ const swaggerOptions = {
   //     in: "cookie"
   //   }
   // },
-  apis: [ "src/bus/**/sw.yaml", "src/bus/**/index.**" ]
+  apis: [ "src/modules/**/sw.yaml", "src/modules/**/index.**" ]
 };
 
 export default swaggerOptions;

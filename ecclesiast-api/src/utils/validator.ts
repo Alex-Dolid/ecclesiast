@@ -4,20 +4,9 @@ import { NextFunction, Request, Response } from "express";
 import Ajv, { ValidateFunction, JSONSchemaType } from "ajv";
 // Utils
 import { ValidationError } from "./errors";
-// Types
-import { LocalesSchemasType } from "../modules/locales";
-import { BiblesSchemasType } from "../modules/bibles";
-import { BiblesVersesSchemesType } from "../modules/biblesVerses";
-import { BiblesChaptersSchemasType } from "../modules/biblesChapters";
-import { BiblesBooksSchemasType } from "../modules/biblesBooks";
 
-export const validator = (
-  schema: JSONSchemaType<object>
-    | LocalesSchemasType
-    | BiblesSchemasType
-    | BiblesVersesSchemesType
-    | BiblesChaptersSchemasType
-    | BiblesBooksSchemasType
+export const validator = <T, SchemasType extends JSONSchemaType<T>>(
+  schema: SchemasType
 ) => {
   return (req: Request, res: Response, next: NextFunction): void => {
     const ajv = new Ajv({ allErrors: true });

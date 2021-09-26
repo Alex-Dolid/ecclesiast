@@ -1,0 +1,28 @@
+components:
+  schemas:
+    AccessRole:
+      type: object
+      properties:
+        _id:
+          type: string
+        name:
+          type: string
+      example:
+        _id: hash
+        name: admin
+  requestBodies:
+    AccessRoleCreate:
+      description: Create new access role body
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AccessRole'
+  parameters:
+    ID:
+      name: _id
+      in: path
+      description: id of access role
+      required: true
+      schema:
+        type: string

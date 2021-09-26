@@ -10,7 +10,15 @@ import { errorLogger, logger, NotFoundError, notFoundLogger, validationLogger } 
 import { swaggerOptions } from "./init";
 import config from "./config";
 // Routes
-import { locales, bibles, biblesBooks, biblesChapters, biblesVerses, users } from "./routers";
+import {
+  locales,
+  bibles,
+  biblesBooks,
+  biblesChapters,
+  biblesVerses,
+  users,
+  accessRoles
+} from "./routers";
 // Types
 import { IErrorHandler } from "./types";
 
@@ -40,6 +48,7 @@ app.use("/bibles-books", biblesBooks);
 app.use("/bibles-chapters", biblesChapters);
 app.use("/bibles-verses", biblesVerses);
 app.use("/users", users);
+app.use("/access-roles", accessRoles);
 
 const swaggerDocs = swaggerJsdoc(swaggerOptions);
 

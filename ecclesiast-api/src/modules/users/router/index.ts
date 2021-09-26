@@ -9,8 +9,7 @@ import { commonSchema, createSchema } from "../schemas";
 // Constants
 import { LIMIT_REQUEST } from "../../../constants";
 // Types
-import { UsersSchemas } from "../schemas/types";
-import { User } from "../odm";
+import { UsersSchemas, UserS } from "../schemas/types";
 
 const router = express.Router();
 
@@ -52,7 +51,7 @@ router.get("/", get);
  *            schema:
  *               $ref: '#/components/schemas/User'
  */
-router.post("/", [ validator<User, UsersSchemas>(createSchema) ], post);
+router.post("/", [ validator<UserS, UsersSchemas>(createSchema) ], post);
 
 
 /**
@@ -93,7 +92,7 @@ router.get("/:_id", getById);
  *            schema:
  *               $ref: '#/components/schemas/User'
  */
-router.put("/:_id", [ validator<User, UsersSchemas>(commonSchema) ], updateById);
+router.put("/:_id", [ validator<UserS, UsersSchemas>(commonSchema) ], updateById);
 
 /**
  * @swagger

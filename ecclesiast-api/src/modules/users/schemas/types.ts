@@ -2,5 +2,6 @@
 import { JSONSchemaType } from "ajv";
 import { User } from "../odm";
 
-export type UsersCommonScheme = JSONSchemaType<User>;
+export type UserS = User & { accessRole: string };
+export type UsersCommonScheme = JSONSchemaType<UserS>;
 export type UsersSchemas = UsersCommonScheme;

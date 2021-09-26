@@ -16,6 +16,10 @@ export const common: UsersCommonScheme = {
       type: "string",
       minLength: 7
     },
+    accessRole: {
+      type: "string",
+      minLength: 10
+    },
     password: {
       type: "string",
       minLength: 8

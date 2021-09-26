@@ -9,6 +9,8 @@ components:
           type: string
         email:
           type: string
+        accessRole:
+          type: string
         password:
           type: string
         token:
@@ -17,6 +19,7 @@ components:
         _id: hash
         nickname: admin
         email: admin@admin.com
+        accessRole: admin
         password: password
         token: tokenHash
   requestBodies:

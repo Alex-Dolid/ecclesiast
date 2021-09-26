@@ -54,4 +54,4 @@ const BibleSchema: Schema = new mongoose.Schema(
   { timestamps: { createdAt: "created", updatedAt: "modified" } }
 );
 
-export const BiblesOdm = mongoose.model<BibleDocType>("bibles", BibleSchema);
+export const Odm = mongoose.model<BibleDocType>("bibles", BibleSchema);

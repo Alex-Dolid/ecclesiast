@@ -1,7 +1,7 @@
 // Controllers
-import { BiblesChaptersModel, IBiblesChaptersModel } from "./biblesChapters.model";
+import { Model, IBiblesChaptersModel } from "./model";
 // Types
-import { BibleChapterType } from "./biblesChapters.odm";
+import { BibleChapterType } from "./odm";
 
 interface IBiblesChaptersController {
   create: (payload: BibleChapterType) => Promise<BibleChapterType>;
@@ -15,12 +15,12 @@ type BiblesChaptersControllerModelsType = {
   chapters: IBiblesChaptersModel
 }
 
-export class BiblesChaptersController implements IBiblesChaptersController {
+export class Controller implements IBiblesChaptersController {
   private readonly models: BiblesChaptersControllerModelsType;
 
   constructor() {
     this.models = {
-      chapters: new BiblesChaptersModel()
+      chapters: new Model()
     };
   }
 

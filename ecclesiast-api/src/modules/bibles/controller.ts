@@ -1,7 +1,7 @@
 // Controllers
-import { BiblesModel, IBiblesModel, BiblesQueryParamsForGetAllFuncType } from "./bibles.model";
+import { Model, IBiblesModel, BiblesQueryParamsForGetAllFuncType } from "./model";
 // Types
-import { BibleType } from "./bibles.odm";
+import { BibleType } from "./odm";
 
 interface IBiblesController {
   create: (payload: BibleType) => Promise<BibleType>;
@@ -15,12 +15,12 @@ type BiblesControllerModelsType = {
   bibles: IBiblesModel
 }
 
-export class BiblesController implements IBiblesController {
+export class Controller implements IBiblesController {
   private readonly models: BiblesControllerModelsType;
 
   constructor() {
     this.models = {
-      bibles: new BiblesModel()
+      bibles: new Model()
     };
   }
 

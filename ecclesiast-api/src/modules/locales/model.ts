@@ -1,5 +1,5 @@
 // Odm
-import { LocalesOdm, LocaleDocType, LocaleType } from "./locales.odm";
+import { Odm, LocaleDocType, LocaleType } from "./odm";
 // Utils
 import { NotFoundError, ServerError } from "../../utils";
 
@@ -11,10 +11,10 @@ export interface ILocalesModel {
   removeById: (_id: string) => Promise<LocaleDocType>;
 }
 
-export class LocalesModel implements ILocalesModel {
+export class Model implements ILocalesModel {
   async create(payload: LocaleType): Promise<LocaleType> {
     try {
-      return await LocalesOdm.create(payload);
+      return await Odm.create(payload);
     } catch (error) {
       throw new ServerError(error.message);
     }
@@ -22,7 +22,7 @@ export class LocalesModel implements ILocalesModel {
 
   async getAll(): Promise<LocaleType[]> {
     try {
-      return await LocalesOdm
+      return await Odm
         .find()
         .sort("-created")
         .select("-__v -created -modified")
@@ -34,7 +34,7 @@ export class LocalesModel implements ILocalesModel {
 
   async getById(_id: string): Promise<LocaleType> {
     try {
-      const data = await LocalesOdm
+      const data = await Odm
         .findOne({ _id })
         .select("-__v")
         .lean();
@@ -51,7 +51,7 @@ export class LocalesModel implements ILocalesModel {
 
   async updateById(_id: string, payload: Partial<LocaleType>): Promise<LocaleDocType> {
     try {
-      const data = await LocalesOdm.findOneAndUpdate({ _id }, payload, {
+      const data = await Odm.findOneAndUpdate({ _id }, payload, {
         new: true
       });
 
@@ -67,7 +67,7 @@ export class LocalesModel implements ILocalesModel {
 
   async removeById(_id: string): Promise<LocaleDocType> {
     try {
-      const data = await LocalesOdm.findOneAndDelete({ _id });
+      const data = await Odm.findOneAndDelete({ _id });
 
       if (!data) {
         throw new NotFoundError(`can not find document with id ${ _id }`);

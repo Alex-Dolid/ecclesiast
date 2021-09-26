@@ -1,3 +1,3 @@
 export { biblesVersesRouter } from "./router";
-export { BiblesVersesOdm, BibleVerseType } from "./biblesVerses.odm";
+export { Odm as BiblesVersesOdm, BibleVerseType } from "./odm";
 export { BiblesVersesSchemesType } from "./schemas/types";

@@ -32,4 +32,4 @@ const LocaleSchema: Schema = new Schema(
   { timestamps: { createdAt: "created", updatedAt: "modified" } }
 );
 
-export const LocalesOdm = mongoose.model<LocaleDocType>("locales", LocaleSchema);
+export const Odm = mongoose.model<LocaleDocType>("locales", LocaleSchema);

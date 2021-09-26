@@ -1,3 +1,3 @@
 export { biblesChaptersRouter } from "./router";
-export { BiblesChaptersOdm, BibleChapterType } from "./biblesChapters.odm";
+export { Odm as BiblesChaptersOdm, BibleChapterType } from "./odm";
 export { BiblesChaptersSchemasType } from "./schemas/types";

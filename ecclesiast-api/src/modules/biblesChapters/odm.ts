@@ -21,4 +21,4 @@ const BibleChaptersSchema: Schema = new mongoose.Schema(
   { timestamps: { createdAt: "created", updatedAt: "modified" } }
 );
 
-export const BiblesChaptersOdm = mongoose.model<BibleChaptersDocType>("bibles-chapters", BibleChaptersSchema);
+export const Odm = mongoose.model<BibleChaptersDocType>("bibles-chapters", BibleChaptersSchema);

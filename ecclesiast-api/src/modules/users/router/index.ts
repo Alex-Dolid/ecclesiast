@@ -10,7 +10,7 @@ import { commonSchema, createSchema } from "../schemas";
 import { LIMIT_REQUEST } from "../../../constants";
 // Types
 import { UsersSchemas } from "../schemas/types";
-import { User } from "../users.odm";
+import { User } from "../odm";
 
 const router = express.Router();
 

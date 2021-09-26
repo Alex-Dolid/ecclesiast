@@ -1,6 +1,6 @@
 // Types
 import { JSONSchemaType } from "ajv";
-import { BibleType } from "../../bibles.odm";
+import { BibleType } from "../../odm";
 
 export type BibleSType = BibleType & { locale: string, verses: string[] };
 export type BiblesCommonSchemeType = JSONSchemaType<BibleSType>;

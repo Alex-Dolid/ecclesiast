@@ -9,7 +9,7 @@ import { authenticate, limiter, validator } from "../../../utils";
 import { commonSchema, createSchema } from "../schemas";
 // types
 import { BiblesChaptersSchemasType } from "../schemas/types";
-import { BibleChapterType } from "../biblesChapters.odm";
+import { BibleChapterType } from "../odm";
 
 const router = express.Router();
 

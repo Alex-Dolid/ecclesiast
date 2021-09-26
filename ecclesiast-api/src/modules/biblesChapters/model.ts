@@ -1,5 +1,5 @@
 // Odm
-import { BiblesChaptersOdm, BibleChapterType } from "./biblesChapters.odm";
+import { Odm, BibleChapterType } from "./odm";
 // Utils
 import { NotFoundError, ServerError } from "../../utils";
 
@@ -11,10 +11,10 @@ export interface IBiblesChaptersModel {
   removeById: (_id: string) => Promise<BibleChapterType>;
 }
 
-export class BiblesChaptersModel implements IBiblesChaptersModel {
+export class Model implements IBiblesChaptersModel {
   async create(payload: BibleChapterType): Promise<BibleChapterType> {
     try {
-      return await BiblesChaptersOdm.create(payload);
+      return await Odm.create(payload);
     } catch (error) {
       throw new ServerError(error.message);
     }
@@ -22,7 +22,7 @@ export class BiblesChaptersModel implements IBiblesChaptersModel {
 
   async getAll(): Promise<BibleChapterType[]> {
     try {
-      return await BiblesChaptersOdm
+      return await Odm
         .find()
         .sort("-created")
         .select("-__v -created -modified")
@@ -35,7 +35,7 @@ export class BiblesChaptersModel implements IBiblesChaptersModel {
 
   async getById(_id: string): Promise<BibleChapterType> {
     try {
-      const data = await BiblesChaptersOdm
+      const data = await Odm
         .findOne({ _id })
         .select("-__v")
         .lean();
@@ -52,7 +52,7 @@ export class BiblesChaptersModel implements IBiblesChaptersModel {
 
   async updateById(_id: string, payload: Partial<BibleChapterType>): Promise<BibleChapterType> {
     try {
-      const data = await BiblesChaptersOdm.findOneAndUpdate({ _id }, payload, {
+      const data = await Odm.findOneAndUpdate({ _id }, payload, {
         new: true
       });
 
@@ -68,7 +68,7 @@ export class BiblesChaptersModel implements IBiblesChaptersModel {
 
   async removeById(_id: string): Promise<BibleChapterType> {
     try {
-      const data = await BiblesChaptersOdm.findOneAndDelete({ _id });
+      const data = await Odm.findOneAndDelete({ _id });
 
       if (!data) {
         throw new NotFoundError(`can not find document with id ${ _id }`);

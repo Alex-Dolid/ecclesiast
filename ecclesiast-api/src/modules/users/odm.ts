@@ -38,4 +38,4 @@ export const UserSchema: Schema = new mongoose.Schema(
   { timestamps: { createdAt: "created", updatedAt: "modified" } }
 );
 
-export const UsersOdm = createOdm<UserDoc>(COLLECTION_NAME, UserSchema);
+export const Odm = createOdm<UserDoc>(COLLECTION_NAME, UserSchema);

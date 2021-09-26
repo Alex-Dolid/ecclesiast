@@ -1,5 +1,5 @@
 // Odm
-import { BiblesVersesOdm, BibleVerseType } from "./biblesVerses.odm";
+import { Odm, BibleVerseType } from "./odm";
 // Utils
 import { NotFoundError, ServerError } from "../../utils";
 
@@ -17,10 +17,10 @@ export interface IBiblesVersesModel {
   getByQuery: (queryParams: BiblesVersesQueryParamsForGetByQueryFuncType) => Promise<BibleVerseType[]>;
 }
 
-export class BiblesVersesModel implements IBiblesVersesModel {
+export class Model implements IBiblesVersesModel {
   async create(payload: BibleVerseType): Promise<BibleVerseType> {
     try {
-      return await BiblesVersesOdm.create(payload);
+      return await Odm.create(payload);
     } catch (error) {
       throw new ServerError(error.message);
     }
@@ -28,7 +28,7 @@ export class BiblesVersesModel implements IBiblesVersesModel {
 
   async getAll(): Promise<BibleVerseType[]> {
     try {
-      return await BiblesVersesOdm
+      return await Odm
         .find()
         .sort("-created")
         .select("-__v -created -modified")
@@ -50,7 +50,7 @@ export class BiblesVersesModel implements IBiblesVersesModel {
 
   async getById(_id: string): Promise<BibleVerseType> {
     try {
-      const data = await BiblesVersesOdm
+      const data = await Odm
         .findOne({ _id })
         .select("-__v")
         .populate("locale", "-created -modified -__v")
@@ -77,7 +77,7 @@ export class BiblesVersesModel implements IBiblesVersesModel {
 
   async updateById(_id: string, payload: Partial<BibleVerseType>): Promise<BibleVerseType> {
     try {
-      const data = await BiblesVersesOdm.findOneAndUpdate({ _id }, payload, {
+      const data = await Odm.findOneAndUpdate({ _id }, payload, {
         new: true
       });
 
@@ -93,7 +93,7 @@ export class BiblesVersesModel implements IBiblesVersesModel {
 
   async removeById(_id: string): Promise<BibleVerseType> {
     try {
-      const data = await BiblesVersesOdm.findOneAndDelete({ _id });
+      const data = await Odm.findOneAndDelete({ _id });
 
       if (!data) {
         throw new NotFoundError(`can not find document with id ${ _id }`);
@@ -108,7 +108,7 @@ export class BiblesVersesModel implements IBiblesVersesModel {
   async getByQuery(queryParams: BiblesVersesQueryParamsForGetByQueryFuncType): Promise<BibleVerseType[]> {
     try {
       const textRegExp = new RegExp(queryParams.text, "ig");
-      const data = await BiblesVersesOdm
+      const data = await Odm
         .find({ ...queryParams, text: textRegExp })
         .select("-__v -created -modified")
         .populate("locale", "-created -modified -__v")

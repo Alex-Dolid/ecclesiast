@@ -1,5 +1,5 @@
 // Odm
-import { BiblesOdm, BibleType } from "./bibles.odm";
+import { Odm, BibleType } from "./odm";
 // Utils
 import { NotFoundError, ServerError } from "../../utils";
 
@@ -15,10 +15,10 @@ export interface IBiblesModel {
   removeById: (_id: string) => Promise<BibleType>;
 }
 
-export class BiblesModel implements IBiblesModel {
+export class Model implements IBiblesModel {
   async create(payload: BibleType): Promise<BibleType> {
     try {
-      return await BiblesOdm.create(payload);
+      return await Odm.create(payload);
     } catch (error) {
       throw new ServerError(error.message);
     }
@@ -26,7 +26,7 @@ export class BiblesModel implements IBiblesModel {
 
   async getAll(queryParams: BiblesQueryParamsForGetAllFuncType): Promise<BibleType[]> {
     try {
-      return await BiblesOdm
+      return await Odm
         .find()
         .sort("-created")
         .select(queryParams.select || "-__v -created -modified")
@@ -47,7 +47,7 @@ export class BiblesModel implements IBiblesModel {
 
   async getById(_id: string): Promise<BibleType> {
     try {
-      const data = await BiblesOdm
+      const data = await Odm
         .findOne({ _id })
         .select("-__v")
         .lean();
@@ -64,7 +64,7 @@ export class BiblesModel implements IBiblesModel {
 
   async updateById(_id: string, payload: Partial<BibleType>): Promise<BibleType> {
     try {
-      const data = await BiblesOdm.findOneAndUpdate({ _id }, payload, {
+      const data = await Odm.findOneAndUpdate({ _id }, payload, {
         new: true
       });
 
@@ -80,7 +80,7 @@ export class BiblesModel implements IBiblesModel {
 
   async removeById(_id: string): Promise<BibleType> {
     try {
-      const data = await BiblesOdm.findOneAndDelete({ _id });
+      const data = await Odm.findOneAndDelete({ _id });
 
       if (!data) {
         throw new NotFoundError(`can not find document with id ${ _id }`);

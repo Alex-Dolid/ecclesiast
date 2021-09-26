@@ -3,7 +3,7 @@ import { NextFunction, Request, Response } from "express";
 // Instruments
 import dg from "debug";
 // Controllers
-import { LocalesController } from "../locales.controller";
+import { Controller } from "../controller";
 
 const debug = dg("router:locales");
 
@@ -11,7 +11,7 @@ export const get = async (req: Request, res: Response, next: NextFunction): Prom
   debug(`${ req.method } - ${ req.originalUrl }`);
 
   try {
-    const controller = new LocalesController();
+    const controller = new Controller();
     const data = await controller.getAll();
 
     res.status(200).json(data);
@@ -25,7 +25,7 @@ export const post = async (req: Request, res: Response, next: NextFunction): Pro
 
   try {
     const payload = req.body;
-    const controller = new LocalesController();
+    const controller = new Controller();
     const data = await controller.create(payload);
 
     res.status(200).json(data);

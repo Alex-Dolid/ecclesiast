@@ -1,8 +1,8 @@
 // Controllers
-import { UsersController } from "../users.controller";
+import { Controller } from "../controller";
 // Common
 import { getCRUDRoutes } from "../../../common";
 // Constants
 import { COLLECTION_NAME } from "../constants";
 
-export const { get, post, getById, updateById, removeById } = getCRUDRoutes(UsersController, COLLECTION_NAME);
+export const { get, post, getById, updateById, removeById } = getCRUDRoutes(Controller, COLLECTION_NAME);

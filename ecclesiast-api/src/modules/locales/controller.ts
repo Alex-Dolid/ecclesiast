@@ -1,18 +1,18 @@
 // Models
-import { LocalesModel, ILocalesModel } from "./locales.model";
+import { Model, ILocalesModel } from "./model";
 // Odm
-import { LocaleDocType, LocaleType } from "./locales.odm";
+import { LocaleDocType, LocaleType } from "./odm";
 
 type LocalesControllerModelsType = {
   locales: ILocalesModel
 }
 
-export class LocalesController implements ILocalesModel {
+export class Controller implements ILocalesModel {
   private readonly models: LocalesControllerModelsType;
 
   constructor() {
     this.models = {
-      locales: new LocalesModel()
+      locales: new Model()
     };
   }
 

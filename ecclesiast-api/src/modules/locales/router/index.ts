@@ -8,7 +8,7 @@ import { authenticate, limiter, validator } from "../../../utils";
 // Schemas
 import { commonSchema, createSchema } from "../schemas";
 // Types
-import { LocaleType } from "../locales.odm";
+import { LocaleType } from "../odm";
 import { LocalesSchemasType } from "../schemas/types";
 
 const router = express.Router();

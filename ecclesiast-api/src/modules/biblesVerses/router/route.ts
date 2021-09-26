@@ -3,7 +3,7 @@ import { NextFunction, Request, Response } from "express";
 // Libs
 import dg from "debug";
 // Controllers
-import { BiblesVersesController } from "../biblesVerses.controller";
+import { Controller } from "../controller";
 // Helpers
 import { isEmptyObj } from "../../../helpers";
 
@@ -13,7 +13,7 @@ export const get = async (req: Request, res: Response, next: NextFunction): Prom
   debug(`${ req.method } - ${ req.originalUrl }`);
 
   try {
-    const controller = new BiblesVersesController();
+    const controller = new Controller();
     const data = !isEmptyObj(req.query) ? await controller.getByQuery({
       ...req.query,
       bibleId: req.query.bibleId?.toString() || "",
@@ -31,7 +31,7 @@ export const post = async (req: Request, res: Response, next: NextFunction): Pro
 
   try {
     const payload = req.body;
-    const controller = new BiblesVersesController();
+    const controller = new Controller();
     const data = await controller.create(payload);
 
     res.status(200).json(data);

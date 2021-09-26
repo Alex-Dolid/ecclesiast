@@ -1,3 +1,3 @@
 export { localesRouter } from "./router";
-export { LocalesOdm, LocaleType } from "./locales.odm";
+export { Odm as LocalesOdm, LocaleType } from "./odm";
 export { LocalesSchemasType } from "./schemas/types";

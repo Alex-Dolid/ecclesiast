@@ -1,3 +1,3 @@
 export { usersRouter } from "./router";
-export { UsersOdm, User } from "./users.odm";
+export { Odm as UsersOdm, User } from "./odm";
 export { UsersSchemas } from "./schemas/types";

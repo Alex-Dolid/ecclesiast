@@ -1,7 +1,7 @@
 // Controllers
-import { BiblesVersesModel, IBiblesVersesModel, BiblesVersesQueryParamsForGetByQueryFuncType } from "./biblesVerses.model";
+import { Model, IBiblesVersesModel, BiblesVersesQueryParamsForGetByQueryFuncType } from "./model";
 // Types
-import { BibleVerseType } from "./biblesVerses.odm";
+import { BibleVerseType } from "./odm";
 
 type BiblesVersesQueryParamsType = BiblesVersesQueryParamsForGetByQueryFuncType & { isTranslate?: boolean }
 
@@ -18,12 +18,12 @@ type BiblesVersesControllerModelsType = {
   verses: IBiblesVersesModel
 }
 
-export class BiblesVersesController implements IBiblesVersesController {
+export class Controller implements IBiblesVersesController {
   private readonly models: BiblesVersesControllerModelsType;
 
   constructor() {
     this.models = {
-      verses: new BiblesVersesModel()
+      verses: new Model()
     };
   }
 

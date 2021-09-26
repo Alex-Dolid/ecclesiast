@@ -8,6 +8,10 @@ export const common: UsersCommonScheme = {
       type: "string",
       nullable: true
     },
+    nickname: {
+      type: "string",
+      minLength: 3
+    },
     email: {
       type: "string",
       minLength: 7
@@ -15,6 +19,10 @@ export const common: UsersCommonScheme = {
     password: {
       type: "string",
       minLength: 8
+    },
+    token: {
+      type: "string",
+      nullable: true
     }
   },
   additionalProperties: false,

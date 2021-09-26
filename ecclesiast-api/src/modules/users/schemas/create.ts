@@ -5,5 +5,5 @@ import { common } from "./common";
 
 export const create: UsersCommonScheme = {
   ...common,
-  required: [ "email", "password" ]
+  required: [ "nickname", "email", "password" ]
 };

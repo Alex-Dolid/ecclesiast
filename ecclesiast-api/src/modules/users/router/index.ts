@@ -20,18 +20,43 @@ const router = express.Router();
  *  get:
  *    tags:
  *      - Users
- *    summary: Get all users
+ *    summary: Get list of all users
  *    responses:
  *      '200':
- *        description: Get all users data success
+ *        description: Success
  *        content:
  *          application/json:
  *            schema:
- *              $ref: '#/components/schemas/Users'
+ *               type: array
+ *               items:
+ *                  $ref: '#/components/schemas/User'
  */
 router.get("/", [ authenticate, limiter(LIMIT_REQUEST.MAX, LIMIT_REQUEST.RESET_IN) ], get);
 router.post("/", [ authenticate, limiter(LIMIT_REQUEST.MAX, LIMIT_REQUEST.RESET_IN), validator<User, UsersSchemas>(createSchema) ], post);
 
+
+/**
+ * @swagger
+ * /users/${_id}:
+ *  get:
+ *    tags:
+ *      - Users
+ *    summary: Get one user by id
+ *    parameters:
+ *      - name: _id
+ *        in: path
+ *        description: id of user
+ *        required: true
+ *        schema:
+ *          type: string
+ *    responses:
+ *      '200':
+ *        description: Success
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/User'
+ */
 router.get("/:_id", [ authenticate, limiter(LIMIT_REQUEST.MAX, LIMIT_REQUEST.RESET_IN) ], getById);
 router.put("/:_id", [ authenticate, limiter(LIMIT_REQUEST.MAX, LIMIT_REQUEST.RESET_IN), validator<User, UsersSchemas>(commonSchema) ], updateById);
 router.delete("/:_id", [ authenticate, limiter(LIMIT_REQUEST.MAX, LIMIT_REQUEST.RESET_IN) ], removeById);

@@ -36,14 +36,48 @@
         "tags": [
           "Users"
         ],
-        "summary": "Get all users",
+        "summary": "Get list of all users",
         "responses": {
           "200": {
-            "description": "Get all users data success",
+            "description": "Success",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Users"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/${_id}": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get one user by id",
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "description": "id of user",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
                 }
               }
             }
@@ -83,18 +117,19 @@
           }
         }
       },
-      "Users": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "_id": {
-              "type": "string"
-            },
-            "email": {
-              "type": "string"
-            }
+      "User": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
           }
+        },
+        "example": {
+          "_id": "dfkn32h4vjh2v42",
+          "email": "admin@admin.com"
         }
       }
     }

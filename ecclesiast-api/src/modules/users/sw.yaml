@@ -9,12 +9,15 @@ components:
           type: string
         email:
           type: string
+        password:
+          type: string
         token:
           type: string
       example:
         _id: hash
         nickname: admin
         email: admin@admin.com
+        password: password
         token: tokenHash
   requestBodies:
     UserCreate:

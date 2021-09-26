@@ -193,6 +193,9 @@
           "email": {
             "type": "string"
           },
+          "password": {
+            "type": "string"
+          },
           "token": {
             "type": "string"
           }
@@ -201,6 +204,7 @@
           "_id": "hash",
           "nickname": "admin",
           "email": "admin@admin.com",
+          "password": "password",
           "token": "tokenHash"
         }
       }

@@ -2,5 +2,6 @@
 import { JSONSchemaType } from "ajv";
 import { BibleBookType } from "../../biblesBooks.odm";
 
-export type BiblesBooksCommonSchemeType = JSONSchemaType<BibleBookType & { locale: string }>;
+export type BibleBookSType = BibleBookType & { locale: string };
+export type BiblesBooksCommonSchemeType = JSONSchemaType<BibleBookSType>;
 export type BiblesBooksSchemasType = BiblesBooksCommonSchemeType;

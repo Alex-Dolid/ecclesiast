@@ -7,6 +7,7 @@ import { getById, removeById, updateById } from "./hash";
 import { authenticate, limiter, validator } from "../../../utils";
 // Schema
 import { commonSchema, createSchema } from "../schemas";
+import { BiblesSchemasType, BibleSType } from "../schemas/types";
 
 const router = express.Router();
 
@@ -26,10 +27,10 @@ const router = express.Router();
  *              $ref: '#/components/schemas/Bibles'
  */
 router.get("/", [ limiter(10, 60 * 1000) ], get);
-router.post("/", [ limiter(10, 60 * 1000), validator(createSchema) ], post);
+router.post("/", [ limiter(10, 60 * 1000), validator<BibleSType, BiblesSchemasType>(createSchema) ], post);
 
 router.get("/:_id", [ authenticate, limiter(10, 60 * 1000) ], getById);
-router.put("/:_id", [ limiter(10, 60 * 1000), validator(commonSchema) ], updateById);
+router.put("/:_id", [ limiter(10, 60 * 1000), validator<BibleSType, BiblesSchemasType>(commonSchema) ], updateById);
 router.delete("/:_id", [ authenticate, limiter(10, 60 * 1000) ], removeById);
 
 export { router as biblesRouter };

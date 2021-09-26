@@ -52,6 +52,27 @@
             }
           }
         }
+      },
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Create user",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/UserCreate"
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/users/${_id}": {
@@ -62,13 +83,56 @@
         "summary": "Get one user by id",
         "parameters": [
           {
-            "name": "_id",
-            "in": "path",
-            "description": "id of user",
-            "required": true,
-            "schema": {
-              "type": "string"
+            "$ref": "#/components/parameters/ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
             }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Update one user",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ID"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/UserCreate"
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Delete one user",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ID"
           }
         ],
         "responses": {
@@ -123,13 +187,45 @@
           "_id": {
             "type": "string"
           },
+          "nickname": {
+            "type": "string"
+          },
           "email": {
+            "type": "string"
+          },
+          "token": {
             "type": "string"
           }
         },
         "example": {
-          "_id": "dfkn32h4vjh2v42",
-          "email": "admin@admin.com"
+          "_id": "hash",
+          "nickname": "admin",
+          "email": "admin@admin.com",
+          "token": "tokenHash"
+        }
+      }
+    },
+    "requestBodies": {
+      "UserCreate": {
+        "description": "Create new user body",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/User"
+            }
+          }
+        }
+      }
+    },
+    "parameters": {
+      "ID": {
+        "name": "_id",
+        "in": "path",
+        "description": "id of user",
+        "required": true,
+        "schema": {
+          "type": "string"
         }
       }
     }

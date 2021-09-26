@@ -14,6 +14,8 @@ import { User } from "../users.odm";
 
 const router = express.Router();
 
+router.use([ authenticate, limiter(LIMIT_REQUEST.MAX, LIMIT_REQUEST.RESET_IN) ]);
+
 /**
  * @swagger
  * /users:
@@ -31,8 +33,26 @@ const router = express.Router();
  *               items:
  *                  $ref: '#/components/schemas/User'
  */
-router.get("/", [ authenticate, limiter(LIMIT_REQUEST.MAX, LIMIT_REQUEST.RESET_IN) ], get);
-router.post("/", [ authenticate, limiter(LIMIT_REQUEST.MAX, LIMIT_REQUEST.RESET_IN), validator<User, UsersSchemas>(createSchema) ], post);
+router.get("/", get);
+
+/**
+ * @swagger
+ * /users:
+ *  post:
+ *    tags:
+ *      - Users
+ *    summary: Create user
+ *    requestBody:
+ *      $ref: '#/components/requestBodies/UserCreate'
+ *    responses:
+ *      '200':
+ *        description: Success
+ *        content:
+ *          application/json:
+ *            schema:
+ *               $ref: '#/components/schemas/User'
+ */
+router.post("/", [ validator<User, UsersSchemas>(createSchema) ], post);
 
 
 /**
@@ -43,12 +63,7 @@ router.post("/", [ authenticate, limiter(LIMIT_REQUEST.MAX, LIMIT_REQUEST.RESET_
  *      - Users
  *    summary: Get one user by id
  *    parameters:
- *      - name: _id
- *        in: path
- *        description: id of user
- *        required: true
- *        schema:
- *          type: string
+ *      - $ref: '#/components/parameters/ID'
  *    responses:
  *      '200':
  *        description: Success
@@ -57,8 +72,46 @@ router.post("/", [ authenticate, limiter(LIMIT_REQUEST.MAX, LIMIT_REQUEST.RESET_
  *            schema:
  *              $ref: '#/components/schemas/User'
  */
-router.get("/:_id", [ authenticate, limiter(LIMIT_REQUEST.MAX, LIMIT_REQUEST.RESET_IN) ], getById);
-router.put("/:_id", [ authenticate, limiter(LIMIT_REQUEST.MAX, LIMIT_REQUEST.RESET_IN), validator<User, UsersSchemas>(commonSchema) ], updateById);
-router.delete("/:_id", [ authenticate, limiter(LIMIT_REQUEST.MAX, LIMIT_REQUEST.RESET_IN) ], removeById);
+router.get("/:_id", getById);
+
+/**
+ * @swagger
+ * /users/${_id}:
+ *  put:
+ *    tags:
+ *      - Users
+ *    summary: Update one user
+ *    parameters:
+ *      - $ref: '#/components/parameters/ID'
+ *    requestBody:
+ *      $ref: '#/components/requestBodies/UserCreate'
+ *    responses:
+ *      '200':
+ *        description: Success
+ *        content:
+ *          application/json:
+ *            schema:
+ *               $ref: '#/components/schemas/User'
+ */
+router.put("/:_id", [ validator<User, UsersSchemas>(commonSchema) ], updateById);
+
+/**
+ * @swagger
+ * /users/${_id}:
+ *  delete:
+ *    tags:
+ *      - Users
+ *    summary: Delete one user
+ *    parameters:
+ *      - $ref: '#/components/parameters/ID'
+ *    responses:
+ *      '200':
+ *        description: Success
+ *        content:
+ *          application/json:
+ *            schema:
+ *               $ref: '#/components/schemas/User'
+ */
+router.delete("/:_id", removeById);
 
 export { router as usersRouter };

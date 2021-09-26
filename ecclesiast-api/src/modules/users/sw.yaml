@@ -5,8 +5,30 @@ components:
       properties:
         _id:
           type: string
+        nickname:
+          type: string
         email:
           type: string
+        token:
+          type: string
       example:
-        _id: dfkn32h4vjh2v42
+        _id: hash
+        nickname: admin
         email: admin@admin.com
+        token: tokenHash
+  requestBodies:
+    UserCreate:
+      description: Create new user body
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/User'
+  parameters:
+    ID:
+      name: _id
+      in: path
+      description: id of user
+      required: true
+      schema:
+        type: string

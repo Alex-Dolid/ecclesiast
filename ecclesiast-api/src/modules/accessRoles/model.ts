@@ -1,4 +1,4 @@
-// Core
+// Common
 import { BaseModel } from "../../common";
 // Odm
 import { AccessRoleDoc, AccessRole, AccessRolesOdm } from "./odm";

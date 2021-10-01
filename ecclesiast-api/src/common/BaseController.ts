@@ -1,8 +1,8 @@
 // Types
 import { Document } from "mongoose";
-import BaseModel, { IBaseModel } from "./BaseModel";
+import BaseModel from "./BaseModel";
 
-interface IBaseController<T> extends IBaseModel<T>{
+interface IBaseController<T> {
   create: (payload: T) => Promise<T>;
   getAll: () => Promise<T[]>;
   getById: (_id: string) => Promise<T>;

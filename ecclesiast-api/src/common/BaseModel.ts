@@ -23,11 +23,11 @@ type Options = {
   populate: PopulateOption,
 };
 export interface IBaseModel<T> {
-  create: (payload: T) => Promise<T>;
+  create: (payload: T) => Promise<void>;
   getAll: (options?: Partial<Options>) => Promise<T[]>;
   getById: (_id: string, options?: Partial<Omit<Options, "sort">>) => Promise<T>;
   updateById: (_id: string, payload: Partial<T>) => Promise<T>;
-  removeById: (_id: string) => Promise<T>;
+  removeById: (_id: string) => Promise<void>;
 }
 
 export default class BaseModel<T, Doc extends Document & { _id?: string } & T> implements IBaseModel<T> {
@@ -39,9 +39,9 @@ export default class BaseModel<T, Doc extends Document & { _id?: string } & T> i
     this.odm = odm;
   }
 
-  async create(payload: T): Promise<T> {
+  async create(payload: T): Promise<void> {
     try {
-      return await this.odm.create(payload);
+      await this.odm.create(payload);
     } catch (error) {
       throw new ServerError(error.message);
     }
@@ -105,7 +105,7 @@ export default class BaseModel<T, Doc extends Document & { _id?: string } & T> i
     }
   }
 
-  async removeById(_id: string): Promise<T> {
+  async removeById(_id: string): Promise<void> {
     try {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -114,8 +114,6 @@ export default class BaseModel<T, Doc extends Document & { _id?: string } & T> i
       if (!data) {
         throw new NotFoundError(`can not find document with id ${ _id }`);
       }
-
-      return data;
     } catch (error) {
       throw new ServerError(error.message);
     }

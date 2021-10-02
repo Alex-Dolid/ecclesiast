@@ -43,14 +43,7 @@
         },
         "responses": {
           "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AccessRole"
-                }
-              }
-            }
+            "description": "Success"
           }
         }
       }
@@ -117,14 +110,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AccessRole"
-                }
-              }
-            }
+            "description": "Success"
           }
         }
       }
@@ -181,19 +167,12 @@
         },
         "responses": {
           "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/User"
-                }
-              }
-            }
+            "description": "Success"
           }
         }
       }
     },
-    "/users/${_id}": {
+    "/users/{_id}": {
       "get": {
         "tags": [
           "Users"
@@ -255,14 +234,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/User"
-                }
-              }
-            }
+            "description": "Success"
           }
         }
       }

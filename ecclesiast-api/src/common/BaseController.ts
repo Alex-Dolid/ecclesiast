@@ -3,11 +3,11 @@ import { Document } from "mongoose";
 import BaseModel from "./BaseModel";
 
 interface IBaseController<T> {
-  create: (payload: T) => Promise<T>;
+  create: (payload: T) => Promise<void>;
   getAll: () => Promise<T[]>;
   getById: (_id: string) => Promise<T>;
   updateById: (_id: string, payload: Partial<T>) => Promise<T>;
-  removeById: (_id: string) => Promise<T>;
+  removeById: (_id: string) => Promise<void>;
 }
 
 export default class BaseController<T, Doc extends Document & T, M extends BaseModel<T, Doc>> implements IBaseController<T> {
@@ -17,7 +17,7 @@ export default class BaseController<T, Doc extends Document & T, M extends BaseM
     this.model = params.model;
   }
 
-  async create(payload: T): Promise<T> {
+  async create(payload: T): Promise<void> {
     return await this.model.create(payload);
   }
 
@@ -33,7 +33,7 @@ export default class BaseController<T, Doc extends Document & T, M extends BaseM
     return await this.model.updateById(_id, payload);
   }
 
-  async removeById(_id: string): Promise<T> {
+  async removeById(_id: string): Promise<void> {
     return await this.model.removeById(_id);
   }
 }

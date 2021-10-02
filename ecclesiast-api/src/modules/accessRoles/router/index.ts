@@ -47,10 +47,6 @@ router.get("/", get);
  *    responses:
  *      '200':
  *        description: Success
- *        content:
- *          application/json:
- *            schema:
- *               $ref: '#/components/schemas/AccessRole'
  */
 router.post("/", [ validator<AccessRole, AccessRolesSchemas>(createSchema) ], post);
 
@@ -107,10 +103,6 @@ router.put("/:_id", [ validator<AccessRole, AccessRolesSchemas>(commonSchema) ],
  *    responses:
  *      '200':
  *        description: Success
- *        content:
- *          application/json:
- *            schema:
- *               $ref: '#/components/schemas/AccessRole'
  */
 router.delete("/:_id", removeById);
 

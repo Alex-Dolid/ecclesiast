@@ -46,17 +46,13 @@ router.get("/", get);
  *    responses:
  *      '200':
  *        description: Success
- *        content:
- *          application/json:
- *            schema:
- *               $ref: '#/components/schemas/User'
  */
 router.post("/", [ validator<UserS, UsersSchemas>(createSchema) ], post);
 
 
 /**
  * @swagger
- * /users/${_id}:
+ * /users/{_id}:
  *  get:
  *    tags:
  *      - Users
@@ -75,7 +71,7 @@ router.get("/:_id", getById);
 
 /**
  * @swagger
- * /users/${_id}:
+ * /users/{_id}:
  *  put:
  *    tags:
  *      - Users
@@ -96,7 +92,7 @@ router.put("/:_id", [ validator<UserS, UsersSchemas>(commonSchema) ], updateById
 
 /**
  * @swagger
- * /users/${_id}:
+ * /users/{_id}:
  *  delete:
  *    tags:
  *      - Users
@@ -106,10 +102,6 @@ router.put("/:_id", [ validator<UserS, UsersSchemas>(commonSchema) ], updateById
  *    responses:
  *      '200':
  *        description: Success
- *        content:
- *          application/json:
- *            schema:
- *               $ref: '#/components/schemas/User'
  */
 router.delete("/:_id", removeById);
 

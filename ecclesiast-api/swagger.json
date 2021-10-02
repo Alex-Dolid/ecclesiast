@@ -325,7 +325,15 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/components/schemas/AccessRole"
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                }
+              },
+              "example": {
+                "name": "admin"
+              }
             }
           }
         }

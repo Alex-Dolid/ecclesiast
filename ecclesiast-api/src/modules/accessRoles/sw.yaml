@@ -17,7 +17,12 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/AccessRole'
+            type: object
+            properties:
+              name:
+                type: string
+            example:
+              name: admin
   parameters:
     ID:
       name: _id

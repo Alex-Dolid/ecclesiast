@@ -25,7 +25,7 @@ type Options = {
 export interface IBaseModel<T> {
   create: (payload: T) => Promise<T>;
   getAll: (options?: Partial<Options>) => Promise<T[]>;
-  getById: (_id: string) => Promise<T>;
+  getById: (_id: string, options?: Partial<Omit<Options, "sort">>) => Promise<T>;
   updateById: (_id: string, payload: Partial<T>) => Promise<T>;
   removeById: (_id: string) => Promise<T>;
 }
@@ -47,83 +47,41 @@ export default class BaseModel<T, Doc extends Document & { _id?: string } & T> i
     }
   }
 
-  async getAll({ sort = {}, select = {}, populate }: Partial<Options> = { sort: { isDefault: 1 }, select: { isDefault: 1 } }): Promise<T[]> {
+  async getAll({
+    sort = {},
+    select = {},
+    populate
+  }: Partial<Options> = { sort: { isDefault: 1 }, select: { isDefault: 1 } }): Promise<T[]> {
     try {
-      const defaultSortRaw = "-created";
-      const defaultSelectRaw = "-__v -created -modified";
-      // eslint-disable-next-line no-confusing-arrow,no-nested-ternary
-      const getSortRaw = (sortObj: MapOption): MapOption => typeof sortObj === "string"
-        ? sortObj : sortObj.isDefault
-          ? defaultSortRaw : { ...sortObj };
-      // eslint-disable-next-line no-confusing-arrow,no-nested-ternary
-      const getSelectRaw = (sortObj: MapOption): MapOption => typeof sortObj === "string"
-        ? sortObj : sortObj.isDefault
-          ? defaultSelectRaw : { ...sortObj };
-      const handlers = {
-        handlePopulateObj: (populateObj: CompositePopulateOption): CompositePopulateOption => ({
-          ...populateObj,
-          sort: populateObj.sort ? getSortRaw(populateObj.sort) : null,
-          select: populateObj.select ? getSelectRaw(populateObj.select) : null,
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          // eslint-disable-next-line no-nested-ternary
-          populate: populateObj.populate
-            ? !Array.isArray(populateObj.populate)
-              ? handlers.handlePopulateObj(populateObj.populate)
-              // eslint-disable-next-line no-use-before-define
-              : handlers.handlePopulateArray(populateObj.populate)
-            : null
-        }),
-        handlePopulateArray: (populateArray: PopulateOptionAsArrayOption): PopulateOptionAsArrayOption => {
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          return populateArray.map((item) => {
-            if (!item || typeof item === "string") {
-              return item;
-            }
-
-            if (Array.isArray(item)) {
-              return handlers.handlePopulateArray(item);
-            }
-
-            if (!Array.isArray(item) && item.path) {
-              return handlers.handlePopulateObj(item as CompositePopulateOption);
-            }
-
-            return getSelectRaw(item as MapOption);
-          });
-        }
-      };
-      // eslint-disable-next-line require-await
-      const withPopulate = async (odm: Query<Doc[], Doc>, populateOption: PopulateOption): Query<Doc[], Doc> => {
-        return odm.populate(
-          !Array.isArray(populateOption)
-            ? handlers.handlePopulateObj(populateOption)
-            : handlers.handlePopulateArray(populateOption)
-        ).lean();
-      };
       const result = this.odm
         .find()
-        .sort(getSortRaw(sort))
-        .select(getSelectRaw(select));
+        .sort(this.getRaw(sort, "sort"))
+        .select(this.getRaw(select, "select"));
 
-      return populate ? await withPopulate(result, populate) : await result.lean();
+      return populate ? await this.withPopulate<T[], Doc>(result, populate) : await result.lean();
     } catch (error) {
       throw new ServerError(error.message);
     }
   }
 
-  async getById(_id: string): Promise<T> {
+  async getById(_id: string, {
+    select = {},
+    populate
+  }: Partial<Omit<Options, "sort">> = { select: { isDefault: 1 } }): Promise<T> {
     try {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      const data = await this.odm.findOne({ _id }).select("-__v");
+      const data = this.odm
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        .findOne({ _id })
+        .select(this.getRaw(select, "select"));
 
-      if (!data) {
+      const result = populate ? await this.withPopulate<T | null, Doc>(data, populate) : await data.lean();
+
+      if (!result) {
         throw new NotFoundError(`can not find document with id ${ _id }`);
       }
 
-      return data;
+      return result as T;
     } catch (error) {
       throw new ServerError(error.message);
     }
@@ -161,5 +119,66 @@ export default class BaseModel<T, Doc extends Document & { _id?: string } & T> i
     } catch (error) {
       throw new ServerError(error.message);
     }
+  }
+
+  private getRaw(option: MapOption, recipient: "sort" | "select"): MapOption {
+    const defaultSortRaw = "-created";
+    const defaultSelectRaw = "-__v -created -modified";
+
+    if (typeof option === "string" || !option.isDefault) {
+      return option;
+    }
+
+    return recipient === "sort" ? defaultSortRaw : defaultSelectRaw;
+  }
+
+  private handlePopulateObj(populateObj: CompositePopulateOption): CompositePopulateOption {
+    return {
+      ...populateObj,
+      sort: populateObj.sort ? this.getRaw(populateObj.sort, "sort") : null,
+      select: populateObj.select ? this.getRaw(populateObj.select, "select") : null,
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      // eslint-disable-next-line no-nested-ternary
+      populate: populateObj.populate
+        ? !Array.isArray(populateObj.populate)
+          ? this.handlePopulateObj(populateObj.populate)
+          // eslint-disable-next-line no-use-before-define
+          : this.handlePopulateArray(populateObj.populate)
+        : null
+    };
+  }
+
+  private handlePopulateArray(populateArray: PopulateOptionAsArrayOption): PopulateOptionAsArrayOption {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    return populateArray.map((item) => {
+      if (!item || typeof item === "string") {
+        return item;
+      }
+
+      if (Array.isArray(item)) {
+        return this.handlePopulateArray(item);
+      }
+
+      if (!Array.isArray(item) && item.path) {
+        return this.handlePopulateObj(item as CompositePopulateOption);
+      }
+
+      return this.getRaw(item as MapOption, "select");
+    });
+  }
+
+  // eslint-disable-next-line require-await
+  private async withPopulate
+  <PT extends T | T[] | null, PDoc extends Doc>(
+    odm: Query<PT, PDoc>,
+    populateOption: PopulateOption
+  ): Promise<Query<PT, PDoc>> {
+    return odm.populate(
+      !Array.isArray(populateOption)
+        ? this.handlePopulateObj(populateOption)
+        : this.handlePopulateArray(populateOption)
+    ).lean();
   }
 }

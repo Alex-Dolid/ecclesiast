@@ -55,7 +55,7 @@
         }
       }
     },
-    "/access-roles/${_id}": {
+    "/access-roles/{_id}": {
       "get": {
         "tags": [
           "AccessRoles"

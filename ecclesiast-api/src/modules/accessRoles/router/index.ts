@@ -57,7 +57,7 @@ router.post("/", [ validator<AccessRole, AccessRolesSchemas>(createSchema) ], po
 
 /**
  * @swagger
- * /access-roles/${_id}:
+ * /access-roles/{_id}:
  *  get:
  *    tags:
  *      - AccessRoles
@@ -76,7 +76,7 @@ router.get("/:_id", getById);
 
 /**
  * @swagger
- * /access-roles/${_id}:
+ * /access-roles/{_id}:
  *  put:
  *    tags:
  *      - AccessRoles
@@ -97,7 +97,7 @@ router.put("/:_id", [ validator<AccessRole, AccessRolesSchemas>(commonSchema) ],
 
 /**
  * @swagger
- * /access-roles/${_id}:
+ * /access-roles/{_id}:
  *  delete:
  *    tags:
  *      - AccessRoles

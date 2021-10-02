@@ -26,7 +26,7 @@ export interface IBaseModel<T> {
   create: (payload: T) => Promise<void>;
   getAll: (options?: Partial<Options>) => Promise<T[]>;
   getById: (_id: string, options?: Partial<Omit<Options, "sort">>) => Promise<T>;
-  updateById: (_id: string, payload: Partial<T>) => Promise<T>;
+  updateById: (_id: string, payload: Partial<T>, options?: Partial<Omit<Options, "sort">>) => Promise<T>;
   removeById: (_id: string) => Promise<void>;
 }
 
@@ -87,19 +87,26 @@ export default class BaseModel<T, Doc extends Document & { _id?: string } & T> i
     }
   }
 
-  async updateById(_id: string, payload: Partial<T>): Promise<T> {
+  async updateById(_id: string, payload: Partial<T>, {
+    select = {},
+    populate
+  }: Partial<Omit<Options, "sort">> = { select: { isDefault: 1 } }): Promise<T> {
     try {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      const data = await this.odm.findOneAndUpdate({ _id }, payload, {
-        new: true
-      });
+      const data = this.odm
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        .findOneAndUpdate({ _id }, payload, {
+          new: true
+        })
+        .select(this.getRaw(select, "select"));
 
-      if (!data) {
+      const result = populate ? await this.withPopulate<T, Doc>(data, populate) : await data.lean();
+
+      if (!result) {
         throw new NotFoundError(`can not find document with id ${ _id }`);
       }
 
-      return data;
+      return result as T;
     } catch (error) {
       throw new ServerError(error.message);
     }

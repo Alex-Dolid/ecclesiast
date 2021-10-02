@@ -126,7 +126,7 @@ export default class BaseModel<T, Doc extends Document & { _id?: string } & T> i
     }
   }
 
-  private getRaw(option: MapOption, recipient: "sort" | "select"): MapOption {
+  protected getRaw(option: MapOption, recipient: "sort" | "select"): MapOption {
     const defaultSortRaw = "-created";
     const defaultSelectRaw = "-__v -created -modified";
 
@@ -137,7 +137,7 @@ export default class BaseModel<T, Doc extends Document & { _id?: string } & T> i
     return recipient === "sort" ? defaultSortRaw : defaultSelectRaw;
   }
 
-  private handlePopulateObj(populateObj: CompositePopulateOption): CompositePopulateOption {
+  protected handlePopulateObj(populateObj: CompositePopulateOption): CompositePopulateOption {
     return {
       ...populateObj,
       sort: populateObj.sort ? this.getRaw(populateObj.sort, "sort") : null,
@@ -154,7 +154,7 @@ export default class BaseModel<T, Doc extends Document & { _id?: string } & T> i
     };
   }
 
-  private handlePopulateArray(populateArray: PopulateOptionAsArrayOption): PopulateOptionAsArrayOption {
+  protected handlePopulateArray(populateArray: PopulateOptionAsArrayOption): PopulateOptionAsArrayOption {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     return populateArray.map((item) => {
@@ -175,7 +175,7 @@ export default class BaseModel<T, Doc extends Document & { _id?: string } & T> i
   }
 
   // eslint-disable-next-line require-await
-  private async withPopulate
+  protected async withPopulate
   <PT extends T | T[] | null, PDoc extends Doc>(
     odm: Query<PT, PDoc>,
     populateOption: PopulateOption

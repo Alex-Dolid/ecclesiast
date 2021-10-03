@@ -19,7 +19,7 @@ router.use([ limiter(LIMIT_REQUEST.MAX, LIMIT_REQUEST.RESET_IN) ]);
 
 /**
  * @swagger
- * /sign-in:
+ * /auth/sign-in:
  *  post:
  *    tags:
  *      - Auth
@@ -34,11 +34,11 @@ router.use([ limiter(LIMIT_REQUEST.MAX, LIMIT_REQUEST.RESET_IN) ]);
  *            schema:
  *               $ref: '#/components/schemas/User'
  */
-router.get("/sign-in", [ validator<SignInPayload, AuthSchemas>(signInSchema) ], signIn);
+router.post("/sign-in", [ validator<SignInPayload, AuthSchemas>(signInSchema) ], signIn);
 
 /**
  * @swagger
- * /sign-up:
+ * /auth/sign-up:
  *  post:
  *    tags:
  *      - Auth
@@ -54,7 +54,7 @@ router.post("/sign-up", [ validator<UserS, UsersSchemas>(createSchema) ], signUp
 
 /**
  * @swagger
- * /refresh:
+ * /auth/refresh:
  *  post:
  *    tags:
  *      - Auth
@@ -69,6 +69,6 @@ router.post("/sign-up", [ validator<UserS, UsersSchemas>(createSchema) ], signUp
  *            schema:
  *              $ref: '#/components/schemas/User'
  */
-router.get("/refresh", [ authenticate, validator<SignInPayload, AuthSchemas>(signInSchema) ], refresh);
+router.post("/refresh", [ authenticate, validator<SignInPayload, AuthSchemas>(signInSchema) ], refresh);
 
 export { router as authRouter };

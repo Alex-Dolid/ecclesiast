@@ -4,7 +4,7 @@ import dg from "debug";
 // Controllers
 import { Controller } from "../controller";
 // Helpers
-import {clearFromSecrets, sendResponse} from "../../../helpers";
+import { clearFromSecrets, sendResponse } from "../../../helpers";
 // Constants
 import { ROUTER } from "../../../constants";
 // Types

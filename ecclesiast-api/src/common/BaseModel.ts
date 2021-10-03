@@ -78,7 +78,7 @@ export default class BaseModel<T, Doc extends Document & { _id?: string } & T> i
       const result = populate ? await this.withPopulate<T | null, Doc>(data, populate) : await data.lean();
 
       if (!result) {
-        throw new NotFoundError(`can not find document with conditions: ${ conditions }`);
+        throw new NotFoundError(`can not find document with conditions: ${ JSON.stringify(conditions) }`);
       }
 
       return result as T;

@@ -17,7 +17,7 @@ import {
   biblesChapters,
   biblesVerses,
   users,
-  accessRoles
+  accessRoles, auth
 } from "./routers";
 // Types
 import { IErrorHandler } from "./types";
@@ -49,6 +49,7 @@ app.use("/bibles-chapters", biblesChapters);
 app.use("/bibles-verses", biblesVerses);
 app.use("/users", users);
 app.use("/access-roles", accessRoles);
+app.use("/auth", auth);
 
 const swaggerDocs = swaggerJsdoc(swaggerOptions);
 

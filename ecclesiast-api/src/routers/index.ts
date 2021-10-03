@@ -5,3 +5,4 @@ export { biblesChaptersRouter as biblesChapters } from "../modules/biblesChapter
 export { biblesVersesRouter as biblesVerses } from "../modules/biblesVerses";
 export { usersRouter as users } from "../modules/users";
 export { accessRolesRouter as accessRoles } from "../modules/accessRoles";
+export { authRouter as auth } from "../modules/auth";

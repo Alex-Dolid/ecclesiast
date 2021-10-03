@@ -2,12 +2,18 @@
   "info": {
     "version": "1.0.0",
     "title": "Ecclesiast API",
-    "description": "ecclesiast-api"
+    "description": "This Api for Ecclesiast projects",
+    "contact": {
+      "name": "Alex Dolid",
+      "email": "admin@admin.com",
+      "url": "web.com"
+    }
   },
   "openapi": "3.0.0",
   "servers": [
     {
-      "url": "http://localhost:3030"
+      "url": "http://localhost:3030",
+      "description": "Local server"
     }
   ],
   "paths": {
@@ -444,6 +450,17 @@
           "type": "string"
         }
       }
+    },
+    "securitySchemes": {
+      "JWT": {
+        "description": "",
+        "type": "apiKey",
+        "name": "Authorization",
+        "in": "header"
+      }
+    },
+    "security": {
+      "bearerAuth": []
     }
   },
   "tags": []

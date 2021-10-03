@@ -18,3 +18,11 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/AuthSignIn'
+  securitySchemes:
+    JWT:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header
+  security:
+    bearerAuth: []

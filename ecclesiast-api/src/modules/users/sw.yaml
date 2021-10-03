@@ -13,15 +13,12 @@ components:
           type: string
         password:
           type: string
-        token:
-          type: string
       example:
         _id: hash
         nickname: admin
         email: admin@admin.com
         accessRole: admin
         password: password
-        token: tokenHash
   requestBodies:
     UserCreate:
       description: Create new user body

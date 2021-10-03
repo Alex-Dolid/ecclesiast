@@ -1,8 +1,12 @@
 // Core
 import { NextFunction, Request, Response } from "express";
 import dg from "debug";
+// Helpers
+import { sendResponse } from "../helpers";
 // Constants
 import { ROUTER } from "../constants";
+// Types
+import { Middleware } from "../types";
 
 type RouteHandler = (req: Request, res: Response, next: NextFunction) => Promise<void>;
 type CRUDRoutes = {
@@ -13,10 +17,9 @@ type CRUDRoutes = {
   removeById: RouteHandler;
 }
 
-const getCRUDRoutes = (Controller: new () => any, collectionName: string): CRUDRoutes => {
+const getCRUDRoutes = (Controller: new () => any, collectionName: string, middlewares?: Middleware | Middleware[]): CRUDRoutes => {
   const debug = dg(`${ ROUTER.LOG_TITLE }:${ collectionName }`);
   const getLog = (req: Request): string => `${ req.method } - ${ req.originalUrl }`;
-  const send = (res: Response, data: unknown) => res.status(200).json(data);
 
   return {
     get: async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -26,7 +29,7 @@ const getCRUDRoutes = (Controller: new () => any, collectionName: string): CRUDR
         const controller = new Controller();
         const data = await controller.getAll();
 
-        send(res, data);
+        sendResponse(res, data, { middlewares });
       } catch (error) {
         next(error);
       }
@@ -40,7 +43,7 @@ const getCRUDRoutes = (Controller: new () => any, collectionName: string): CRUDR
         const controller = new Controller();
         const data = await controller.create(payload);
 
-        send(res, data);
+        sendResponse(res, data, { middlewares });
       } catch (error) {
         next(error);
       }
@@ -54,7 +57,7 @@ const getCRUDRoutes = (Controller: new () => any, collectionName: string): CRUDR
         const controller = new Controller();
         const data = await controller.getById(_id);
 
-        send(res, data);
+        sendResponse(res, data, { middlewares });
       } catch (error) {
         next(error);
       }
@@ -69,7 +72,7 @@ const getCRUDRoutes = (Controller: new () => any, collectionName: string): CRUDR
         const controller = new Controller();
         const data = await controller.updateById(_id, payload);
 
-        send(res, data);
+        sendResponse(res, data, { middlewares });
       } catch (error) {
         next(error);
       }
@@ -83,7 +86,7 @@ const getCRUDRoutes = (Controller: new () => any, collectionName: string): CRUDR
         const controller = new Controller();
         const data = await controller.removeById(_id);
 
-        send(res, data);
+        sendResponse(res, data, { middlewares });
       } catch (error) {
         next(error);
       }

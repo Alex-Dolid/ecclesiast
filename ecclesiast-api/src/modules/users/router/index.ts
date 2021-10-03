@@ -13,7 +13,7 @@ import { UsersSchemas, UserS } from "../schemas/types";
 
 const router = express.Router();
 
-router.use([ authenticate, limiter(LIMIT_REQUEST.MAX, LIMIT_REQUEST.RESET_IN) ]);
+router.use([ limiter(LIMIT_REQUEST.MAX, LIMIT_REQUEST.RESET_IN) ]);
 
 /**
  * @swagger

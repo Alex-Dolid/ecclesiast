@@ -1,6 +1,6 @@
 // Core
 import * as mongoose from "mongoose";
-import { Document, Query } from "mongoose";
+import { Document, FilterQuery, Query } from "mongoose";
 // Utils
 import { NotFoundError, ServerError } from "../utils";
 
@@ -64,7 +64,7 @@ export default class BaseModel<T, Doc extends Document & { _id?: string } & T> i
     }
   }
 
-  async getById(_id: string, {
+  async findOne(conditions: FilterQuery<T>, {
     select = {},
     populate
   }: Partial<Omit<Options, "sort">> = { select: { isDefault: 1 } }): Promise<T> {
@@ -72,19 +72,25 @@ export default class BaseModel<T, Doc extends Document & { _id?: string } & T> i
       const data = this.odm
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        .findOne({ _id })
+        .findOne(conditions)
         .select(this.getRaw(select, "select"));
 
       const result = populate ? await this.withPopulate<T | null, Doc>(data, populate) : await data.lean();
 
       if (!result) {
-        throw new NotFoundError(`can not find document with id ${ _id }`);
+        throw new NotFoundError(`can not find document with conditions: ${ conditions }`);
       }
 
       return result as T;
     } catch (error) {
       throw new ServerError(error.message);
     }
+  }
+
+  async getById(_id: string, options?: Partial<Omit<Options, "sort">>): Promise<T> {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    return await this.findOne({ _id }, options);
   }
 
   async updateById(_id: string, payload: Partial<T>, {

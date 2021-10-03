@@ -115,6 +115,68 @@
         }
       }
     },
+    "/sign-in": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Sign in to the app",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/AuthSignIn"
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sign-up": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Sign up in the app",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/UserCreate"
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/refresh": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Refresh token for user",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/AuthSignIn"
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/bibles": {
       "get": {
         "tags": [
@@ -257,6 +319,21 @@
           "name": "admin"
         }
       },
+      "AuthSignIn": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "email": "admin@admin.com",
+          "password": "password"
+        }
+      },
       "Bibles": {
         "type": "array",
         "items": {
@@ -303,9 +380,6 @@
           },
           "password": {
             "type": "string"
-          },
-          "token": {
-            "type": "string"
           }
         },
         "example": {
@@ -313,8 +387,7 @@
           "nickname": "admin",
           "email": "admin@admin.com",
           "accessRole": "admin",
-          "password": "password",
-          "token": "tokenHash"
+          "password": "password"
         }
       }
     },
@@ -334,6 +407,17 @@
               "example": {
                 "name": "admin"
               }
+            }
+          }
+        }
+      },
+      "AuthSignIn": {
+        "description": "Required Body for sign in and sign up to app",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/AuthSignIn"
             }
           }
         }

@@ -8,12 +8,12 @@ import { AccessRole, AccessRolesOdm } from "../accessRoles";
 import { COLLECTION_NAME } from "./constants";
 
 export type User = {
-  _id?: string,
+  _id: string,
   nickname: string,
   email: string,
   accessRole: AccessRole,
   password: string,
-  token?: string,
+  token?: string | null,
 }
 
 export type UserDoc = Document & User;

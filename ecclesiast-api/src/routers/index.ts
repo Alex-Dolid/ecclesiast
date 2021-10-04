@@ -1,8 +1,19 @@
-export { localesRouter as locales } from "../modules/locales";
-export { biblesRouter as bibles } from "../modules/bibles";
-export { biblesBooksRouter as biblesBooks } from "../modules/biblesBooks";
-export { biblesChaptersRouter as biblesChapters } from "../modules/biblesChapters";
-export { biblesVersesRouter as biblesVerses } from "../modules/biblesVerses";
-export { usersRouter as users } from "../modules/users";
-export { accessRolesRouter as accessRoles } from "../modules/accessRoles";
-export { authRouter as auth } from "../modules/auth";
+import { localesRouter as locales } from "../modules/locales";
+import { biblesRouter as bibles } from "../modules/bibles";
+import { biblesBooksRouter as biblesBooks } from "../modules/biblesBooks";
+import { biblesChaptersRouter as biblesChapters } from "../modules/biblesChapters";
+import { biblesVersesRouter as biblesVerses } from "../modules/biblesVerses";
+import { usersRouter as users } from "../modules/users";
+import { accessRolesRouter as accessRoles } from "../modules/accessRoles";
+import { authRouter as auth } from "../modules/auth";
+
+export const routes = {
+  "/locales": locales,
+  "/bibles": bibles,
+  "/bibles-books": biblesBooks,
+  "/bibles-chapters": biblesChapters,
+  "/bibles-verses": biblesVerses,
+  "/users": users,
+  "/access-roles": accessRoles,
+  "/auth": auth
+};

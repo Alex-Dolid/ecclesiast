@@ -9,16 +9,12 @@ import * as swaggerJsdoc from "swagger-jsdoc";
 import { errorLogger, logger, NotFoundError, notFoundLogger, validationLogger } from "./utils";
 import { swaggerOptions } from "./init";
 import config from "./config";
+// Helpers
+import { sendResponse } from "./helpers";
 // Routes
-import {
-  locales,
-  bibles,
-  biblesBooks,
-  biblesChapters,
-  biblesVerses,
-  users,
-  accessRoles, auth
-} from "./routers";
+import { routes } from "./routers";
+// Constants
+import { Statuses } from "./constants";
 // Types
 import { IErrorHandler } from "./types";
 
@@ -42,21 +38,15 @@ if (process.env.NODE_ENV === "dev") {
 }
 
 // Routers
-app.use("/locales", locales);
-app.use("/bibles", bibles);
-app.use("/bibles-books", biblesBooks);
-app.use("/bibles-chapters", biblesChapters);
-app.use("/bibles-verses", biblesVerses);
-app.use("/users", users);
-app.use("/access-roles", accessRoles);
-app.use("/auth", auth);
+Object.entries(routes).forEach(([ route, router ]) => app.use(route, router));
 
+// Swagger
 const swaggerDocs = swaggerJsdoc(swaggerOptions);
-
 if (config.swagger.access === "true") {
   app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 }
 
+// NotFound Route
 app.use("*", (req, res, next) => {
   const error = new NotFoundError(
     `Can not find right route for method ${ req.method } and path ${ req.originalUrl }`
@@ -66,7 +56,7 @@ app.use("*", (req, res, next) => {
 
 if (process.env.NODE_ENV !== "test") {
   app.use((error: Error & IErrorHandler, req: Request, res: Response, next: NextFunction) => {
-    const { name, message, statusCode } = error;
+    const { name, message, statusCode = Statuses.ServerError } = error;
     const errorMessage = `${ name }: ${ message }`;
 
     switch (error.name) {
@@ -83,8 +73,7 @@ if (process.env.NODE_ENV !== "test") {
         break;
     }
 
-    const status = statusCode || 500;
-    res.status(status).json({ message });
+    sendResponse(res, { type: "error", name: error.name, message }, { statusCode });
   });
 }
 

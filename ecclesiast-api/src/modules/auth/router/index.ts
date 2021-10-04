@@ -19,11 +19,19 @@ router.use([ limiter(LIMIT_REQUEST.MAX, LIMIT_REQUEST.RESET_IN) ]);
 
 /**
  * @swagger
+ * tags:
+ *   name: Auth
+ *   description: APIs to handle auth resources.
+ */
+
+/**
+ * @swagger
  * /auth/sign-in:
  *  post:
  *    tags:
  *      - Auth
  *    summary: Sign in to the app
+ *    security: []
  *    requestBody:
  *      $ref: '#/components/requestBodies/AuthSignIn'
  *    responses:
@@ -43,6 +51,7 @@ router.post("/sign-in", [ validator<SignInPayload, AuthSchemas>(signInSchema) ],
  *    tags:
  *      - Auth
  *    summary: Sign up in the app
+ *    security: []
  *    requestBody:
  *      $ref: '#/components/requestBodies/UserCreate'
  *    responses:

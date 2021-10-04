@@ -13,7 +13,14 @@ import { UsersSchemas, UserS } from "../schemas/types";
 
 const router = express.Router();
 
-router.use([ limiter(LIMIT_REQUEST.MAX, LIMIT_REQUEST.RESET_IN) ]);
+router.use([ authenticate, limiter(LIMIT_REQUEST.MAX, LIMIT_REQUEST.RESET_IN) ]);
+
+/**
+ * @swagger
+ * tags:
+ *   name: Users
+ *   description: APIs to handle users resources.
+ */
 
 /**
  * @swagger

@@ -16,5 +16,20 @@ module.exports = {
       description: "Local server"
     }
   ],
+  components: {
+    securitySchemes: {
+      JWT: {
+        name: "Authorization",
+        description: "This is JWT bearer token API",
+        type: "http",
+        scheme: "bearer",
+        in: "header",
+        bearerFormat: "JWT"
+      }
+    }
+  },
+  security: [{
+    JWT: []
+  }],
   apis: [ "src/modules/**/sw.yaml", "src/modules/**/index.**" ]
 };

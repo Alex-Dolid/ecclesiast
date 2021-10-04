@@ -16,6 +16,165 @@
       "description": "Local server"
     }
   ],
+  "components": {
+    "securitySchemes": {
+      "JWT": {
+        "name": "Authorization",
+        "description": "This is JWT bearer token API",
+        "type": "http",
+        "scheme": "bearer",
+        "in": "header",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "AccessRole": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "_id": "hash",
+          "name": "admin"
+        }
+      },
+      "AuthSignIn": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "email": "admin@admin.com",
+          "password": "password"
+        }
+      },
+      "Bibles": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string"
+            },
+            "author": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "translators": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "edition": {
+              "type": "string"
+            },
+            "src": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "nickname": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "accessRole": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "_id": "hash",
+          "nickname": "admin",
+          "email": "admin@admin.com",
+          "accessRole": "admin",
+          "password": "password"
+        }
+      }
+    },
+    "requestBodies": {
+      "AccessRoleCreate": {
+        "description": "Create new access role body",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                }
+              },
+              "example": {
+                "name": "admin"
+              }
+            }
+          }
+        }
+      },
+      "AuthSignIn": {
+        "description": "Required Body for sign in and sign up to app",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/AuthSignIn"
+            }
+          }
+        }
+      },
+      "UserCreate": {
+        "description": "Create new user body",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/User"
+            }
+          }
+        }
+      }
+    },
+    "parameters": {
+      "ID": {
+        "name": "_id",
+        "in": "path",
+        "description": "id of user",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "JWT": []
+    }
+  ],
   "paths": {
     "/access-roles": {
       "get": {
@@ -127,6 +286,7 @@
           "Auth"
         ],
         "summary": "Sign in to the app",
+        "security": [],
         "requestBody": {
           "$ref": "#/components/requestBodies/AuthSignIn"
         },
@@ -150,6 +310,7 @@
           "Auth"
         ],
         "summary": "Sign up in the app",
+        "security": [],
         "requestBody": {
           "$ref": "#/components/requestBodies/UserCreate"
         },
@@ -308,160 +469,18 @@
       }
     }
   },
-  "components": {
-    "schemas": {
-      "AccessRole": {
-        "type": "object",
-        "properties": {
-          "_id": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          }
-        },
-        "example": {
-          "_id": "hash",
-          "name": "admin"
-        }
-      },
-      "AuthSignIn": {
-        "type": "object",
-        "properties": {
-          "email": {
-            "type": "string"
-          },
-          "password": {
-            "type": "string"
-          }
-        },
-        "example": {
-          "email": "admin@admin.com",
-          "password": "password"
-        }
-      },
-      "Bibles": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "_id": {
-              "type": "string"
-            },
-            "author": {
-              "type": "string"
-            },
-            "name": {
-              "type": "string"
-            },
-            "translators": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            },
-            "edition": {
-              "type": "string"
-            },
-            "src": {
-              "type": "string"
-            }
-          }
-        }
-      },
-      "User": {
-        "type": "object",
-        "properties": {
-          "_id": {
-            "type": "string"
-          },
-          "nickname": {
-            "type": "string"
-          },
-          "email": {
-            "type": "string"
-          },
-          "accessRole": {
-            "type": "string"
-          },
-          "password": {
-            "type": "string"
-          }
-        },
-        "example": {
-          "_id": "hash",
-          "nickname": "admin",
-          "email": "admin@admin.com",
-          "accessRole": "admin",
-          "password": "password"
-        }
-      }
+  "tags": [
+    {
+      "name": "AccessRoles",
+      "description": "APIs to handle access roles resources."
     },
-    "requestBodies": {
-      "AccessRoleCreate": {
-        "description": "Create new access role body",
-        "required": true,
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "type": "string"
-                }
-              },
-              "example": {
-                "name": "admin"
-              }
-            }
-          }
-        }
-      },
-      "AuthSignIn": {
-        "description": "Required Body for sign in and sign up to app",
-        "required": true,
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/AuthSignIn"
-            }
-          }
-        }
-      },
-      "UserCreate": {
-        "description": "Create new user body",
-        "required": true,
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/User"
-            }
-          }
-        }
-      }
+    {
+      "name": "Auth",
+      "description": "APIs to handle auth resources."
     },
-    "parameters": {
-      "ID": {
-        "name": "_id",
-        "in": "path",
-        "description": "id of user",
-        "required": true,
-        "schema": {
-          "type": "string"
-        }
-      }
-    },
-    "securitySchemes": {
-      "JWT": {
-        "description": "",
-        "type": "apiKey",
-        "name": "Authorization",
-        "in": "header"
-      }
-    },
-    "security": {
-      "bearerAuth": []
+    {
+      "name": "Users",
+      "description": "APIs to handle users resources."
     }
-  },
-  "tags": []
+  ]
 }

@@ -18,6 +18,13 @@ router.use([ authenticate, limiter(LIMIT_REQUEST.MAX, LIMIT_REQUEST.RESET_IN) ])
 
 /**
  * @swagger
+ * tags:
+ *   name: AccessRoles
+ *   description: APIs to handle access roles resources.
+ */
+
+/**
+ * @swagger
  * /access-roles:
  *  get:
  *    tags:

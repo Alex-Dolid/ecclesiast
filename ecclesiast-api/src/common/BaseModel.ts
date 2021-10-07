@@ -3,10 +3,19 @@ import * as mongoose from "mongoose";
 import { Document, FilterQuery, Query } from "mongoose";
 // Utils
 import { NotFoundError, ServerError } from "../utils";
+// Constants
+import { RAWS, DOC_VERSION, TIMESTAMPS } from "../constants";
 
-type DefaultSelectKeys = "__v" | "created" | "modified" | "isDefault" | string;
+const IS_DEFAULT_KEY_FLAG = "isDefault";
+const DEFAULT_SORT_SELECT: { [IS_DEFAULT_KEY_FLAG]: 1 } = { [IS_DEFAULT_KEY_FLAG]: 1 };
+
+type DefaultSelectKeys = typeof DOC_VERSION
+  | typeof TIMESTAMPS.CREATED_AT
+  | typeof TIMESTAMPS.UPDATED_AT
+  | typeof IS_DEFAULT_KEY_FLAG
+  | string;
 type MapOption = ({ [key in DefaultSelectKeys]: 0 | 1 }) | string;
-type SimplePopulateOption = [string, string | MapOption | undefined];
+type SimplePopulateOption = [string, (string | MapOption)? ];
 type CompositePopulateOption = {
   path: string,
   sort?: MapOption | null,
@@ -48,8 +57,8 @@ export default class BaseModel<T, Doc extends Document & { _id?: string } & T> i
   }
 
   async getAll({
-    sort = {},
-    select = {},
+    sort = DEFAULT_SORT_SELECT,
+    select = DEFAULT_SORT_SELECT,
     populate
   }: Partial<Options> = { sort: { isDefault: 1 }, select: { isDefault: 1 } }): Promise<T[]> {
     try {
@@ -65,7 +74,7 @@ export default class BaseModel<T, Doc extends Document & { _id?: string } & T> i
   }
 
   async findOne(conditions: FilterQuery<T>, {
-    select = {},
+    select = DEFAULT_SORT_SELECT,
     populate
   }: Partial<Omit<Options, "sort">> = { select: { isDefault: 1 } }): Promise<T> {
     try {
@@ -94,7 +103,7 @@ export default class BaseModel<T, Doc extends Document & { _id?: string } & T> i
   }
 
   async updateById(_id: string, payload: Partial<T>, {
-    select = {},
+    select = DEFAULT_SORT_SELECT,
     populate
   }: Partial<Omit<Options, "sort">> = { select: { isDefault: 1 } }): Promise<T> {
     try {
@@ -133,14 +142,11 @@ export default class BaseModel<T, Doc extends Document & { _id?: string } & T> i
   }
 
   protected getRaw(option: MapOption, recipient: "sort" | "select"): MapOption {
-    const defaultSortRaw = "-created";
-    const defaultSelectRaw = "-__v -created -modified";
-
     if (typeof option === "string" || !option.isDefault) {
       return option;
     }
 
-    return recipient === "sort" ? defaultSortRaw : defaultSelectRaw;
+    return recipient === "sort" ? RAWS.SORT : RAWS.SELECT;
   }
 
   protected handlePopulateObj(populateObj: CompositePopulateOption): CompositePopulateOption {
@@ -163,7 +169,7 @@ export default class BaseModel<T, Doc extends Document & { _id?: string } & T> i
   protected handlePopulateArray(populateArray: PopulateOptionAsArrayOption): PopulateOptionAsArrayOption {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    return populateArray.map((item) => {
+    return populateArray.map((item, i) => {
       if (!item || typeof item === "string") {
         return item;
       }

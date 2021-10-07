@@ -6,6 +6,10 @@ import { BaseModel } from "../../common";
 import { UserDoc, User, Odm } from "./odm";
 // Utils
 import { ServerError } from "../../utils";
+// Constants
+import { RAWS } from "../../constants";
+
+const populate = [{ path: "accessRole", select: RAWS.SELECT }];
 
 export class Model extends BaseModel<User, UserDoc> {
   constructor() {
@@ -14,6 +18,18 @@ export class Model extends BaseModel<User, UserDoc> {
 
   async create(payload: User): Promise<void> {
     await super.create(await this.transformCreateUser(payload));
+  }
+
+  async getAll(): Promise<User[]> {
+    return await super.getAll({ populate });
+  }
+
+  async updateById(_id: string, payload: Partial<User>): Promise<User> {
+    return await super.updateById(_id, payload, { populate });
+  }
+
+  async getById(_id: string): Promise<User> {
+    return await super.getById(_id, { populate });
   }
 
   private async transformCreateUser({ password, ...otherUserData }: User): Promise<User> {

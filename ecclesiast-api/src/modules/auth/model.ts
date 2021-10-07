@@ -12,8 +12,6 @@ export type SignInPayload = Pick<User & { password: string }, "email" | "passwor
 export class Model extends UsersModel {
   async signIn({ email, password }: SignInPayload): Promise<User> {
     try {
-      const token = await createToken();
-
       const user = await this.findOne({ email });
 
       if (!user) {
@@ -25,6 +23,8 @@ export class Model extends UsersModel {
       if (!isValidPassword) {
         throw new ValidationError("Credentials not valid");
       }
+
+      const token = await createToken();
 
       return await this.updateById(user._id, { token });
     } catch (error) {

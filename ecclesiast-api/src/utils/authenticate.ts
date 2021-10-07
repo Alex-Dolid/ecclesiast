@@ -7,12 +7,14 @@ import { JsonWebTokenError } from "jsonwebtoken";
 import { ValidationError } from "./errors";
 // Helpers
 import { generatePrivateKey, getToken } from "../helpers";
+// Constants
+import { Statuses } from "../constants";
 
 export const authenticate = (req: Request, res: Response, next: NextFunction): void => {
   const token = req.headers.authorization && getToken(req.headers.authorization);
 
   if (!token) {
-    throw new ValidationError("token not found", 401);
+    throw new ValidationError("User is unauthorized", Statuses.Unauthorized);
   }
 
   const isRefreshUrl = () => req.url === "/refresh";
@@ -33,7 +35,7 @@ export const authenticate = (req: Request, res: Response, next: NextFunction): v
     generatePrivateKey(_typePrivateKey),
     (error: JsonWebTokenError | null, _decodedAccessToken: any): Response | void => {
       if (error) {
-        throw new ValidationError(error.message, isRefreshUrl() ? 403 : 401);
+        throw new ValidationError(error.message, isRefreshUrl() ? Statuses.Forbidden : Statuses.Unauthorized);
       }
 
       if (isRefreshUrl()) {
@@ -44,7 +46,7 @@ export const authenticate = (req: Request, res: Response, next: NextFunction): v
           generatePrivateKey("refreshToken"),
           (_error: JsonWebTokenError | null): Response | void => {
             if (_error) {
-              return res.status(403).json({ error: true, message: _error.message, result: {} });
+              throw new ValidationError(_error.message, Statuses.Forbidden);
             }
 
             next();

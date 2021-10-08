@@ -3,17 +3,22 @@ import * as express from "express";
 // Routes
 import { get, post, getById, removeById, updateById } from "./route";
 // Utils
-import { authenticate, limiter, validator } from "../../../utils";
+import { authenticate, limiter, validator, authorize } from "../../../utils";
 // Schema
 import { commonSchema, createSchema } from "../schemas";
 // Constants
 import { LIMIT_REQUEST } from "../../../constants";
+import { ROLES } from "../../accessRoles";
 // Types
-import { UsersSchemas, UserS } from "../schemas/types";
+import { UserS, UsersSchemas } from "../schemas/types";
 
 const router = express.Router();
 
-router.use([ authenticate, limiter(LIMIT_REQUEST.MAX, LIMIT_REQUEST.RESET_IN) ]);
+router.use([
+  limiter(LIMIT_REQUEST.MAX, LIMIT_REQUEST.RESET_IN),
+  authenticate,
+  authorize([ ROLES.SUPER_ADMIN, ROLES.ADMIN ])
+]);
 
 /**
  * @swagger

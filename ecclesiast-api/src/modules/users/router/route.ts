@@ -6,6 +6,10 @@ import { getCRUDRoutes } from "../../../common";
 import { clearFromSecrets } from "../../../helpers";
 // Constants
 import { COLLECTION_NAME } from "../constants";
+// Types
+import { User } from "../odm";
+
+const excludedProps = [ "password", "token" ];
 
 export const {
   get,
@@ -13,4 +17,4 @@ export const {
   getById,
   updateById,
   removeById
-} = getCRUDRoutes(Controller, COLLECTION_NAME, clearFromSecrets([ "password", "token" ]));
+} = getCRUDRoutes(Controller, COLLECTION_NAME, clearFromSecrets<User, typeof excludedProps>(excludedProps));

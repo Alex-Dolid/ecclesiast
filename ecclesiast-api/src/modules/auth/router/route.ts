@@ -9,6 +9,7 @@ import { clearFromSecrets, sendResponse } from "../../../helpers";
 import { ROUTER } from "../../../constants";
 // Types
 import { Middleware } from "../../../types";
+import { User } from "../../users";
 
 enum Routes {
   SIGN_IN = "signIn",
@@ -21,6 +22,8 @@ type RouteFn = (req: Request, res: Response, next: NextFunction) => Promise<void
 type RoutesFn = {
   [key in Routes]: RouteFn
 }
+
+const excludedProps = [ "password" ];
 
 const constructRoute = (route: Routes, middlewares?: Middleware | Middleware[]): RouteFn => {
   const debug = dg(`${ ROUTER.LOG_TITLE }:auth`);
@@ -41,5 +44,8 @@ const constructRoute = (route: Routes, middlewares?: Middleware | Middleware[]):
 };
 
 export const { signIn, signOut, signUp, refresh } = Object.values(Routes)
-  .reduce<RoutesFn>((acc, route) => ({ ...acc, [route]: constructRoute(route, clearFromSecrets([ "password" ])) }), {} as RoutesFn);
+  .reduce<RoutesFn>((acc, route) => ({
+    ...acc,
+    [route]: constructRoute(route, clearFromSecrets<User, typeof excludedProps>(excludedProps))
+  }), {} as RoutesFn);
 

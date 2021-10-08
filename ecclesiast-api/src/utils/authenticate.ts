@@ -1,14 +1,14 @@
 // Core
-import { Request, Response, NextFunction } from "express";
+import { NextFunction, Request, Response } from "express";
 // Libs
 import * as jwt from "jsonwebtoken";
 import { JsonWebTokenError } from "jsonwebtoken";
 // Instruments
 import { ValidationError } from "./errors";
 // Helpers
-import { generatePrivateKey, getToken } from "../helpers";
+import { AccessToken, generatePrivateKey, getToken } from "../helpers";
 // Constants
-import { Statuses } from "../constants";
+import { Statuses, Token } from "../constants";
 
 export const authenticate = (req: Request, res: Response, next: NextFunction): void => {
   const token = req.headers.authorization && getToken(req.headers.authorization);
@@ -28,12 +28,14 @@ export const authenticate = (req: Request, res: Response, next: NextFunction): v
   }
 
   const _token = isRefreshUrl() ? refreshToken : token;
-  const _typePrivateKey = isRefreshUrl() ? "refreshToken" : "accessToken";
+  const _typePrivateKey = isRefreshUrl() ? Token.Refresh : Token.Access;
 
   jwt.verify(
     _token,
     generatePrivateKey(_typePrivateKey),
     (error: JsonWebTokenError | null, _decodedAccessToken: any): Response | void => {
+      const decodedAccessToken = _decodedAccessToken as AccessToken;
+
       if (error) {
         throw new ValidationError(error.message, isRefreshUrl() ? Statuses.Forbidden : Statuses.Unauthorized);
       }
@@ -42,8 +44,8 @@ export const authenticate = (req: Request, res: Response, next: NextFunction): v
         next();
       } else {
         jwt.verify(
-          _decodedAccessToken?.refreshToken,
-          generatePrivateKey("refreshToken"),
+          decodedAccessToken.refreshToken,
+          generatePrivateKey(Token.Refresh),
           (_error: JsonWebTokenError | null): Response | void => {
             if (_error) {
               throw new ValidationError(_error.message, Statuses.Forbidden);

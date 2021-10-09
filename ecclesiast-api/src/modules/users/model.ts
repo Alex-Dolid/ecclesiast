@@ -1,7 +1,7 @@
 // Libs
 import * as bcrypt from "bcryptjs";
 // Common
-import { BaseModel } from "../../common";
+import { BaseModel } from "../../core";
 // Odm
 import { UserDoc, User, Odm } from "./odm";
 // Utils

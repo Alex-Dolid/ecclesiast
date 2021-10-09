@@ -1,7 +1,7 @@
 // Controllers
 import { AccessRolesController } from "../controller";
 // Common
-import { getCRUDRoutes } from "../../../common";
+import { getCRUDRoutes } from "../../../core";
 // Constants
 import { COLLECTION_NAME } from "../constants";
 

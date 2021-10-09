@@ -6,7 +6,7 @@ import { JsonWebTokenError } from "jsonwebtoken";
 // Models
 import { UsersModel } from "../modules/users";
 // Utils
-import { ValidationError } from "./errors";
+import { ValidationError } from "../utils";
 // Helpers
 import { AccessToken, generatePrivateKey, getToken } from "../helpers";
 // Constants

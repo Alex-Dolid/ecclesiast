@@ -1,5 +1,5 @@
 // Core
-import { BaseController } from "../../common";
+import { BaseController } from "../../core";
 // Models
 import { AccessRolesModel } from "./model";
 // Odm

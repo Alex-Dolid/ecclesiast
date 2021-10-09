@@ -4,7 +4,7 @@ import * as express from "express";
 import { get, post } from "./route";
 import { getById, removeById, updateById } from "./hash";
 // Utils
-import { authenticate, limiter, validator } from "../../../utils";
+import { authenticate, limiter, validator } from "../../../middlewares";
 // Schema
 import { commonSchema, createSchema } from "../schemas";
 import { BibleBookSType, BiblesBooksSchemasType } from "../schemas/types";

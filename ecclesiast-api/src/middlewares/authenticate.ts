@@ -4,7 +4,7 @@ import { NextFunction, Request, Response } from "express";
 import * as jwt from "jsonwebtoken";
 import { JsonWebTokenError } from "jsonwebtoken";
 // Instruments
-import { ValidationError } from "./errors";
+import { ValidationError } from "../utils";
 // Helpers
 import { AccessToken, generatePrivateKey, getToken } from "../helpers";
 // Constants

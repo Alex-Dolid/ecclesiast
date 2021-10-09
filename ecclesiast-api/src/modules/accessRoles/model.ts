@@ -1,5 +1,5 @@
 // Common
-import { BaseModel } from "../../common";
+import { BaseModel } from "../../core";
 // Odm
 import { AccessRoleDoc, AccessRole, AccessRolesOdm } from "./odm";
 

@@ -3,7 +3,7 @@ import * as express from "express";
 // Routes
 import { signIn, signUp, refresh } from "./route";
 // Utils
-import { authenticate, limiter, validator } from "../../../utils";
+import { authenticate, limiter, validator } from "../../../middlewares";
 // Schema
 import { signInSchema } from "../schemas";
 // Constants

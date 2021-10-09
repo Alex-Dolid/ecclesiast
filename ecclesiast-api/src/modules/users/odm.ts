@@ -1,7 +1,7 @@
 // Core
 import * as mongoose from "mongoose";
 import { Document, Schema } from "mongoose";
-import { createOdm } from "../../common";
+import { createOdm } from "../../core";
 // Odm
 import { AccessRole, AccessRolesOdm } from "../accessRoles";
 // Constants

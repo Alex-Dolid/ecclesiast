@@ -3,7 +3,8 @@ import * as express from "express";
 // Routes
 import { get, post, getById, removeById, updateById } from "./route";
 // Utils
-import { authenticate, authorize, limiter, validator } from "../../../utils";
+import { authenticate, limiter, validator } from "../../../middlewares";
+import { authorize } from "../../../middlewares/authorize";
 // Schema
 import { commonSchema, createSchema } from "../schemas";
 // Constants

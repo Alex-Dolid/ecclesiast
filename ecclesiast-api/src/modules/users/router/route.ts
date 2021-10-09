@@ -1,7 +1,7 @@
 // Controllers
 import { Controller } from "../controller";
 // Common
-import { getCRUDRoutes } from "../../../common";
+import { getCRUDRoutes } from "../../../core";
 // Helpers
 import { clearFromSecrets } from "../../../helpers";
 // Constants

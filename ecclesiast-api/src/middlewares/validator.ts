@@ -3,7 +3,7 @@ import { NextFunction, Request, Response } from "express";
 // Libs
 import Ajv, { ValidateFunction, JSONSchemaType } from "ajv";
 // Utils
-import { ValidationError } from "./errors";
+import { ValidationError } from "../utils";
 
 export const validator = <T, SchemasType extends JSONSchemaType<T>>(
   schema: SchemasType

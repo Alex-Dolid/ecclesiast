@@ -6,7 +6,7 @@ import { createOdm } from "../../core";
 import { COLLECTION_NAME, ROLES } from "./constants";
 
 export type AccessRole = {
-  _id?: string,
+  _id: string,
   name: ROLES,
 }
 

@@ -37,7 +37,7 @@ export const authenticate = (req: Request, res: Response, next: NextFunction): v
       const decodedAccessToken = _decodedAccessToken as AccessToken;
 
       if (error) {
-        throw new ValidationError(error.message, isRefreshUrl() ? Statuses.Forbidden : Statuses.Unauthorized);
+        next(new ValidationError(error.message, isRefreshUrl() ? Statuses.Forbidden : Statuses.Unauthorized));
       }
 
       if (isRefreshUrl()) {
@@ -48,7 +48,7 @@ export const authenticate = (req: Request, res: Response, next: NextFunction): v
           generatePrivateKey(Token.Refresh),
           (_error: JsonWebTokenError | null): Response | void => {
             if (_error) {
-              throw new ValidationError(_error.message, Statuses.Forbidden);
+              next(new ValidationError(_error.message, Statuses.Forbidden));
             }
 
             next();

@@ -31,23 +31,23 @@ export const authorize = (roles: ROLES[]): ExpressMiddleware => {
         const { user } = _decodedAccessToken as AccessToken;
 
         if (error) {
-          throw new ValidationError(error.message, Statuses.Unauthorized);
+          next(new ValidationError(error.message, Statuses.Unauthorized));
         }
 
         const model = new UsersModel();
         model.getById(user._id)
           .then((_user) => {
-            if (_user.accessRole._id !== user.accessRole._id
+            if (_user.accessRole._id.toString() !== user.accessRole._id
               || _user.accessRole.name !== user.accessRole.name
               || !accessRoles.includes(_user.accessRole.name)
             ) {
-              throw new ValidationError("Access denied", Statuses.Forbidden);
+              next(new ValidationError("Access denied", Statuses.Forbidden));
             }
 
             next();
           })
           .catch((_error) => {
-            throw _error;
+            next(_error);
           });
       }
     );

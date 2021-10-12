@@ -42,9 +42,14 @@ router.use([
  *        content:
  *          application/json:
  *            schema:
- *               type: array
- *               items:
- *                  $ref: '#/components/schemas/AccessRole'
+ *              type: object
+ *              properties:
+ *                pagination:
+ *                  $ref: '#/components/schemas/Pagination'
+ *                data:
+ *                  type: array
+ *                  items:
+ *                    $ref: '#/components/schemas/AccessRole'
  */
 router.get("/", get);
 

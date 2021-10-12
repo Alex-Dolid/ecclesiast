@@ -1,7 +1,7 @@
 // Libs
 import * as bcrypt from "bcryptjs";
-// Common
-import { BaseModel } from "../../core";
+// Core
+import { BaseModel, GetAllPayload, GetAllResult } from "../../core";
 // Odm
 import { UserDoc, User, Odm } from "./odm";
 // Utils
@@ -20,8 +20,8 @@ export class Model extends BaseModel<User, UserDoc> {
     await super.create(await this.transformCreateUser(payload));
   }
 
-  async getAll(): Promise<User[]> {
-    return await super.getAll({ populate });
+  async getAll(payload?: GetAllPayload): Promise<GetAllResult<User>> {
+    return await super.getAll(payload, { populate });
   }
 
   async updateById(_id: string, payload: Partial<User>): Promise<User> {

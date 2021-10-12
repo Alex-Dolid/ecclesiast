@@ -31,9 +31,14 @@ type Options = {
   select: MapOption,
   populate: PopulateOption,
 };
+export type GetAllPayload = Partial<{
+  page: number,
+  size: number,
+}> | null;
+export type GetAllResult<T> = { data: T[], pagination: { total: number, page: number, size: number } };
 export interface IBaseModel<T> {
   create: (payload: T) => Promise<void>;
-  getAll: (options?: Partial<Options>) => Promise<T[]>;
+  getAll: (payload?: GetAllPayload, options?: Partial<Options>) => Promise<GetAllResult<T>>;
   getById: (_id: string, options?: Partial<Omit<Options, "sort">>) => Promise<T>;
   updateById: (_id: string, payload: Partial<T>, options?: Partial<Omit<Options, "sort">>) => Promise<T>;
   removeById: (_id: string) => Promise<void>;
@@ -56,18 +61,30 @@ export default class BaseModel<T, Doc extends Document & { _id?: string } & T> i
     }
   }
 
-  async getAll({
+  async getAll(payload?: GetAllPayload, {
     sort = DEFAULT_SORT_SELECT,
     select = DEFAULT_SORT_SELECT,
     populate
-  }: Partial<Options> = { sort: { isDefault: 1 }, select: { isDefault: 1 } }): Promise<T[]> {
+  }: Partial<Options> = { sort: { isDefault: 1 }, select: { isDefault: 1 } }): Promise<GetAllResult<T>> {
     try {
+      const { page = 0, size = 0 } = payload ?? {};
+      const total = await this.odm.countDocuments();
+      const offset = (page - 1) * size;
+      const pagination = { total, page, size };
+
       const result = this.odm
         .find()
         .sort(this.getRaw(sort, "sort"))
+        .skip(offset)
+        .limit(size)
         .select(this.getRaw(select, "select"));
 
-      return populate ? await this.withPopulate<T[], Doc>(result, populate) : await result.lean();
+      const data: T[] = populate ? await this.withPopulate<T[], Doc>(result, populate) : await result.lean();
+
+      return {
+        data,
+        pagination
+      };
     } catch (error) {
       throw new ServerError(error.message);
     }

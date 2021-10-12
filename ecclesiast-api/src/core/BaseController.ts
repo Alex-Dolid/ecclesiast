@@ -1,10 +1,10 @@
 // Types
 import { Document } from "mongoose";
-import BaseModel from "./BaseModel";
+import BaseModel, { GetAllPayload, GetAllResult } from "./BaseModel";
 
 interface IBaseController<T> {
   create: (payload: T) => Promise<void>;
-  getAll: () => Promise<T[]>;
+  getAll: (payload?: GetAllPayload) => Promise<GetAllResult<T>>;
   getById: (_id: string) => Promise<T>;
   updateById: (_id: string, payload: Partial<T>) => Promise<T>;
   removeById: (_id: string) => Promise<void>;
@@ -21,8 +21,8 @@ export default class BaseController<T, Doc extends Document & T, M extends BaseM
     return await this.model.create(payload);
   }
 
-  async getAll(): Promise<T[]> {
-    return await this.model.getAll();
+  async getAll(payload?: GetAllPayload): Promise<GetAllResult<T>> {
+    return await this.model.getAll(payload);
   }
 
   async getById(_id: string): Promise<T> {

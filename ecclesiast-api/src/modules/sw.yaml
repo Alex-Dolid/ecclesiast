@@ -1,0 +1,15 @@
+components:
+  schemas:
+    Pagination:
+      type: object
+      properties:
+        total:
+          type: number
+        page:
+          type: number
+        size:
+          type: number
+      example:
+        total: 100
+        page: 1
+        size: 10

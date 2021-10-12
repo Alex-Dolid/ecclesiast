@@ -42,6 +42,7 @@ export interface IBaseModel<T> {
   getById: (_id: string, options?: Partial<Omit<Options, "sort">>) => Promise<T>;
   updateById: (_id: string, payload: Partial<T>, options?: Partial<Omit<Options, "sort">>) => Promise<T>;
   removeById: (_id: string) => Promise<void>;
+  find: (conditions: FilterQuery<T>) => Promise<T[]>;
 }
 
 export default class BaseModel<T, Doc extends Document & { _id?: string } & T> implements IBaseModel<T> {
@@ -104,10 +105,33 @@ export default class BaseModel<T, Doc extends Document & { _id?: string } & T> i
       const result = populate ? await this.withPopulate<T | null, Doc>(data, populate) : await data.lean();
 
       if (!result) {
-        throw new NotFoundError(`can not find document with conditions: ${ JSON.stringify(conditions) }`);
+        throw new NotFoundError(`Can not find document with conditions: ${ JSON.stringify(conditions) }`);
       }
 
       return result as T;
+    } catch (error) {
+      throw new ServerError(error.message);
+    }
+  }
+
+  async find(conditions: FilterQuery<T>, {
+    select = DEFAULT_SORT_SELECT,
+    populate
+  }: Partial<Omit<Options, "sort">> = { select: { isDefault: 1 } }): Promise<T[]> {
+    try {
+      const data = this.odm
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        .find(conditions)
+        .select(this.getRaw(select, "select"));
+
+      const result = populate ? await this.withPopulate<Doc[], Doc>(data, populate) : await data.lean();
+
+      if (!result) {
+        throw new NotFoundError(`Can not find documents with conditions: ${ JSON.stringify(conditions) }`);
+      }
+
+      return result as T[];
     } catch (error) {
       throw new ServerError(error.message);
     }
@@ -135,7 +159,7 @@ export default class BaseModel<T, Doc extends Document & { _id?: string } & T> i
       const result = populate ? await this.withPopulate<T, Doc>(data, populate) : await data.lean();
 
       if (!result) {
-        throw new NotFoundError(`can not find document with id ${ _id }`);
+        throw new NotFoundError(`Can not find document with id ${ _id }`);
       }
 
       return result as T;
@@ -151,7 +175,7 @@ export default class BaseModel<T, Doc extends Document & { _id?: string } & T> i
       const data = await this.odm.findOneAndDelete({ _id });
 
       if (!data) {
-        throw new NotFoundError(`can not find document with id ${ _id }`);
+        throw new NotFoundError(`Can not find document with id ${ _id }`);
       }
     } catch (error) {
       throw new ServerError(error.message);

@@ -1,5 +1,5 @@
 // Types
-import { Document } from "mongoose";
+import { Document, FilterQuery } from "mongoose";
 import BaseModel, { GetAllPayload, GetAllResult } from "./BaseModel";
 
 interface IBaseController<T> {
@@ -8,6 +8,7 @@ interface IBaseController<T> {
   getById: (_id: string) => Promise<T>;
   updateById: (_id: string, payload: Partial<T>) => Promise<T>;
   removeById: (_id: string) => Promise<void>;
+  find: (conditions: FilterQuery<T>) => Promise<T[]>;
 }
 
 export default class BaseController<T, Doc extends Document & T, M extends BaseModel<T, Doc>> implements IBaseController<T> {
@@ -35,5 +36,9 @@ export default class BaseController<T, Doc extends Document & T, M extends BaseM
 
   async removeById(_id: string): Promise<void> {
     return await this.model.removeById(_id);
+  }
+
+  async find(conditions: FilterQuery<T>): Promise<T[]> {
+    return await this.model.find(conditions);
   }
 }

@@ -1,0 +1,23 @@
+components:
+  schemas:
+    Locale:
+      type: object
+      properties:
+        name:
+          type: string
+        code2:
+          type: string
+        code3:
+          type: string
+      example:
+        name: English
+        code2: en
+        code3: eng
+  requestBodies:
+    LocaleCreate:
+      description: Create new locale body
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Locale'

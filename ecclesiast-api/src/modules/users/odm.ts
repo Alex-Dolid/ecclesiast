@@ -3,7 +3,7 @@ import * as mongoose from "mongoose";
 import { Document, Schema } from "mongoose";
 import { createOdm } from "../../core";
 // Odm
-import { AccessRole, AccessRolesOdm } from "../accessRoles";
+import { AccessRole, AccessRolesOdm } from "../accessRoles/odm";
 // Constants
 import { COLLECTION_NAME } from "./constants";
 import { TIMESTAMPS } from "../../constants";

@@ -4,14 +4,14 @@ import { NextFunction, Request, Response } from "express";
 import * as jwt from "jsonwebtoken";
 import { JsonWebTokenError } from "jsonwebtoken";
 // Models
-import { UsersModel } from "../modules/users";
+import { Model as UsersModel } from "../modules/users/model";
 // Utils
 import { ValidationError } from "../utils";
 // Helpers
 import { AccessToken, generatePrivateKey, getToken } from "../helpers";
 // Constants
-import { ROLES } from "../modules/accessRoles";
 import { Statuses, Token } from "../constants";
+import { ROLES } from "../modules/accessRoles/constants";
 // Types
 import { ExpressMiddleware } from "../types";
 

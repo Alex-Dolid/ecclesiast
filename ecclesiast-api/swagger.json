@@ -87,6 +87,25 @@
           }
         }
       },
+      "Locale": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "code2": {
+            "type": "string"
+          },
+          "code3": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "name": "English",
+          "code2": "en",
+          "code3": "eng"
+        }
+      },
       "Pagination": {
         "type": "object",
         "properties": {
@@ -104,6 +123,17 @@
           "total": 100,
           "page": 1,
           "size": 10
+        }
+      },
+      "ID": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "_id": "hash"
         }
       },
       "User": {
@@ -161,6 +191,17 @@
           "application/json": {
             "schema": {
               "$ref": "#/components/schemas/AuthSignIn"
+            }
+          }
+        }
+      },
+      "LocaleCreate": {
+        "description": "Create new locale body",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Locale"
             }
           }
         }
@@ -391,6 +432,139 @@
         }
       }
     },
+    "/locales": {
+      "get": {
+        "tags": [
+          "Locales"
+        ],
+        "summary": "Get list of all locales",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "pagination": {
+                      "$ref": "#/components/schemas/Pagination"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "allOf": [
+                          {
+                            "$ref": "#/components/schemas/ID"
+                          },
+                          {
+                            "$ref": "#/components/schemas/Locale"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Locales"
+        ],
+        "summary": "Create locale",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/LocaleCreate"
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/locales/{_id}": {
+      "get": {
+        "tags": [
+          "Locales"
+        ],
+        "summary": "Get one locale by id",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ID"
+                    },
+                    {
+                      "$ref": "#/components/schemas/Locale"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Locales"
+        ],
+        "summary": "Update one locale",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ID"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/LocaleCreate"
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ID"
+                    },
+                    {
+                      "$ref": "#/components/schemas/Locale"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Locales"
+        ],
+        "summary": "Delete one locale",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/users": {
       "get": {
         "tags": [
@@ -512,6 +686,10 @@
     {
       "name": "Auth",
       "description": "APIs to handle auth resources."
+    },
+    {
+      "name": "Locales",
+      "description": "APIs to handle locales resources."
     },
     {
       "name": "Users",

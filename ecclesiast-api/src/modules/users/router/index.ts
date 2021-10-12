@@ -3,13 +3,12 @@ import * as express from "express";
 // Routes
 import { get, post, getById, removeById, updateById } from "./route";
 // Utils
-import { authenticate, limiter, validator } from "../../../middlewares";
-import { authorize } from "../../../middlewares/authorize";
+import { authenticate, limiter, validator, authorize } from "../../../middlewares";
 // Schema
 import { commonSchema, createSchema } from "../schemas";
 // Constants
 import { LIMIT_REQUEST } from "../../../constants";
-import { ROLES } from "../../accessRoles";
+import { ROLES } from "../../accessRoles/constants";
 // Types
 import { UserS, UsersSchemas } from "../schemas/types";
 

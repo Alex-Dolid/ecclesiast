@@ -3,8 +3,7 @@ import * as express from "express";
 // Routes
 import { get, post, getById, removeById, updateById } from "./route";
 // Utils
-import { authenticate, limiter, validator } from "../../../middlewares";
-import { authorize } from "../../../middlewares/authorize";
+import { authenticate, limiter, validator, authorize } from "../../../middlewares";
 // Schema
 import { commonSchema, createSchema } from "../schemas";
 // Constants
@@ -21,6 +20,8 @@ router.use([
   authenticate,
   authorize([ ROLES.SUPER_ADMIN ])
 ]);
+
+// TODO anyof ID зробити для accessRoles, users !(останній раз рефакторив locales, продовжити...)!
 
 /**
  * @swagger

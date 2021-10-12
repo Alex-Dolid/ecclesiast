@@ -13,3 +13,18 @@ components:
         total: 100
         page: 1
         size: 10
+    ID:
+      type: object
+      properties:
+        _id:
+          type: string
+      example:
+        _id: hash
+  parameters:
+    ID:
+      name: _id
+      in: path
+      description: id of document
+      required: true
+      schema:
+        type: string

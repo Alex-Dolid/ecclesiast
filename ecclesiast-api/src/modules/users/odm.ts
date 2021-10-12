@@ -6,6 +6,7 @@ import { createOdm } from "../../core";
 import { AccessRole, AccessRolesOdm } from "../accessRoles";
 // Constants
 import { COLLECTION_NAME } from "./constants";
+import { TIMESTAMPS } from "../../constants";
 
 export type User = {
   _id: string,
@@ -43,7 +44,7 @@ export const UserSchema: Schema = new mongoose.Schema(
       type: String
     }
   },
-  { timestamps: { createdAt: "created", updatedAt: "modified" } }
+  { timestamps: { createdAt: TIMESTAMPS.CREATED_AT, updatedAt: TIMESTAMPS.UPDATED_AT } }
 );
 
 export const Odm = createOdm<UserDoc>(COLLECTION_NAME, UserSchema);

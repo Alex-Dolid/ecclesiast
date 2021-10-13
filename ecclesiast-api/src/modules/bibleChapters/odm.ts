@@ -10,7 +10,7 @@ export type BibleChapter = {
   name: number,
 }
 
-export type BibleChaptersDoc = Document & BibleChapter;
+export type BibleChapterDoc = Document & BibleChapter;
 
 const BibleChaptersSchema: Schema = new mongoose.Schema(
   {
@@ -23,4 +23,4 @@ const BibleChaptersSchema: Schema = new mongoose.Schema(
   { timestamps: { createdAt: TIMESTAMPS.CREATED_AT, updatedAt: TIMESTAMPS.UPDATED_AT } }
 );
 
-export const Odm = mongoose.model<BibleChaptersDoc>(COLLECTION_NAME, BibleChaptersSchema);
+export const Odm = mongoose.model<BibleChapterDoc>(COLLECTION_NAME, BibleChaptersSchema);

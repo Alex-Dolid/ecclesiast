@@ -5,7 +5,7 @@ import { get, post, getById, removeById, updateById } from "./route";
 // Utils
 import { authenticate, limiter, validator, authorize } from "../../../middlewares";
 // Schema
-import { commonSchema, createSchema, BiblesChaptersSchemasType } from "../schemas";
+import { commonSchema, createSchema, BibleChapterSchemas } from "../schemas";
 // Constants
 import { LIMIT_REQUEST } from "../../../constants";
 import { ROLES } from "../../accessRoles/constants";
@@ -23,17 +23,17 @@ router.use([
 /**
  * @swagger
  * tags:
- *   name: BiblesChapters
- *   description: APIs to handle bibles chapters resources.
+ *   name: BibleChapters
+ *   description: APIs to handle bible chapters resources.
  */
 
 /**
  * @swagger
- * /bibles-chapters:
+ * /bible-chapters:
  *  get:
  *    tags:
- *      - BiblesChapters
- *    summary: Get list of all bibles chapters
+ *      - BibleChapters
+ *    summary: Get list of all bible chapters
  *    responses:
  *      '200':
  *        description: Success
@@ -55,10 +55,10 @@ router.get("/", get);
 
 /**
  * @swagger
- * /bibles-chapters:
+ * /bible-chapters:
  *  post:
  *    tags:
- *      - BiblesChapters
+ *      - BibleChapters
  *    summary: Create bible chapter
  *    requestBody:
  *      $ref: '#/components/requestBodies/BibleChapterCreate'
@@ -66,15 +66,15 @@ router.get("/", get);
  *      '200':
  *        description: Success
  */
-router.post("/", [ validator<BibleChapter, BiblesChaptersSchemasType>(createSchema) ], post);
+router.post("/", [ validator<BibleChapter, BibleChapterSchemas>(createSchema) ], post);
 
 
 /**
  * @swagger
- * /bibles-chapters/{_id}:
+ * /bible-chapters/{_id}:
  *  get:
  *    tags:
- *      - BiblesChapters
+ *      - BibleChapters
  *    summary: Get one bible chapter by id
  *    parameters:
  *      - $ref: '#/components/parameters/ID'
@@ -92,10 +92,10 @@ router.get("/:_id", getById);
 
 /**
  * @swagger
- * /bibles-chapters/{_id}:
+ * /bible-chapters/{_id}:
  *  put:
  *    tags:
- *      - BiblesChapters
+ *      - BibleChapters
  *    summary: Update one bible chapter
  *    parameters:
  *      - $ref: '#/components/parameters/ID'
@@ -111,14 +111,14 @@ router.get("/:_id", getById);
  *                - $ref: '#/components/schemas/ID'
  *                - $ref: '#/components/schemas/BibleChapter'
  */
-router.put("/:_id", [ validator<BibleChapter, BiblesChaptersSchemasType>(commonSchema) ], updateById);
+router.put("/:_id", [ validator<BibleChapter, BibleChapterSchemas>(commonSchema) ], updateById);
 
 /**
  * @swagger
- * /bibles-chapters/{_id}:
+ * /bible-chapters/{_id}:
  *  delete:
  *    tags:
- *      - BiblesChapters
+ *      - BibleChapters
  *    summary: Delete one bible chapter
  *    parameters:
  *      - $ref: '#/components/parameters/ID'
@@ -128,4 +128,4 @@ router.put("/:_id", [ validator<BibleChapter, BiblesChaptersSchemasType>(commonS
  */
 router.delete("/:_id", removeById);
 
-export { router as biblesChaptersRouter };
+export { router as bibleChaptersRouter };

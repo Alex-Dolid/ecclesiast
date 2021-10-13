@@ -1,17 +1,19 @@
 // Core
 import * as mongoose from "mongoose";
-// Types
 import { Document, Schema } from "mongoose";
 // Odm
 import { LocalesOdm, Locale } from "../locales";
+// Constants
+import { TIMESTAMPS } from "../../constants";
+import { COLLECTION_NAME } from "./constants";
 
-export type BibleBookType = {
-  _id?: string,
+export type BibleBook = {
+  _id: string,
   name: string,
   locale: Locale
 }
 
-export type BibleBooksDocType = Document & BibleBookType;
+export type BibleBookDoc = Document & BibleBook;
 
 const BibleBooksSchema: Schema = new mongoose.Schema(
   {
@@ -25,7 +27,7 @@ const BibleBooksSchema: Schema = new mongoose.Schema(
       ref: LocalesOdm
     }
   },
-  { timestamps: { createdAt: "created", updatedAt: "modified" } }
+  { timestamps: { createdAt: TIMESTAMPS.CREATED_AT, updatedAt: TIMESTAMPS.UPDATED_AT } }
 );
 
-export const Odm = mongoose.model<BibleBooksDocType>("bibles-books", BibleBooksSchema);
+export const Odm = mongoose.model<BibleBookDoc>(COLLECTION_NAME, BibleBooksSchema);

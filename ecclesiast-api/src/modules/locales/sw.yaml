@@ -13,6 +13,21 @@ components:
         name: English
         code2: en
         code3: eng
+    LocaleHash:
+      type: object
+      properties:
+        locale:
+          type: string
+      example:
+        locale: <hash>
+    LocaleObj:
+      type: object
+      properties:
+        locale:
+          $ref: '#/components/schemas/Locale'
+      example:
+        locale:
+          $ref: '#/components/examples/Locale'
   requestBodies:
     LocaleCreate:
       description: Create new locale body
@@ -21,3 +36,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Locale'
+  examples:
+    Locale:
+      name: English
+      code2: en
+      code3: eng

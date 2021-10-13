@@ -1,0 +1,19 @@
+components:
+  schemas:
+    BibleBook:
+      type: object
+      properties:
+        name:
+          type: string
+      example:
+        name: Genesis
+  requestBodies:
+    BibleBookCreate:
+      description: Create new bible book body
+      required: true
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/BibleBook'
+              - $ref: '#/components/schemas/LocaleHash'

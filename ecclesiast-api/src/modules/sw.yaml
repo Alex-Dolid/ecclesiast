@@ -19,7 +19,7 @@ components:
         _id:
           type: string
       example:
-        _id: hash
+        _id: <hash>
   parameters:
     ID:
       name: _id

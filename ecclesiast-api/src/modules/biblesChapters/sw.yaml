@@ -1,0 +1,17 @@
+components:
+  schemas:
+    BibleChapter:
+      type: object
+      properties:
+        name:
+          type: number
+      example:
+        name: 1
+  requestBodies:
+    BibleChapterCreate:
+      description: Create new bible chapter body
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BibleChapter'

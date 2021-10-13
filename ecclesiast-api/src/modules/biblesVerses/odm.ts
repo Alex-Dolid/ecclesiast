@@ -4,7 +4,7 @@ import * as mongoose from "mongoose";
 import { Document, Schema } from "mongoose";
 // Odm
 import { LocalesOdm, Locale } from "../locales";
-import { BiblesChaptersOdm, BibleChapterType } from "../biblesChapters";
+import { BiblesChaptersOdm, BibleChapter } from "../biblesChapters";
 import { BibleBookType, BiblesBooksOdm } from "../biblesBooks";
 
 export type BibleVerseType = {
@@ -12,7 +12,7 @@ export type BibleVerseType = {
   name: number,
   text: string
   locale: Locale,
-  chapter: BibleChapterType,
+  chapter: BibleChapter,
   book: BibleBookType,
   bibleId: string
 }

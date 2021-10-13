@@ -1,14 +1,16 @@
 // Core
 import * as mongoose from "mongoose";
-// Types
 import { Document, Schema } from "mongoose";
+// Constants
+import { COLLECTION_NAME } from "./constants";
+import { TIMESTAMPS } from "../../constants";
 
-export type BibleChapterType = {
-  _id?: string,
+export type BibleChapter = {
+  _id: string,
   name: number,
 }
 
-export type BibleChaptersDocType = Document & BibleChapterType;
+export type BibleChaptersDoc = Document & BibleChapter;
 
 const BibleChaptersSchema: Schema = new mongoose.Schema(
   {
@@ -18,7 +20,7 @@ const BibleChaptersSchema: Schema = new mongoose.Schema(
       unique: true
     }
   },
-  { timestamps: { createdAt: "created", updatedAt: "modified" } }
+  { timestamps: { createdAt: TIMESTAMPS.CREATED_AT, updatedAt: TIMESTAMPS.UPDATED_AT } }
 );
 
-export const Odm = mongoose.model<BibleChaptersDocType>("bibles-chapters", BibleChaptersSchema);
+export const Odm = mongoose.model<BibleChaptersDoc>(COLLECTION_NAME, BibleChaptersSchema);

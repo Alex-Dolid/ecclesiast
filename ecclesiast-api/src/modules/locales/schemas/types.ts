@@ -2,5 +2,5 @@
 import { JSONSchemaType } from "ajv";
 import { Locale } from "../odm";
 
-export type LocalesCommonSchemeType = JSONSchemaType<Locale>;
-export type LocalesSchemasType = JSONSchemaType<Locale>;
+export type LocaleCommonScheme = JSONSchemaType<Locale>;
+export type LocaleSchemas = LocaleCommonScheme;

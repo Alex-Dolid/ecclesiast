@@ -5,12 +5,11 @@ import { get, post, getById, removeById, updateById } from "./route";
 // Utils
 import { authenticate, limiter, validator, authorize } from "../../../middlewares";
 // Schema
-import { commonSchema, createSchema } from "../schemas";
+import { commonSchema, createSchema, AccessRoleSchemas } from "../schemas";
 // Constants
 import { LIMIT_REQUEST } from "../../../constants";
 import { ROLES } from "../constants";
 // Types
-import { AccessRolesSchemas } from "../schemas/types";
 import { AccessRole } from "../odm";
 
 const router = express.Router();
@@ -67,7 +66,7 @@ router.get("/", get);
  *      '200':
  *        description: Success
  */
-router.post("/", [ validator<AccessRole, AccessRolesSchemas>(createSchema) ], post);
+router.post("/", [ validator<AccessRole, AccessRoleSchemas>(createSchema) ], post);
 
 
 /**
@@ -112,7 +111,7 @@ router.get("/:_id", getById);
  *                - $ref: '#/components/schemas/ID'
  *                - $ref: '#/components/schemas/AccessRole'
  */
-router.put("/:_id", [ validator<AccessRole, AccessRolesSchemas>(commonSchema) ], updateById);
+router.put("/:_id", [ validator<AccessRole, AccessRoleSchemas>(commonSchema) ], updateById);
 
 /**
  * @swagger

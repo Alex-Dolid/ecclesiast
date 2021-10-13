@@ -5,7 +5,7 @@ import { get, post, getById, removeById, updateById } from "./route";
 // Utils
 import { authenticate, limiter, validator, authorize } from "../../../middlewares";
 // Schema
-import { commonSchema, createSchema, LocalesSchemasType } from "../schemas";
+import { commonSchema, createSchema, LocaleSchemas } from "../schemas";
 // Constants
 import { LIMIT_REQUEST } from "../../../constants";
 import { ROLES } from "../../accessRoles/constants";
@@ -66,7 +66,7 @@ router.get("/", get);
  *      '200':
  *        description: Success
  */
-router.post("/", [ validator<Locale, LocalesSchemasType>(createSchema) ], post);
+router.post("/", [ validator<Locale, LocaleSchemas>(createSchema) ], post);
 
 
 /**
@@ -111,7 +111,7 @@ router.get("/:_id", getById);
  *                - $ref: '#/components/schemas/ID'
  *                - $ref: '#/components/schemas/Locale'
  */
-router.put("/:_id", [ validator<Locale, LocalesSchemasType>(commonSchema) ], updateById);
+router.put("/:_id", [ validator<Locale, LocaleSchemas>(commonSchema) ], updateById);
 
 /**
  * @swagger

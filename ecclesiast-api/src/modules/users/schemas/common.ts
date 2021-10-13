@@ -1,7 +1,7 @@
 // Types
-import { UsersCommonScheme } from "./types";
+import { UserCommonScheme } from "./types";
 
-export const common: UsersCommonScheme = {
+export const common: UserCommonScheme = {
   type: "object",
   properties: {
     _id: {

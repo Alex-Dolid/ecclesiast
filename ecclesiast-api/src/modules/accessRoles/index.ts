@@ -1,2 +1,3 @@
 export { accessRolesRouter } from "./router";
-export { AccessRolesSchemas } from "./schemas/types";
+export { AccessRoleSchemas } from "./schemas";
+export { COLLECTION_NAME as ACCESS_ROLES_COLLECTION_NAME } from "./constants";

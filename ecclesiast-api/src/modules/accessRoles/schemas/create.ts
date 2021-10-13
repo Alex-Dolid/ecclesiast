@@ -1,9 +1,9 @@
 // Types
-import { AccessRolesCommonScheme } from "./types";
+import { AccessRoleCommonScheme } from "./types";
 // Schemas
 import { common } from "./common";
 
-export const create: AccessRolesCommonScheme = {
+export const create: AccessRoleCommonScheme = {
   ...common,
   required: [ "name" ]
 };

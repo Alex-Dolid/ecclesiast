@@ -1,7 +1,7 @@
 // Types
-import { LocalesCommonSchemeType } from "./types";
+import { LocaleCommonScheme } from "./types";
 
-export const common: LocalesCommonSchemeType = {
+export const common: LocaleCommonScheme = {
   type: "object",
   properties: {
     _id: {

@@ -1,9 +1,9 @@
 // Types
-import { UsersCommonScheme } from "./types";
+import { UserCommonScheme } from "./types";
 // Schemas
 import { common } from "./common";
 
-export const create: UsersCommonScheme = {
+export const create: UserCommonScheme = {
   ...common,
   required: [ "nickname", "email", "password", "accessRole" ]
 };

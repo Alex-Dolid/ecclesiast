@@ -7,6 +7,7 @@ import { Controller } from "../controller";
 import { clearFromSecrets, sendResponse } from "../../../helpers";
 // Constants
 import { ROUTER } from "../../../constants";
+import { COLLECTION_NAME } from "../constants";
 // Types
 import { Middleware } from "../../../types";
 import { User } from "../../users";
@@ -26,7 +27,7 @@ type RoutesFn = {
 const excludedProps = [ "password" ];
 
 const constructRoute = (route: Routes, middlewares?: Middleware | Middleware[]): RouteFn => {
-  const debug = dg(`${ ROUTER.LOG_TITLE }:auth`);
+  const debug = dg(`${ ROUTER.LOG_TITLE }:${ COLLECTION_NAME }`);
   const getLog = (req: Request): string => `${ req.method } - ${ req.originalUrl }`;
 
   return async (req: Request, res: Response, next: NextFunction): Promise<void> => {

@@ -11,7 +11,7 @@ import { LIMIT_REQUEST } from "../../../constants";
 // Types
 import { AuthSchemas } from "../schemas/types";
 import { SignInPayload } from "../model";
-import { UserS, UsersSchemas, createSchema } from "../../users";
+import { UserS, UserSchemas, createSchema } from "../../users";
 
 const router = express.Router();
 
@@ -60,7 +60,7 @@ router.post("/sign-in", [ validator<SignInPayload, AuthSchemas>(signInSchema) ],
  *      '200':
  *        description: Success
  */
-router.post("/sign-up", [ validator<UserS, UsersSchemas>(createSchema) ], signUp);
+router.post("/sign-up", [ validator<UserS, UserSchemas>(createSchema) ], signUp);
 
 
 /**

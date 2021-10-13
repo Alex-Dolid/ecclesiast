@@ -5,12 +5,10 @@ import { get, post, getById, removeById, updateById } from "./route";
 // Utils
 import { authenticate, limiter, validator, authorize } from "../../../middlewares";
 // Schema
-import { commonSchema, createSchema } from "../schemas";
+import { commonSchema, createSchema, UserS, UserSchemas } from "../schemas";
 // Constants
 import { LIMIT_REQUEST } from "../../../constants";
 import { ROLES } from "../../accessRoles/constants";
-// Types
-import { UserS, UsersSchemas } from "../schemas/types";
 
 const router = express.Router();
 
@@ -66,7 +64,7 @@ router.get("/", get);
  *      '200':
  *        description: Success
  */
-router.post("/", [ validator<UserS, UsersSchemas>(createSchema) ], post);
+router.post("/", [ validator<UserS, UserSchemas>(createSchema) ], post);
 
 
 /**
@@ -111,7 +109,7 @@ router.get("/:_id", getById);
  *                 - $ref: '#/components/schemas/ID'
  *                 - $ref: '#/components/schemas/User'
  */
-router.put("/:_id", [ validator<UserS, UsersSchemas>(commonSchema) ], updateById);
+router.put("/:_id", [ validator<UserS, UserSchemas>(commonSchema) ], updateById);
 
 /**
  * @swagger

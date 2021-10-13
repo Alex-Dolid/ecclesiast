@@ -1,9 +1,9 @@
 // Constants
 import { ROLES } from "../constants";
 // Types
-import { AccessRolesCommonScheme } from "./types";
+import { AccessRoleCommonScheme } from "./types";
 
-export const common: AccessRolesCommonScheme = {
+export const common: AccessRoleCommonScheme = {
   type: "object",
   properties: {
     _id: {

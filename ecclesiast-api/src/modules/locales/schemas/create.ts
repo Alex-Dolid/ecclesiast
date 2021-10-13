@@ -1,9 +1,9 @@
 // Types
-import { LocalesCommonSchemeType } from "./types";
+import { LocaleCommonScheme } from "./types";
 // Schemas
 import { common } from "./common";
 
-export const create: LocalesCommonSchemeType = {
+export const create: LocaleCommonScheme = {
   ...common,
   required: [ "code2", "code3", "name" ]
 };

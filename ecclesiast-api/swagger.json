@@ -54,6 +54,17 @@
           "password": "password"
         }
       },
+      "BibleChapter": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "number"
+          }
+        },
+        "example": {
+          "name": 1
+        }
+      },
       "Bibles": {
         "type": "array",
         "items": {
@@ -92,17 +103,6 @@
         },
         "example": {
           "name": "Genesis"
-        }
-      },
-      "BibleChapter": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "number"
-          }
-        },
-        "example": {
-          "name": 1
         }
       },
       "Locale": {
@@ -225,6 +225,17 @@
           }
         }
       },
+      "BibleChapterCreate": {
+        "description": "Create new bible chapter body",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/BibleChapter"
+            }
+          }
+        }
+      },
       "BibleBookCreate": {
         "description": "Create new bible book body",
         "required": true,
@@ -239,17 +250,6 @@
                   "$ref": "#/components/schemas/LocaleHash"
                 }
               ]
-            }
-          }
-        }
-      },
-      "BibleChapterCreate": {
-        "description": "Create new bible chapter body",
-        "required": true,
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/BibleChapter"
             }
           }
         }
@@ -513,6 +513,139 @@
         }
       }
     },
+    "/bible-chapters": {
+      "get": {
+        "tags": [
+          "BibleChapters"
+        ],
+        "summary": "Get list of all bible chapters",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "pagination": {
+                      "$ref": "#/components/schemas/Pagination"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "allOf": [
+                          {
+                            "$ref": "#/components/schemas/ID"
+                          },
+                          {
+                            "$ref": "#/components/schemas/BibleChapter"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "BibleChapters"
+        ],
+        "summary": "Create bible chapter",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/BibleChapterCreate"
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/bible-chapters/{_id}": {
+      "get": {
+        "tags": [
+          "BibleChapters"
+        ],
+        "summary": "Get one bible chapter by id",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ID"
+                    },
+                    {
+                      "$ref": "#/components/schemas/BibleChapter"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "BibleChapters"
+        ],
+        "summary": "Update one bible chapter",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ID"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/BibleChapterCreate"
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ID"
+                    },
+                    {
+                      "$ref": "#/components/schemas/BibleChapter"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "BibleChapters"
+        ],
+        "summary": "Delete one bible chapter",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/bibles": {
       "get": {
         "tags": [
@@ -665,139 +798,6 @@
           "BiblesBooks"
         ],
         "summary": "Delete one bible book",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/ID"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      }
-    },
-    "/bibles-chapters": {
-      "get": {
-        "tags": [
-          "BiblesChapters"
-        ],
-        "summary": "Get list of all bibles chapters",
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "pagination": {
-                      "$ref": "#/components/schemas/Pagination"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "allOf": [
-                          {
-                            "$ref": "#/components/schemas/ID"
-                          },
-                          {
-                            "$ref": "#/components/schemas/BibleChapter"
-                          }
-                        ]
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "BiblesChapters"
-        ],
-        "summary": "Create bible chapter",
-        "requestBody": {
-          "$ref": "#/components/requestBodies/BibleChapterCreate"
-        },
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      }
-    },
-    "/bibles-chapters/{_id}": {
-      "get": {
-        "tags": [
-          "BiblesChapters"
-        ],
-        "summary": "Get one bible chapter by id",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/ID"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/ID"
-                    },
-                    {
-                      "$ref": "#/components/schemas/BibleChapter"
-                    }
-                  ]
-                }
-              }
-            }
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "BiblesChapters"
-        ],
-        "summary": "Update one bible chapter",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/ID"
-          }
-        ],
-        "requestBody": {
-          "$ref": "#/components/requestBodies/BibleChapterCreate"
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/ID"
-                    },
-                    {
-                      "$ref": "#/components/schemas/BibleChapter"
-                    }
-                  ]
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "BiblesChapters"
-        ],
-        "summary": "Delete one bible chapter",
         "parameters": [
           {
             "$ref": "#/components/parameters/ID"
@@ -1087,12 +1087,12 @@
       "description": "APIs to handle auth resources."
     },
     {
-      "name": "BiblesBooks",
-      "description": "APIs to handle bibles books resources."
+      "name": "BibleChapters",
+      "description": "APIs to handle bible chapters resources."
     },
     {
-      "name": "BiblesChapters",
-      "description": "APIs to handle bibles chapters resources."
+      "name": "BiblesBooks",
+      "description": "APIs to handle bibles books resources."
     },
     {
       "name": "Locales",

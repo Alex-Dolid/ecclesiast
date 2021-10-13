@@ -5,7 +5,7 @@ import { get, post, getById, removeById, updateById } from "./route";
 // Utils
 import { authenticate, limiter, validator, authorize } from "../../../middlewares";
 // Schema
-import { commonSchema, createSchema, BiblesBooksSchemas, BibleBookS } from "../schemas";
+import { commonSchema, createSchema, BibleBookSchemas, BibleBookS } from "../schemas";
 // Constants
 import { LIMIT_REQUEST } from "../../../constants";
 import { ROLES } from "../../accessRoles/constants";
@@ -21,17 +21,17 @@ router.use([
 /**
  * @swagger
  * tags:
- *   name: BiblesBooks
- *   description: APIs to handle bibles books resources.
+ *   name: BibleBooks
+ *   description: APIs to handle bible books resources.
  */
 
 /**
  * @swagger
- * /bibles-books:
+ * /bible-books:
  *  get:
  *    tags:
- *      - BiblesBooks
- *    summary: Get list of all bibles books
+ *      - BibleBooks
+ *    summary: Get list of all bible books
  *    responses:
  *      '200':
  *        description: Success
@@ -57,7 +57,7 @@ router.get("/", get);
  * /bibles-book:
  *  post:
  *    tags:
- *      - BiblesBooks
+ *      - BibleBooks
  *    summary: Create bible book
  *    requestBody:
  *      $ref: '#/components/requestBodies/BibleBookCreate'
@@ -65,15 +65,15 @@ router.get("/", get);
  *      '200':
  *        description: Success
  */
-router.post("/", [ validator<BibleBookS, BiblesBooksSchemas>(createSchema) ], post);
+router.post("/", [ validator<BibleBookS, BibleBookSchemas>(createSchema) ], post);
 
 
 /**
  * @swagger
- * /bibles-books/{_id}:
+ * /bible-books/{_id}:
  *  get:
  *    tags:
- *      - BiblesBooks
+ *      - BibleBooks
  *    summary: Get one bible book by id
  *    parameters:
  *      - $ref: '#/components/parameters/ID'
@@ -92,10 +92,10 @@ router.get("/:_id", getById);
 
 /**
  * @swagger
- * /bibles-books/{_id}:
+ * /bible-books/{_id}:
  *  put:
  *    tags:
- *      - BiblesBooks
+ *      - BibleBooks
  *    summary: Update one bible books
  *    parameters:
  *      - $ref: '#/components/parameters/ID'
@@ -112,14 +112,14 @@ router.get("/:_id", getById);
  *                - $ref: '#/components/schemas/BibleBook'
  *                - $ref: '#/components/schemas/LocaleObj'
  */
-router.put("/:_id", [ validator<BibleBookS, BiblesBooksSchemas>(commonSchema) ], updateById);
+router.put("/:_id", [ validator<BibleBookS, BibleBookSchemas>(commonSchema) ], updateById);
 
 /**
  * @swagger
- * /bibles-books/{_id}:
+ * /bible-books/{_id}:
  *  delete:
  *    tags:
- *      - BiblesBooks
+ *      - BibleBooks
  *    summary: Delete one bible book
  *    parameters:
  *      - $ref: '#/components/parameters/ID'
@@ -129,4 +129,4 @@ router.put("/:_id", [ validator<BibleBookS, BiblesBooksSchemas>(commonSchema) ],
  */
 router.delete("/:_id", removeById);
 
-export { router as biblesBooksRouter };
+export { router as bibleBooksRouter };

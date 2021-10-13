@@ -1,7 +1,7 @@
 // Types
-import { BiblesBooksCommonScheme } from "./types";
+import { BibleBookCommonScheme } from "./types";
 
-export const common: BiblesBooksCommonScheme = {
+export const common: BibleBookCommonScheme = {
   type: "object",
   properties: {
     _id: {

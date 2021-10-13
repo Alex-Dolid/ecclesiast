@@ -5,7 +5,7 @@ import { Document, Schema } from "mongoose";
 // Odm
 import { LocalesOdm, Locale } from "../locales";
 import { BiblesChaptersOdm, BibleChapter } from "../bibleChapters";
-import { BibleBook, BiblesBooksOdm } from "../biblesBooks";
+import { BibleBook, BiblesBooksOdm } from "../bibleBooks";
 
 export type BibleVerseType = {
   _id?: string,

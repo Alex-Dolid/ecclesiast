@@ -1,9 +1,9 @@
 // Types
-import { BiblesBooksCommonScheme } from "./types";
+import { BibleBookCommonScheme } from "./types";
 // Schemas
 import { common } from "./common";
 
-export const create: BiblesBooksCommonScheme = {
+export const create: BibleBookCommonScheme = {
   ...common,
   required: [ "name", "locale" ]
 };

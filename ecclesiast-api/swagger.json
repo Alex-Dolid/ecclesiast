@@ -54,6 +54,17 @@
           "password": "password"
         }
       },
+      "BibleBook": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "name": "Genesis"
+        }
+      },
       "BibleChapter": {
         "type": "object",
         "properties": {
@@ -92,17 +103,6 @@
               "type": "string"
             }
           }
-        }
-      },
-      "BibleBook": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string"
-          }
-        },
-        "example": {
-          "name": "Genesis"
         }
       },
       "Locale": {
@@ -225,17 +225,6 @@
           }
         }
       },
-      "BibleChapterCreate": {
-        "description": "Create new bible chapter body",
-        "required": true,
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/BibleChapter"
-            }
-          }
-        }
-      },
       "BibleBookCreate": {
         "description": "Create new bible book body",
         "required": true,
@@ -250,6 +239,17 @@
                   "$ref": "#/components/schemas/LocaleHash"
                 }
               ]
+            }
+          }
+        }
+      },
+      "BibleChapterCreate": {
+        "description": "Create new bible chapter body",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/BibleChapter"
             }
           }
         }
@@ -513,6 +513,150 @@
         }
       }
     },
+    "/bible-books": {
+      "get": {
+        "tags": [
+          "BibleBooks"
+        ],
+        "summary": "Get list of all bible books",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "pagination": {
+                      "$ref": "#/components/schemas/Pagination"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "allOf": [
+                          {
+                            "$ref": "#/components/schemas/ID"
+                          },
+                          {
+                            "$ref": "#/components/schemas/BibleBook"
+                          },
+                          {
+                            "$ref": "#/components/schemas/LocaleObj"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/bibles-book": {
+      "post": {
+        "tags": [
+          "BibleBooks"
+        ],
+        "summary": "Create bible book",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/BibleBookCreate"
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/bible-books/{_id}": {
+      "get": {
+        "tags": [
+          "BibleBooks"
+        ],
+        "summary": "Get one bible book by id",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ID"
+                    },
+                    {
+                      "$ref": "#/components/schemas/BibleBook"
+                    },
+                    {
+                      "$ref": "#/components/schemas/LocaleObj"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "BibleBooks"
+        ],
+        "summary": "Update one bible books",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ID"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/BibleBookCreate"
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ID"
+                    },
+                    {
+                      "$ref": "#/components/schemas/BibleBook"
+                    },
+                    {
+                      "$ref": "#/components/schemas/LocaleObj"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "BibleBooks"
+        ],
+        "summary": "Delete one bible book",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/bible-chapters": {
       "get": {
         "tags": [
@@ -662,150 +806,6 @@
                 }
               }
             }
-          }
-        }
-      }
-    },
-    "/bibles-books": {
-      "get": {
-        "tags": [
-          "BiblesBooks"
-        ],
-        "summary": "Get list of all bibles books",
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "pagination": {
-                      "$ref": "#/components/schemas/Pagination"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "allOf": [
-                          {
-                            "$ref": "#/components/schemas/ID"
-                          },
-                          {
-                            "$ref": "#/components/schemas/BibleBook"
-                          },
-                          {
-                            "$ref": "#/components/schemas/LocaleObj"
-                          }
-                        ]
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/bibles-book": {
-      "post": {
-        "tags": [
-          "BiblesBooks"
-        ],
-        "summary": "Create bible book",
-        "requestBody": {
-          "$ref": "#/components/requestBodies/BibleBookCreate"
-        },
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      }
-    },
-    "/bibles-books/{_id}": {
-      "get": {
-        "tags": [
-          "BiblesBooks"
-        ],
-        "summary": "Get one bible book by id",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/ID"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/ID"
-                    },
-                    {
-                      "$ref": "#/components/schemas/BibleBook"
-                    },
-                    {
-                      "$ref": "#/components/schemas/LocaleObj"
-                    }
-                  ]
-                }
-              }
-            }
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "BiblesBooks"
-        ],
-        "summary": "Update one bible books",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/ID"
-          }
-        ],
-        "requestBody": {
-          "$ref": "#/components/requestBodies/BibleBookCreate"
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/ID"
-                    },
-                    {
-                      "$ref": "#/components/schemas/BibleBook"
-                    },
-                    {
-                      "$ref": "#/components/schemas/LocaleObj"
-                    }
-                  ]
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "BiblesBooks"
-        ],
-        "summary": "Delete one bible book",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/ID"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
           }
         }
       }
@@ -1087,12 +1087,12 @@
       "description": "APIs to handle auth resources."
     },
     {
-      "name": "BibleChapters",
-      "description": "APIs to handle bible chapters resources."
+      "name": "BibleBooks",
+      "description": "APIs to handle bible books resources."
     },
     {
-      "name": "BiblesBooks",
-      "description": "APIs to handle bibles books resources."
+      "name": "BibleChapters",
+      "description": "APIs to handle bible chapters resources."
     },
     {
       "name": "Locales",

@@ -3,12 +3,9 @@ components:
     AccessRole:
       type: object
       properties:
-        _id:
-          type: string
         name:
           type: string
       example:
-        _id: hash
         name: admin
   requestBodies:
     AccessRoleCreate:
@@ -17,17 +14,4 @@ components:
       content:
         application/json:
           schema:
-            type: object
-            properties:
-              name:
-                type: string
-            example:
-              name: admin
-  parameters:
-    ID:
-      name: _id
-      in: path
-      description: id of access role
-      required: true
-      schema:
-        type: string
+            $ref: '#/components/schemas/AccessRole'

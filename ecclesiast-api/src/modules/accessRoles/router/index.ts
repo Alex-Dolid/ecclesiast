@@ -50,7 +50,9 @@ router.use([
  *                data:
  *                  type: array
  *                  items:
- *                    $ref: '#/components/schemas/AccessRole'
+ *                    allOf:
+ *                      - $ref: '#/components/schemas/ID'
+ *                      - $ref: '#/components/schemas/AccessRole'
  */
 router.get("/", get);
 
@@ -85,7 +87,9 @@ router.post("/", [ validator<AccessRole, AccessRolesSchemas>(createSchema) ], po
  *        content:
  *          application/json:
  *            schema:
- *              $ref: '#/components/schemas/AccessRole'
+ *              allOf:
+ *                - $ref: '#/components/schemas/ID'
+ *                - $ref: '#/components/schemas/AccessRole'
  */
 router.get("/:_id", getById);
 
@@ -106,7 +110,9 @@ router.get("/:_id", getById);
  *        content:
  *          application/json:
  *            schema:
- *               $ref: '#/components/schemas/AccessRole'
+ *               allOf:
+ *                - $ref: '#/components/schemas/ID'
+ *                - $ref: '#/components/schemas/AccessRole'
  */
 router.put("/:_id", [ validator<AccessRole, AccessRolesSchemas>(commonSchema) ], updateById);
 

@@ -31,15 +31,11 @@
       "AccessRole": {
         "type": "object",
         "properties": {
-          "_id": {
-            "type": "string"
-          },
           "name": {
             "type": "string"
           }
         },
         "example": {
-          "_id": "hash",
           "name": "admin"
         }
       },
@@ -171,15 +167,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "type": "string"
-                }
-              },
-              "example": {
-                "name": "admin"
-              }
+              "$ref": "#/components/schemas/AccessRole"
             }
           }
         }
@@ -256,7 +244,14 @@
                     "data": {
                       "type": "array",
                       "items": {
-                        "$ref": "#/components/schemas/AccessRole"
+                        "allOf": [
+                          {
+                            "$ref": "#/components/schemas/ID"
+                          },
+                          {
+                            "$ref": "#/components/schemas/AccessRole"
+                          }
+                        ]
                       }
                     }
                   }
@@ -298,7 +293,14 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AccessRole"
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ID"
+                    },
+                    {
+                      "$ref": "#/components/schemas/AccessRole"
+                    }
+                  ]
                 }
               }
             }
@@ -324,7 +326,14 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AccessRole"
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ID"
+                    },
+                    {
+                      "$ref": "#/components/schemas/AccessRole"
+                    }
+                  ]
                 }
               }
             }

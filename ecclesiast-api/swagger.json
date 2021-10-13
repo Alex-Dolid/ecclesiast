@@ -76,33 +76,34 @@
           "name": 1
         }
       },
-      "Bibles": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "_id": {
-              "type": "string"
-            },
-            "author": {
-              "type": "string"
-            },
-            "name": {
-              "type": "string"
-            },
-            "translators": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            },
-            "edition": {
-              "type": "string"
-            },
-            "src": {
+      "Bible": {
+        "type": "object",
+        "properties": {
+          "author": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "translators": {
+            "type": "array",
+            "items": {
               "type": "string"
             }
+          },
+          "edition": {
+            "type": "string"
+          },
+          "src": {
+            "type": "string"
           }
+        },
+        "example": {
+          "author": "JW",
+          "name": "Modern Translate",
+          "translators": [],
+          "edition": "1 edition",
+          "src": "jw.org"
         }
       },
       "Locale": {
@@ -250,6 +251,24 @@
           "application/json": {
             "schema": {
               "$ref": "#/components/schemas/BibleChapter"
+            }
+          }
+        }
+      },
+      "BibleCreate": {
+        "description": "Create new bible body",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/Bible"
+                },
+                {
+                  "$ref": "#/components/schemas/LocaleHash"
+                }
+              ]
             }
           }
         }
@@ -795,17 +814,139 @@
         "tags": [
           "Bibles"
         ],
-        "summary": "Get all bibles",
+        "summary": "Get list of all bibles",
         "responses": {
           "200": {
-            "description": "Get all bibles data success",
+            "description": "Success",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Bibles"
+                  "type": "object",
+                  "properties": {
+                    "pagination": {
+                      "$ref": "#/components/schemas/Pagination"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "allOf": [
+                          {
+                            "$ref": "#/components/schemas/ID"
+                          },
+                          {
+                            "$ref": "#/components/schemas/Bible"
+                          },
+                          {
+                            "$ref": "#/components/schemas/LocaleObj"
+                          }
+                        ]
+                      }
+                    }
+                  }
                 }
               }
             }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Bibles"
+        ],
+        "summary": "Create bible",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/BibleCreate"
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/bibles/{_id}": {
+      "get": {
+        "tags": [
+          "Bibles"
+        ],
+        "summary": "Get one bible by id",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ID"
+                    },
+                    {
+                      "$ref": "#/components/schemas/Bible"
+                    },
+                    {
+                      "$ref": "#/components/schemas/LocaleObj"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Bibles"
+        ],
+        "summary": "Update one bible by id",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ID"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/BibleCreate"
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ID"
+                    },
+                    {
+                      "$ref": "#/components/schemas/Bible"
+                    },
+                    {
+                      "$ref": "#/components/schemas/LocaleObj"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Bibles"
+        ],
+        "summary": "Delete one bible by id",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
           }
         }
       }
@@ -1093,6 +1234,10 @@
     {
       "name": "BibleChapters",
       "description": "APIs to handle bible chapters resources."
+    },
+    {
+      "name": "Bibles",
+      "description": "APIs to handle bibles resources."
     },
     {
       "name": "Locales",

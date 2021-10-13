@@ -1,21 +1,33 @@
 components:
   schemas:
-    Bibles:
-      type: array
-      items:
-        type: object
-        properties:
-          _id:
+    Bible:
+      type: object
+      properties:
+        author:
+          type: string
+        name:
+          type: string
+        translators:
+          type: array
+          items:
             type: string
-          author:
-            type: string
-          name:
-            type: string
-          translators:
-            type: array
-            items:
-              type: string
-          edition:
-            type: string
-          src:
-            type: string
+        edition:
+          type: string
+        src:
+          type: string
+      example:
+        author: JW
+        name: Modern Translate
+        translators: []
+        edition: '1 edition'
+        src: jw.org
+  requestBodies:
+    BibleCreate:
+      description: Create new bible body
+      required: true
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/Bible'
+              - $ref: '#/components/schemas/LocaleHash'

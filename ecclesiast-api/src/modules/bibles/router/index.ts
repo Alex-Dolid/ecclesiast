@@ -1,15 +1,29 @@
 // Core
 import * as express from "express";
 // Routes
-import { get, post } from "./route";
-import { getById, removeById, updateById } from "./hash";
+import { get, post, getById, removeById, updateById } from "./route";
 // Utils
-import { authenticate, limiter, validator } from "../../../middlewares";
+import { authenticate, limiter, validator, authorize } from "../../../middlewares";
 // Schema
-import { commonSchema, createSchema } from "../schemas";
-import { BiblesSchemasType, BibleSType } from "../schemas/types";
+import { commonSchema, createSchema, BibleSchemas, BibleS } from "../schemas";
+// Constants
+import { LIMIT_REQUEST } from "../../../constants";
+import { ROLES } from "../../accessRoles/constants";
 
 const router = express.Router();
+
+router.use([
+  limiter(LIMIT_REQUEST.MAX, LIMIT_REQUEST.RESET_IN),
+  authenticate,
+  authorize([ ROLES.ADMIN ])
+]);
+
+/**
+ * @swagger
+ * tags:
+ *   name: Bibles
+ *   description: APIs to handle bibles resources.
+ */
 
 /**
  * @swagger
@@ -17,20 +31,102 @@ const router = express.Router();
  *  get:
  *    tags:
  *      - Bibles
- *    summary: Get all bibles
+ *    summary: Get list of all bibles
  *    responses:
  *      '200':
- *        description: Get all bibles data success
+ *        description: Success
  *        content:
  *          application/json:
  *            schema:
- *              $ref: '#/components/schemas/Bibles'
+ *              type: object
+ *              properties:
+ *                pagination:
+ *                  $ref: '#/components/schemas/Pagination'
+ *                data:
+ *                  type: array
+ *                  items:
+ *                    allOf:
+ *                      - $ref: '#/components/schemas/ID'
+ *                      - $ref: '#/components/schemas/Bible'
+ *                      - $ref: '#/components/schemas/LocaleObj'
  */
-router.get("/", [ limiter(10, 60 * 1000) ], get);
-router.post("/", [ limiter(10, 60 * 1000), validator<BibleSType, BiblesSchemasType>(createSchema) ], post);
+router.get("/", get);
 
-router.get("/:_id", [ authenticate, limiter(10, 60 * 1000) ], getById);
-router.put("/:_id", [ limiter(10, 60 * 1000), validator<BibleSType, BiblesSchemasType>(commonSchema) ], updateById);
-router.delete("/:_id", [ authenticate, limiter(10, 60 * 1000) ], removeById);
+/**
+ * @swagger
+ * /bibles:
+ *  post:
+ *    tags:
+ *      - Bibles
+ *    summary: Create bible
+ *    requestBody:
+ *      $ref: '#/components/requestBodies/BibleCreate'
+ *    responses:
+ *      '200':
+ *        description: Success
+ */
+router.post("/", [ validator<BibleS, BibleSchemas>(createSchema) ], post);
+
+
+/**
+ * @swagger
+ * /bibles/{_id}:
+ *  get:
+ *    tags:
+ *      - Bibles
+ *    summary: Get one bible by id
+ *    parameters:
+ *      - $ref: '#/components/parameters/ID'
+ *    responses:
+ *      '200':
+ *        description: Success
+ *        content:
+ *          application/json:
+ *            schema:
+ *              allOf:
+ *                - $ref: '#/components/schemas/ID'
+ *                - $ref: '#/components/schemas/Bible'
+ *                - $ref: '#/components/schemas/LocaleObj'
+ */
+router.get("/:_id", getById);
+
+/**
+ * @swagger
+ * /bibles/{_id}:
+ *  put:
+ *    tags:
+ *      - Bibles
+ *    summary: Update one bible by id
+ *    parameters:
+ *      - $ref: '#/components/parameters/ID'
+ *    requestBody:
+ *      $ref: '#/components/requestBodies/BibleCreate'
+ *    responses:
+ *      '200':
+ *        description: Success
+ *        content:
+ *          application/json:
+ *            schema:
+ *              allOf:
+ *                - $ref: '#/components/schemas/ID'
+ *                - $ref: '#/components/schemas/Bible'
+ *                - $ref: '#/components/schemas/LocaleObj'
+ */
+router.put("/:_id", [ validator<BibleS, BibleSchemas>(commonSchema) ], updateById);
+
+/**
+ * @swagger
+ * /bibles/{_id}:
+ *  delete:
+ *    tags:
+ *      - Bibles
+ *    summary: Delete one bible by id
+ *    parameters:
+ *      - $ref: '#/components/parameters/ID'
+ *    responses:
+ *      '200':
+ *        description: Success
+ */
+router.delete("/:_id", removeById);
 
 export { router as biblesRouter };

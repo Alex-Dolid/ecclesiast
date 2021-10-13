@@ -135,9 +135,6 @@
       "User": {
         "type": "object",
         "properties": {
-          "_id": {
-            "type": "string"
-          },
           "nickname": {
             "type": "string"
           },
@@ -152,7 +149,6 @@
           }
         },
         "example": {
-          "_id": "hash",
           "nickname": "admin",
           "email": "admin@admin.com",
           "accessRole": "admin",
@@ -210,7 +206,7 @@
       "ID": {
         "name": "_id",
         "in": "path",
-        "description": "id of user",
+        "description": "id of document",
         "required": true,
         "schema": {
           "type": "string"
@@ -373,7 +369,14 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/User"
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ID"
+                    },
+                    {
+                      "$ref": "#/components/schemas/User"
+                    }
+                  ]
                 }
               }
             }
@@ -413,7 +416,14 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/User"
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ID"
+                    },
+                    {
+                      "$ref": "#/components/schemas/User"
+                    }
+                  ]
                 }
               }
             }
@@ -594,7 +604,14 @@
                     "data": {
                       "type": "array",
                       "items": {
-                        "$ref": "#/components/schemas/User"
+                        "allOf": [
+                          {
+                            "$ref": "#/components/schemas/ID"
+                          },
+                          {
+                            "$ref": "#/components/schemas/User"
+                          }
+                        ]
                       }
                     }
                   }
@@ -636,7 +653,14 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/User"
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ID"
+                    },
+                    {
+                      "$ref": "#/components/schemas/User"
+                    }
+                  ]
                 }
               }
             }
@@ -662,7 +686,14 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/User"
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ID"
+                    },
+                    {
+                      "$ref": "#/components/schemas/User"
+                    }
+                  ]
                 }
               }
             }

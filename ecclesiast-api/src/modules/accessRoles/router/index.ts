@@ -21,8 +21,6 @@ router.use([
   authorize([ ROLES.SUPER_ADMIN ])
 ]);
 
-// TODO anyof ID зробити для accessRoles, users !(останній раз рефакторив locales, продовжити...)!
-
 /**
  * @swagger
  * tags:

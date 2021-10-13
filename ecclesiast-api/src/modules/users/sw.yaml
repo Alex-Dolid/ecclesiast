@@ -3,8 +3,6 @@ components:
     User:
       type: object
       properties:
-        _id:
-          type: string
         nickname:
           type: string
         email:
@@ -14,7 +12,6 @@ components:
         password:
           type: string
       example:
-        _id: hash
         nickname: admin
         email: admin@admin.com
         accessRole: admin
@@ -27,11 +24,3 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/User'
-  parameters:
-    ID:
-      name: _id
-      in: path
-      description: id of user
-      required: true
-      schema:
-        type: string

@@ -47,7 +47,9 @@ router.use([
  *                  data:
  *                    type: array
  *                    items:
- *                      $ref: '#/components/schemas/User'
+ *                      allOf:
+ *                        - $ref: '#/components/schemas/ID'
+ *                        - $ref: '#/components/schemas/User'
  */
 router.get("/", get);
 
@@ -82,7 +84,9 @@ router.post("/", [ validator<UserS, UsersSchemas>(createSchema) ], post);
  *        content:
  *          application/json:
  *            schema:
- *              $ref: '#/components/schemas/User'
+ *              allOf:
+ *                - $ref: '#/components/schemas/ID'
+ *                - $ref: '#/components/schemas/User'
  */
 router.get("/:_id", getById);
 
@@ -103,7 +107,9 @@ router.get("/:_id", getById);
  *        content:
  *          application/json:
  *            schema:
- *               $ref: '#/components/schemas/User'
+ *               allOf:
+ *                 - $ref: '#/components/schemas/ID'
+ *                 - $ref: '#/components/schemas/User'
  */
 router.put("/:_id", [ validator<UserS, UsersSchemas>(commonSchema) ], updateById);
 

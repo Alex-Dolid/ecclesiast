@@ -40,7 +40,9 @@ router.use([ limiter(LIMIT_REQUEST.MAX, LIMIT_REQUEST.RESET_IN) ]);
  *        content:
  *          application/json:
  *            schema:
- *               $ref: '#/components/schemas/User'
+ *               allOf:
+ *                 - $ref: '#/components/schemas/ID'
+ *                 - $ref: '#/components/schemas/User'
  */
 router.post("/sign-in", [ validator<SignInPayload, AuthSchemas>(signInSchema) ], signIn);
 
@@ -76,7 +78,9 @@ router.post("/sign-up", [ validator<UserS, UsersSchemas>(createSchema) ], signUp
  *        content:
  *          application/json:
  *            schema:
- *              $ref: '#/components/schemas/User'
+ *              allOf:
+ *                - $ref: '#/components/schemas/ID'
+ *                - $ref: '#/components/schemas/User'
  */
 router.post("/refresh", [ authenticate, validator<SignInPayload, AuthSchemas>(signInSchema) ], refresh);
 

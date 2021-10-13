@@ -18,10 +18,16 @@ components:
       type: object
       properties:
         book:
-          $ref: '#/components/schemas/BibleBook'
+          allOf:
+            - $ref: '#/components/schemas/ID'
+            - $ref: '#/components/schemas/BibleBook'
+            - $ref: '#/components/schemas/LocaleObj'
       example:
         book:
-          $ref: '#/components/examples/BibleBook'
+          allOf:
+            - $ref: '#/components/examples/ID'
+            - $ref: '#/components/examples/BibleBook'
+            - $ref: '#/components/examples/LocaleObj'
   requestBodies:
     BibleBookCreate:
       description: Create new bible book body
@@ -35,3 +41,9 @@ components:
   examples:
     BibleBook:
       name: Genesis
+    BibleBookObj:
+      book:
+        allOf:
+          - $ref: '#/components/examples/ID'
+          - $ref: '#/components/examples/BibleBook'
+          - $ref: '#/components/examples/LocaleObj'

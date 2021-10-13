@@ -28,3 +28,6 @@ components:
       required: true
       schema:
         type: string
+  examples:
+    ID:
+      _id: <hash>

@@ -18,10 +18,14 @@ components:
       type: object
       properties:
         chapter:
-          $ref: '#/components/schemas/BibleChapter'
+          allOf:
+            - $ref: '#/components/schemas/ID'
+            - $ref: '#/components/schemas/BibleChapter'
       example:
         chapter:
-          $ref: '#/components/examples/BibleChapter'
+          allOf:
+            - $ref: '#/components/examples/ID'
+            - $ref: '#/components/examples/BibleChapter'
   requestBodies:
     BibleChapterCreate:
       description: Create new bible chapter body
@@ -33,3 +37,8 @@ components:
   examples:
     BibleChapter:
       name: 1
+    BibleChapterObj:
+      chapter:
+        allOf:
+          - $ref: '#/components/examples/ID'
+          - $ref: '#/components/examples/BibleChapter'

@@ -24,10 +24,14 @@ components:
       type: object
       properties:
         locale:
-          $ref: '#/components/schemas/Locale'
+          allOf:
+            - $ref: '#/components/schemas/ID'
+            - $ref: '#/components/schemas/Locale'
       example:
         locale:
-          $ref: '#/components/examples/Locale'
+          allOf:
+            - $ref: '#/components/examples/ID'
+            - $ref: '#/components/examples/Locale'
   requestBodies:
     LocaleCreate:
       description: Create new locale body
@@ -41,3 +45,8 @@ components:
       name: English
       code2: en
       code3: eng
+    LocaleObj:
+      locale:
+        allOf:
+          - $ref: '#/components/examples/ID'
+          - $ref: '#/components/examples/Locale'

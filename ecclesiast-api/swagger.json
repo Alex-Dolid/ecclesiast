@@ -80,12 +80,32 @@
         "type": "object",
         "properties": {
           "book": {
-            "$ref": "#/components/schemas/BibleBook"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ID"
+              },
+              {
+                "$ref": "#/components/schemas/BibleBook"
+              },
+              {
+                "$ref": "#/components/schemas/LocaleObj"
+              }
+            ]
           }
         },
         "example": {
           "book": {
-            "$ref": "#/components/examples/BibleBook"
+            "allOf": [
+              {
+                "$ref": "#/components/examples/ID"
+              },
+              {
+                "$ref": "#/components/examples/BibleBook"
+              },
+              {
+                "$ref": "#/components/examples/LocaleObj"
+              }
+            ]
           }
         }
       },
@@ -115,12 +135,26 @@
         "type": "object",
         "properties": {
           "chapter": {
-            "$ref": "#/components/schemas/BibleChapter"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ID"
+              },
+              {
+                "$ref": "#/components/schemas/BibleChapter"
+              }
+            ]
           }
         },
         "example": {
           "chapter": {
-            "$ref": "#/components/examples/BibleChapter"
+            "allOf": [
+              {
+                "$ref": "#/components/examples/ID"
+              },
+              {
+                "$ref": "#/components/examples/BibleChapter"
+              }
+            ]
           }
         }
       },
@@ -173,28 +207,64 @@
           "bibleId": "<hash>"
         }
       },
-      "BibleVerseHash": {
+      "BibleVersesHash": {
         "type": "object",
         "properties": {
-          "verse": {
-            "type": "string"
+          "verses": {
+            "type": "array",
+            "items": "string"
           }
         },
         "example": {
-          "verse": "<hash>"
+          "verses": [
+            "<hash>"
+          ]
         }
       },
-      "BibleVerseObj": {
+      "BibleVersesObj": {
         "type": "object",
         "properties": {
-          "verse": {
-            "$ref": "#/components/schemas/BibleVerse"
+          "verses": {
+            "type": "array",
+            "items": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/ID"
+                },
+                {
+                  "$ref": "#/components/schemas/BibleVerse"
+                },
+                {
+                  "$ref": "#/components/schemas/LocaleObj"
+                },
+                {
+                  "$ref": "#/components/schemas/BibleChapterObj"
+                },
+                {
+                  "$ref": "#/components/schemas/BibleBookObj"
+                }
+              ]
+            }
           }
         },
         "example": {
-          "verse": {
-            "$ref": "#/components/examples/BibleVerse"
-          }
+          "verses": [
+            {
+              "$ref": "#/components/examples/ID"
+            },
+            {
+              "$ref": "#/components/examples/BibleVerse"
+            },
+            {
+              "$ref": "#/components/examples/LocaleObj"
+            },
+            {
+              "$ref": "#/components/examples/BibleChapterObj"
+            },
+            {
+              "$ref": "#/components/examples/BibleBookObj"
+            }
+          ]
         }
       },
       "Locale": {
@@ -231,12 +301,26 @@
         "type": "object",
         "properties": {
           "locale": {
-            "$ref": "#/components/schemas/Locale"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ID"
+              },
+              {
+                "$ref": "#/components/schemas/Locale"
+              }
+            ]
           }
         },
         "example": {
           "locale": {
-            "$ref": "#/components/examples/Locale"
+            "allOf": [
+              {
+                "$ref": "#/components/examples/ID"
+              },
+              {
+                "$ref": "#/components/examples/Locale"
+              }
+            ]
           }
         }
       },
@@ -360,7 +444,7 @@
                   "$ref": "#/components/schemas/LocaleHash"
                 },
                 {
-                  "$ref": "#/components/schemas/BibleVerseHash"
+                  "$ref": "#/components/schemas/BibleVersesHash"
                 }
               ]
             }
@@ -418,8 +502,35 @@
       "BibleBook": {
         "name": "Genesis"
       },
+      "BibleBookObj": {
+        "book": {
+          "allOf": [
+            {
+              "$ref": "#/components/examples/ID"
+            },
+            {
+              "$ref": "#/components/examples/BibleBook"
+            },
+            {
+              "$ref": "#/components/examples/LocaleObj"
+            }
+          ]
+        }
+      },
       "BibleChapter": {
         "name": 1
+      },
+      "BibleChapterObj": {
+        "chapter": {
+          "allOf": [
+            {
+              "$ref": "#/components/examples/ID"
+            },
+            {
+              "$ref": "#/components/examples/BibleChapter"
+            }
+          ]
+        }
       },
       "BibleVerse": {
         "name": 1,
@@ -430,6 +541,21 @@
         "name": "English",
         "code2": "en",
         "code3": "eng"
+      },
+      "LocaleObj": {
+        "locale": {
+          "allOf": [
+            {
+              "$ref": "#/components/examples/ID"
+            },
+            {
+              "$ref": "#/components/examples/Locale"
+            }
+          ]
+        }
+      },
+      "ID": {
+        "_id": "<hash>"
       }
     },
     "parameters": {
@@ -969,7 +1095,7 @@
                             "$ref": "#/components/schemas/LocaleObj"
                           },
                           {
-                            "$ref": "#/components/schemas/LocaleVerseObj"
+                            "$ref": "#/components/schemas/BibleVersesObj"
                           }
                         ]
                       }
@@ -1024,7 +1150,7 @@
                       "$ref": "#/components/schemas/LocaleObj"
                     },
                     {
-                      "$ref": "#/components/schemas/LocaleVerseObj"
+                      "$ref": "#/components/schemas/BibleVersesObj"
                     }
                   ]
                 }
@@ -1063,7 +1189,7 @@
                       "$ref": "#/components/schemas/LocaleObj"
                     },
                     {
-                      "$ref": "#/components/schemas/LocaleVerseObj"
+                      "$ref": "#/components/schemas/BibleVersesObj"
                     }
                   ]
                 }

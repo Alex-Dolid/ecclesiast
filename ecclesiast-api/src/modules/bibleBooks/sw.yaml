@@ -7,6 +7,21 @@ components:
           type: string
       example:
         name: Genesis
+    BibleBookHash:
+      type: object
+      properties:
+        book:
+          type: string
+      example:
+        book: <hash>
+    BibleBookObj:
+      type: object
+      properties:
+        book:
+          $ref: '#/components/schemas/BibleBook'
+      example:
+        book:
+          $ref: '#/components/examples/BibleBook'
   requestBodies:
     BibleBookCreate:
       description: Create new bible book body
@@ -17,3 +32,6 @@ components:
             allOf:
               - $ref: '#/components/schemas/BibleBook'
               - $ref: '#/components/schemas/LocaleHash'
+  examples:
+    BibleBook:
+      name: Genesis

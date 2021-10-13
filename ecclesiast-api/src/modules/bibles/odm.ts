@@ -3,7 +3,7 @@ import * as mongoose from "mongoose";
 import { Document, Schema } from "mongoose";
 // Odm
 import { LocalesOdm, Locale } from "../locales";
-import { BiblesVersesOdm, BibleVerseType } from "../biblesVerses";
+import { BibleVersesOdm, BibleVerse } from "../bibleVerses";
 // Constants
 import { COLLECTION_NAME } from "./constants";
 import { TIMESTAMPS } from "../../constants";
@@ -14,7 +14,7 @@ export type Bible = {
   name: string,
   translators: string[],
   edition?: string,
-  verses: BibleVerseType[],
+  verses: BibleVerse[],
   src?: string,
   locale: Locale
 }
@@ -44,7 +44,7 @@ const BibleSchema: Schema = new mongoose.Schema(
     verses: [
       {
         type: Schema.Types.ObjectId,
-        ref: BiblesVersesOdm
+        ref: BibleVersesOdm
       }
     ],
     locale: {

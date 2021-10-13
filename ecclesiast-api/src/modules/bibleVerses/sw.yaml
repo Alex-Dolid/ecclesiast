@@ -1,0 +1,47 @@
+components:
+  schemas:
+    BibleVerse:
+      type: object
+      properties:
+        name:
+          type: number
+        text:
+          type: string
+        bibleId:
+          type: string
+      example:
+        name: 1
+        text: God create Earth
+        bibleId: <hash>
+    BibleVerseHash:
+      type: object
+      properties:
+        verse:
+          type: string
+      example:
+        verse: <hash>
+    BibleVerseObj:
+      type: object
+      properties:
+        verse:
+          $ref: '#/components/schemas/BibleVerse'
+      example:
+        verse:
+          $ref: '#/components/examples/BibleVerse'
+  requestBodies:
+    BibleVerseCreate:
+      description: Create new bible verse body
+      required: true
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/BibleVerse'
+              - $ref: '#/components/schemas/LocaleHash'
+              - $ref: '#/components/schemas/BibleChapterHash'
+              - $ref: '#/components/schemas/BibleBookHash'
+  examples:
+    BibleVerse:
+      name: 1
+      text: God create Earth
+      bibleId: <hash>

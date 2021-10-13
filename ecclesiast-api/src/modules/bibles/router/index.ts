@@ -49,6 +49,7 @@ router.use([
  *                      - $ref: '#/components/schemas/ID'
  *                      - $ref: '#/components/schemas/Bible'
  *                      - $ref: '#/components/schemas/LocaleObj'
+ *                      - $ref: '#/components/schemas/LocaleVerseObj'
  */
 router.get("/", get);
 
@@ -87,6 +88,7 @@ router.post("/", [ validator<BibleS, BibleSchemas>(createSchema) ], post);
  *                - $ref: '#/components/schemas/ID'
  *                - $ref: '#/components/schemas/Bible'
  *                - $ref: '#/components/schemas/LocaleObj'
+ *                - $ref: '#/components/schemas/LocaleVerseObj'
  */
 router.get("/:_id", getById);
 
@@ -111,6 +113,7 @@ router.get("/:_id", getById);
  *                - $ref: '#/components/schemas/ID'
  *                - $ref: '#/components/schemas/Bible'
  *                - $ref: '#/components/schemas/LocaleObj'
+ *                - $ref: '#/components/schemas/LocaleVerseObj'
  */
 router.put("/:_id", [ validator<BibleS, BibleSchemas>(commonSchema) ], updateById);
 

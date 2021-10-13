@@ -7,6 +7,21 @@ components:
           type: number
       example:
         name: 1
+    BibleChapterHash:
+      type: object
+      properties:
+        chapter:
+          type: string
+      example:
+        chapter: <hash>
+    BibleChapterObj:
+      type: object
+      properties:
+        chapter:
+          $ref: '#/components/schemas/BibleChapter'
+      example:
+        chapter:
+          $ref: '#/components/examples/BibleChapter'
   requestBodies:
     BibleChapterCreate:
       description: Create new bible chapter body
@@ -15,3 +30,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/BibleChapter'
+  examples:
+    BibleChapter:
+      name: 1

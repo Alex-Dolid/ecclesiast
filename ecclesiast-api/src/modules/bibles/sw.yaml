@@ -31,3 +31,4 @@ components:
             allOf:
               - $ref: '#/components/schemas/Bible'
               - $ref: '#/components/schemas/LocaleHash'
+              - $ref: '#/components/schemas/BibleVerseHash'

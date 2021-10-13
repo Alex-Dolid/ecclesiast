@@ -1,14 +1,16 @@
 // Core
 import * as mongoose from "mongoose";
-// Types
 import { Document, Schema } from "mongoose";
 // Odm
 import { LocalesOdm, Locale } from "../locales";
-import { BiblesChaptersOdm, BibleChapter } from "../bibleChapters";
-import { BibleBook, BiblesBooksOdm } from "../bibleBooks";
+import { BibleChaptersOdm, BibleChapter } from "../bibleChapters";
+import { BibleBook, BibleBooksOdm } from "../bibleBooks";
+// Constants
+import { COLLECTION_NAME } from "./constants";
+import { TIMESTAMPS } from "../../constants";
 
-export type BibleVerseType = {
-  _id?: string,
+export type BibleVerse = {
+  _id: string,
   name: number,
   text: string
   locale: Locale,
@@ -17,7 +19,7 @@ export type BibleVerseType = {
   bibleId: string
 }
 
-export type BibleVerseDocType = Document & BibleVerseType;
+export type BibleVerseDoc = Document & BibleVerse;
 
 const BibleVerseSchema: Schema = new mongoose.Schema(
   {
@@ -36,12 +38,12 @@ const BibleVerseSchema: Schema = new mongoose.Schema(
     },
     book: {
       type: Schema.Types.ObjectId,
-      ref: BiblesBooksOdm,
+      ref: BibleBooksOdm,
       required: true
     },
     chapter: {
       type: Schema.Types.ObjectId,
-      ref: BiblesChaptersOdm,
+      ref: BibleChaptersOdm,
       required: true
     },
     locale: {
@@ -50,7 +52,7 @@ const BibleVerseSchema: Schema = new mongoose.Schema(
       required: true
     }
   },
-  { timestamps: { createdAt: "created", updatedAt: "modified" } }
+  { timestamps: { createdAt: TIMESTAMPS.CREATED_AT, updatedAt: TIMESTAMPS.UPDATED_AT } }
 );
 
-export const Odm = mongoose.model<BibleVerseDocType>("bibles-verses", BibleVerseSchema);
+export const Odm = mongoose.model<BibleVerseDoc>(COLLECTION_NAME, BibleVerseSchema);

@@ -54,7 +54,7 @@ router.get("/", get);
 
 /**
  * @swagger
- * /bible-book:
+ * /bible-books:
  *  post:
  *    tags:
  *      - BibleBooks

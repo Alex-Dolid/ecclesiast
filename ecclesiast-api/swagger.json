@@ -826,9 +826,7 @@
             }
           }
         }
-      }
-    },
-    "/bible-book": {
+      },
       "post": {
         "tags": [
           "BibleBooks"

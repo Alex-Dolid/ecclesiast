@@ -6,7 +6,14 @@ import * as cors from "cors";
 import * as swaggerUi from "swagger-ui-express";
 import * as swaggerJsdoc from "swagger-jsdoc";
 // Instruments
-import { errorLogger, logger, NotFoundError, notFoundLogger, validationLogger } from "./utils";
+import {
+  errorLogger,
+  getPort,
+  logger,
+  NotFoundError,
+  notFoundLogger,
+  validationLogger
+} from "./utils";
 import { swaggerOptions } from "./init";
 import config from "./config";
 // Helpers
@@ -32,7 +39,7 @@ if (process.env.NODE_ENV === "dev") {
       body = JSON.stringify(req.body, null, 2);
     }
 
-    logger.debug(`${ req.method } ${ body ? `\n${ body }` : "" }`);
+    logger.debug(`${ req.method } ${ req.url } ${ body ? `\n${ body }` : "" }`);
     next();
   });
 }
@@ -43,7 +50,12 @@ Object.entries(routes).forEach(([ route, router ]) => app.use(route, router));
 // Swagger
 const swaggerDocs = swaggerJsdoc(swaggerOptions);
 if (config.swagger.access === "true") {
-  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+  const SWAGGER_ROUTE = "/api-docs";
+  const PORT = getPort();
+
+  app.use(SWAGGER_ROUTE, swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
+  logger.info(`Swagger API is available on URL: http://localhost:${ PORT }${ SWAGGER_ROUTE }`);
 }
 
 // NotFound Route

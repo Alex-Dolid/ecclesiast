@@ -1,12 +1,13 @@
 // Core
 import * as mongoose from "mongoose";
 // Libs
-import dg from "debug";
+import * as debug from "debug";
 // Utils
 import { getDB } from "../utils";
 
-const debug = dg("db");
+const dg = debug("db");
 const { DB_URL, DB_PORT, DB_NAME } = getDB();
+const DB_FULL_URL = `mongodb://${ DB_URL }:${ DB_PORT }/${ DB_NAME }`;
 
 const mongooseOptions = {
   promiseLibrary: global.Promise,
@@ -20,15 +21,12 @@ const mongooseOptions = {
   autoIndex: false
 };
 
-const connection = mongoose.connect(
-  `mongodb://${ DB_URL }:${ DB_PORT }/${ DB_NAME }`,
-  mongooseOptions
-);
+const connection = mongoose.connect(DB_FULL_URL, mongooseOptions);
 
 connection
   .then(() => {
-    debug(`DB ${ DB_NAME } connected`);
+    dg(`DB ${ DB_NAME } connected to ${ DB_FULL_URL }`);
   })
   .catch(({ message }) => {
-    debug(`DB ${ DB_NAME } connected error ${ message }`);
+    dg(`DB ${ DB_NAME } connected with error: ${ message }`);
   });

@@ -21,7 +21,7 @@ import { sendResponse } from "./helpers";
 // Routes
 import { routes } from "./routers";
 // Constants
-import { Statuses } from "./constants";
+import { ENV, Statuses } from "./constants";
 // Types
 import { IErrorHandler } from "./types";
 
@@ -31,7 +31,7 @@ app.use(cors());
 app.use(express.json({ limit: "10kb" }));
 
 // Debug Logger
-if (config.env.node_env === "dev") {
+if (config.env.node_env === ENV.DEV) {
   app.use((req, res, next) => {
     let body = null;
 
@@ -67,7 +67,7 @@ app.use("*", (req, res, next) => {
 });
 
 // Error Handler
-if (config.env.node_env !== "test") {
+if (config.env.node_env !== ENV.TEST) {
   app.use((error: Error & IErrorHandler, req: Request, res: Response, next: NextFunction) => {
     const { name, message, statusCode = Statuses.ServerError } = error;
     const errorMessage = `${ name }: ${ message }`;

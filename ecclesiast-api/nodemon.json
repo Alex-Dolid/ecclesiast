@@ -11,7 +11,7 @@
     "./swagger"
   ],
   "env": {
-    "NODE_ENV": "dev"
+    "NODE_ENV": "development"
   },
   "exec": "ts-node -r dotenv/config -r @babel/register ./src/index.ts",
   "ext": "ts,json"

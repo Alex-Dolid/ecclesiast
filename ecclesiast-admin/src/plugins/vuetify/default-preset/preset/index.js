@@ -1,4 +1,4 @@
-require('./overrides.scss')
+require('./overrides.scss');
 
 export default {
   theme: {
@@ -23,4 +23,4 @@ export default {
       },
     },
   },
-}
+};

@@ -1,1 +1,1 @@
-export { getToken, setToken } from './token';
+export { getToken, setToken } from './auth';

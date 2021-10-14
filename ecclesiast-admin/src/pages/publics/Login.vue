@@ -150,8 +150,11 @@
 import {
   mdiFacebook, mdiTwitter, mdiGithub, mdiGoogle, mdiEyeOutline, mdiEyeOffOutline,
 } from '@mdi/js';
+// Hooks
+import { useLocalStorage } from '@/hooks';
 // Constants
 import { PAGES } from '@/router/constants';
+import { USER } from '@/constants';
 
 export default {
   name: 'Login',
@@ -190,10 +193,12 @@ export default {
 
   methods: {
     login() {
+      // eslint-disable-next-line no-unused-vars
+      const { user } = useLocalStorage([USER]);
       const { email, password } = this;
 
       if (email && password) {
-        localStorage.setItem('auth', JSON.stringify({ email, password }));
+        user.update({ email, password });
         this.$router.push({ name: PAGES.HOME.name });
       }
     },

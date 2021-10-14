@@ -30,8 +30,8 @@ app.use(cors());
 
 app.use(express.json({ limit: "10kb" }));
 
-// Logger
-if (process.env.NODE_ENV === "dev") {
+// Debug Logger
+if (config.env.node_env === "dev") {
   app.use((req, res, next) => {
     let body = null;
 
@@ -66,7 +66,8 @@ app.use("*", (req, res, next) => {
   next(error);
 });
 
-if (process.env.NODE_ENV !== "test") {
+// Error Handler
+if (config.env.node_env !== "test") {
   app.use((error: Error & IErrorHandler, req: Request, res: Response, next: NextFunction) => {
     const { name, message, statusCode = Statuses.ServerError } = error;
     const errorMessage = `${ name }: ${ message }`;

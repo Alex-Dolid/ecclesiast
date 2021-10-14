@@ -1,47 +1,30 @@
 // Core
 import * as express from "express";
-import { Request, Response, Application, NextFunction } from "express";
+import { Application } from "express";
 // Libs
 import * as cors from "cors";
 import * as swaggerUi from "swagger-ui-express";
 import * as swaggerJsdoc from "swagger-jsdoc";
-// Instruments
-import {
-  errorLogger,
-  getPort,
-  logger,
-  NotFoundError,
-  notFoundLogger,
-  validationLogger
-} from "./utils";
+// Utils
+import { getPort, logger } from "./utils";
 import { swaggerOptions } from "./init";
 import config from "./config";
-// Helpers
-import { sendResponse } from "./helpers";
+// Middlewares
+import { ErrorHandler, handleNotFoundRoute, requestResponseLogger } from "./middlewares";
 // Routes
 import { routes } from "./routers";
 // Constants
-import { ENV, Statuses } from "./constants";
-// Types
-import { IErrorHandler } from "./types";
+import { ENV } from "./constants";
 
 const app: Application = express();
-app.use(cors());
 
+// Common Middlewares
+app.use(cors());
 app.use(express.json({ limit: "10kb" }));
 
 // Debug Logger
 if (config.env.node_env === ENV.DEV) {
-  app.use((req, res, next) => {
-    let body = null;
-
-    if (req.method !== "GET") {
-      body = JSON.stringify(req.body, null, 2);
-    }
-
-    logger.debug(`${ req.method } ${ req.url } ${ body ? `\n${ body }` : "" }`);
-    next();
-  });
+  app.use(requestResponseLogger);
 }
 
 // Routers
@@ -59,35 +42,11 @@ if (config.swagger.access === "true") {
 }
 
 // NotFound Route
-app.use("*", (req, res, next) => {
-  const error = new NotFoundError(
-    `Can not find right route for method ${ req.method } and path ${ req.originalUrl }`
-  );
-  next(error);
-});
+app.use("*", handleNotFoundRoute);
 
 // Error Handler
 if (config.env.node_env !== ENV.TEST) {
-  app.use((error: Error & IErrorHandler, req: Request, res: Response, next: NextFunction) => {
-    const { name, message, statusCode = Statuses.ServerError } = error;
-    const errorMessage = `${ name }: ${ message }`;
-
-    switch (error.name) {
-      case "NotFoundError":
-        notFoundLogger.error(errorMessage);
-        break;
-
-      case "ValidationError":
-        validationLogger.error(errorMessage);
-        break;
-
-      default:
-        errorLogger.error(errorMessage);
-        break;
-    }
-
-    sendResponse(res, { type: "error", name: error.name, message }, { statusCode });
-  });
+  app.use(ErrorHandler);
 }
 
 export { app };

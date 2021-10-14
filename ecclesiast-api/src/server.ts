@@ -32,7 +32,7 @@ Object.entries(routes).forEach(([ route, router ]) => app.use(route, router));
 
 // Swagger
 const swaggerDocs = swaggerJsdoc(swaggerOptions);
-if (config.swagger.access === "true") {
+if (config.swagger.access) {
   const SWAGGER_ROUTE = "/api-docs";
   const PORT = getPort();
 

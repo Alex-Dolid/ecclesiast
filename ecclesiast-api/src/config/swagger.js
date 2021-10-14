@@ -1,3 +1,3 @@
 module.exports = {
-  access: "false"
+  access: false
 };

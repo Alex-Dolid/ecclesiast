@@ -1,4 +1,5 @@
 export const useLocalStorage = (keys) => {
+  let items = null;
   const get = (key) => {
     const item = localStorage.getItem(key);
 
@@ -9,13 +10,21 @@ export const useLocalStorage = (keys) => {
     return JSON.parse(item);
   };
   const set = (key, payload) => localStorage.setItem(key, JSON.stringify(payload));
-  const remove = (key) => localStorage.removeItem(key);
-  const clearAll = () => localStorage.clear();
+  const remove = (key) => {
+    localStorage.removeItem(key);
+    delete items[key];
+  };
+  const clearAll = () => {
+    localStorage.clear();
+    document.dispatchEvent();
+    items = null;
+  };
   const update = (key, payload) => {
     const item = get();
 
     if (!item) {
-      return set(key, payload);
+      set(key, payload);
+      return payload;
     }
 
     if (typeof item !== typeof payload) {
@@ -23,23 +32,44 @@ export const useLocalStorage = (keys) => {
     }
 
     if (typeof payload !== 'object') {
-      return set(key, payload);
+      set(key, payload);
+      return payload;
     }
 
     if (Array.isArray(payload)) {
-      return set(key, [...item, ...payload]);
+      const newData = [...item, ...payload];
+      set(key, newData);
+      return newData;
     }
 
-    return set(key, { ...item, ...payload });
+    const newData = { ...item, ...payload };
+    set(key, newData);
+    return newData;
   };
 
-  const items = Object.fromEntries(
+  items = Object.fromEntries(
     keys.map((key) => [key, {
       data: get(key),
-      get: () => get(key),
-      set: (payload) => set(key, payload),
-      update: (payload) => update(key, payload),
-      remove: () => remove(key),
+      get() {
+        const item = get(key);
+        this.data = item;
+        return item;
+      },
+      set(payload) {
+        set(key, payload);
+        this.data = payload;
+      },
+      update(payload) {
+        // eslint-disable-next-line no-useless-catch
+        try {
+          this.data = update(key, payload);
+        } catch (error) {
+          throw error;
+        }
+      },
+      remove() {
+        remove(key);
+      },
     }]),
   );
 

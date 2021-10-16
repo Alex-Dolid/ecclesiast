@@ -1,8 +1,9 @@
 // Pages
 import App from '@/App.vue';
+// Init
+import { LocalStorage } from '@/init';
 // Constants
 import { PAGES } from '@/router/constants';
-import { USER } from '@/constants';
 
 export default [
   {
@@ -16,7 +17,8 @@ export default [
     ],
     // eslint-disable-next-line consistent-return
     beforeEnter(to, from, next) {
-      if (!localStorage.getItem(USER)) {
+      const { user } = LocalStorage();
+      if (!user) {
         return next({ name: PAGES.LOGIN.name });
       }
 

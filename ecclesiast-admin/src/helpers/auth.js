@@ -1,16 +1,14 @@
-// Hooks
-import { useLocalStorage } from '@/hooks';
-// Constants
-import { USER } from '@/constants';
+// Init
+import { LocalStorage } from '@/init';
 
 export const getToken = () => {
-  const { user } = useLocalStorage([USER]);
+  const { user } = LocalStorage();
 
   return user.data?.token;
 };
 
 export const setToken = (token) => {
-  const { user } = useLocalStorage([USER]);
+  const { user } = LocalStorage();
 
   user.update({ token });
 };

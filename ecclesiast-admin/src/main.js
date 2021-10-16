@@ -7,10 +7,13 @@ import router from './router';
 // Store
 import store from './store';
 // Plugins
-import vuetify from './plugins/vuetify';
+import { vuetify, localStorage } from './plugins';
+// Init
+import { LocalStorage } from '@/init';
 
 // configure...
 Vue.config.productionTip = false;
+Vue.use(localStorage, { useLocalStorage: LocalStorage });
 
 new Vue({
   router,

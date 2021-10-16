@@ -18,7 +18,7 @@ export default [
     // eslint-disable-next-line consistent-return
     beforeEnter(to, from, next) {
       const { user } = LocalStorage();
-      if (!user) {
+      if (!user.data) {
         return next({ name: PAGES.LOGIN.name });
       }
 

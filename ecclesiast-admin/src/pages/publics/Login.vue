@@ -59,7 +59,10 @@
               @click:append="isPasswordVisible = !isPasswordVisible"
             ></v-text-field>
 
-            <div class="d-flex align-center justify-space-between flex-wrap">
+            <div
+              v-if="isShowRegister"
+              class="d-flex align-center justify-space-between flex-wrap mt-3"
+            >
               <v-checkbox
                 label="Remember Me"
                 hide-details
@@ -88,7 +91,10 @@
         </v-card-text>
 
         <!-- create new account  -->
-        <v-card-text class="d-flex align-center justify-center flex-wrap mt-2">
+        <v-card-text
+          v-if="isShowRegister"
+          class="d-flex align-center justify-center flex-wrap mt-2"
+        >
           <span class="me-2">
             New on our platform?
           </span>
@@ -98,14 +104,14 @@
         </v-card-text>
 
         <!-- divider -->
-        <v-card-text class="d-flex align-center mt-2">
+        <v-card-text v-if="isSocialLogin" class="d-flex align-center mt-2">
           <v-divider></v-divider>
           <span class="mx-5">or</span>
           <v-divider></v-divider>
         </v-card-text>
 
         <!-- social links -->
-        <v-card-actions class="d-flex justify-center">
+        <v-card-actions v-if="isSocialLogin" class="d-flex justify-center">
           <v-btn
             v-for="link in socialLink"
             :key="link.icon"
@@ -157,6 +163,8 @@ export default {
   name: 'Login',
 
   data: () => ({
+    isSocialLogin: false,
+    isShowRegister: false,
     isPasswordVisible: false,
     email: '',
     password: '',
@@ -190,12 +198,9 @@ export default {
 
   methods: {
     login() {
-      // eslint-disable-next-line no-unused-vars
-      const { user } = this.$localStorage();
       const { email, password } = this;
 
       if (email && password) {
-        user.update({ email, password });
         this.$router.push({ name: PAGES.HOME.name });
       }
     },
@@ -204,5 +209,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import '@/plugins/vuetify/default-preset/preset/pages/auth.scss';
+@import 'src/plugins/vuetify/default-preset/preset/pages/auth.scss';
 </style>

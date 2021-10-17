@@ -45,9 +45,11 @@
           style="vertical-align:middle"
         >
           <span class="text--primary font-weight-semibold mb-n1">
-            John Doe
+            {{ $store.state.auth.user.nickname }}
           </span>
-          <small class="text--disabled text-capitalize">Admin</small>
+          <small class="text--disabled text-capitalize">
+            {{ $store.state.auth.user.accessRole.name }}
+          </small>
         </div>
       </div>
 
@@ -139,7 +141,7 @@
       <v-divider class="my-2"></v-divider>
 
       <!-- Logout -->
-      <v-list-item link>
+      <v-list-item link :to="{ name: loginPageName }">
         <v-list-item-icon class="me-2">
           <v-icon size="22">
             {{ icons.mdiLogoutVariant }}
@@ -165,9 +167,12 @@ import {
   mdiHelpCircleOutline,
   mdiLogoutVariant,
 } from '@mdi/js';
+// Constants
+import { PAGES } from '@/router/constants';
 
 export default {
   data: () => ({
+    loginPageName: PAGES.LOGIN.name,
     icons: {
       mdiAccountOutline,
       mdiEmailOutline,

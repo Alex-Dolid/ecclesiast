@@ -1,7 +1,7 @@
 // Core
 import * as express from "express";
 // Routes
-import { signIn, signUp, refresh } from "./route";
+import { signIn, signUp, refresh, signOut } from "./route";
 // Utils
 import { authenticate, limiter, validator } from "../../../middlewares";
 // Schema
@@ -65,13 +65,13 @@ router.post("/sign-up", [ validator<UserS, UserSchemas>(createSchema) ], signUp)
 
 /**
  * @swagger
- * /auth/refresh:
+ * /auth/refresh/{id}:
  *  post:
  *    tags:
  *      - Auth
  *    summary: Refresh token for user
- *    requestBody:
- *      $ref: '#/components/requestBodies/AuthSignIn'
+ *    parameters:
+ *      - $ref: '#/components/parameters/ID'
  *    responses:
  *      '200':
  *        description: Success
@@ -82,6 +82,21 @@ router.post("/sign-up", [ validator<UserS, UserSchemas>(createSchema) ], signUp)
  *                - $ref: '#/components/schemas/ID'
  *                - $ref: '#/components/schemas/User'
  */
-router.post("/refresh", [ authenticate, validator<SignInPayload, AuthSchemas>(signInSchema) ], refresh);
+router.post("/refresh/:_id", [ authenticate ], refresh); // TODO переглянути логіку
+
+/**
+ * @swagger
+ * /auth/sign-out/{_id}:
+ *  post:
+ *    tags:
+ *      - Auth
+ *    summary: Sign out in the app
+ *    parameters:
+ *      - $ref: '#/components/parameters/ID'
+ *    responses:
+ *      '200':
+ *        description: Success
+ */
+router.post("/sign-out/:_id", [ authenticate ], signOut); // TODO переглянути логіку
 
 export { router as authRouter };

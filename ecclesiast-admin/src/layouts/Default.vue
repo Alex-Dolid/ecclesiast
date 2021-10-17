@@ -97,6 +97,8 @@
 </template>
 
 <script>
+// Libs
+import { mapActions } from 'vuex';
 // Icons
 import { mdiMagnify, mdiBellOutline, mdiGithub } from '@mdi/js';
 // Components
@@ -120,6 +122,14 @@ export default {
       mdiGithub,
     },
   }),
+
+  methods: {
+    ...mapActions(['initAuthState']),
+  },
+
+  created() {
+    this.initAuthState();
+  },
 };
 </script>
 

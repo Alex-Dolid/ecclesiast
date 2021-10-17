@@ -199,7 +199,7 @@ export default {
   }),
 
   methods: {
-    ...mapActions(['signInAsync']),
+    ...mapActions(['signInAsync', 'signOutAsync']),
     async login() {
       const { email, password } = this;
 
@@ -212,6 +212,10 @@ export default {
         }
       }
     },
+  },
+
+  created() {
+    this.signOutAsync();
   },
 };
 </script>

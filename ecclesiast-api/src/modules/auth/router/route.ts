@@ -35,7 +35,9 @@ const constructRoute = (route: Routes, middlewares?: Middleware | Middleware[]):
 
     try {
       const controller = new Controller();
-      const data = await controller[route](req.body);
+      const data = route !== Routes.SIGN_OUT && route !== Routes.REFRESH
+        ? await controller[route](req.body)
+        : await controller[route](req.params?._id);
 
       sendResponse(res, data, { middlewares });
     } catch (error) {

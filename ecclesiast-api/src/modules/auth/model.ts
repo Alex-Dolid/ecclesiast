@@ -37,6 +37,18 @@ export class Model extends UsersModel {
     }
   }
 
+  async refresh(_id: string): Promise<User> {
+    try {
+      const user = await this.getById(_id);
+
+      const token = await createToken(omit(user, [ "password", "token" ]));
+
+      return await this.updateById(user._id, { token });
+    } catch (error) {
+      throw new ServerError(error.message);
+    }
+  }
+
   async signOut(_id: string): Promise<void> {
     try {
       await this.updateById(_id, { token: null });

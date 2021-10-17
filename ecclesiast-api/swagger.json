@@ -757,15 +757,17 @@
         }
       }
     },
-    "/auth/refresh": {
+    "/auth/refresh/{id}": {
       "post": {
         "tags": [
           "Auth"
         ],
         "summary": "Refresh token for user",
-        "requestBody": {
-          "$ref": "#/components/requestBodies/AuthSignIn"
-        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ID"
+          }
+        ],
         "responses": {
           "200": {
             "description": "Success",
@@ -783,6 +785,24 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/auth/sign-out/{_id}": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Sign out in the app",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
           }
         }
       }

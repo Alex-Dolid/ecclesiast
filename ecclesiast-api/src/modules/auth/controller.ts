@@ -19,8 +19,8 @@ export class Controller extends UsersController {
     return await this.authModel.signOut(_id);
   }
 
-  async refresh(payload: SignInPayload): Promise<User> {
-    return await this.authModel.signIn(payload);
+  async refresh(_id: string): Promise<User> {
+    return await this.authModel.refresh(_id);
   }
 
   async signUp(payload: User): Promise<void> {

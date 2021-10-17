@@ -3,8 +3,8 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 // Api
 import api from './api';
-// Helpers
-import { setToken } from '@/helpers';
+// Init
+import { LocalStorage } from '@/init';
 
 Vue.use(Vuex);
 
@@ -20,11 +20,13 @@ export default new Vuex.Store({
       actions: {
         signInAsync: async ({ commit }, payload) => {
           try {
-            const user = api.signIn(payload);
-            commit('setUser', user);
-            setToken(user.token);
-          } catch (e) {
-            console.error(e);
+            const { user } = LocalStorage();
+            const data = await api.signIn(payload);
+            commit('setUser', data);
+            user.set(data);
+          } catch (error) {
+            console.error(error);
+            throw error;
           }
         },
         clear: ({ commit }) => {

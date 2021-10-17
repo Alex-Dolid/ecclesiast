@@ -152,6 +152,8 @@
 </template>
 
 <script>
+// Store
+import { mapActions } from 'vuex';
 // Icons
 import {
   mdiFacebook, mdiTwitter, mdiGithub, mdiGoogle, mdiEyeOutline, mdiEyeOffOutline,
@@ -197,11 +199,17 @@ export default {
   }),
 
   methods: {
-    login() {
+    ...mapActions(['signInAsync']),
+    async login() {
       const { email, password } = this;
 
       if (email && password) {
-        this.$router.push({ name: PAGES.HOME.name });
+        try {
+          await this.signInAsync({ email, password });
+          await this.$router.push({ name: PAGES.HOME.name });
+        } catch (error) {
+          console.error(error);
+        }
       }
     },
   },

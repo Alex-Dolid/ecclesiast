@@ -6,6 +6,6 @@ const URLS = {
 };
 
 export default {
-  signIn: async (payload) => api.post(URLS.AUTH, payload),
+  signIn: async (payload) => api.post(`${URLS.AUTH}/sign-in`, payload),
   refresh: async () => api.post(`${URLS.AUTH}/refresh`),
 };

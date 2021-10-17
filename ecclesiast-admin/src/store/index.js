@@ -10,20 +10,23 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    auth: null,
+    user: null,
   },
   mutations: {
-    setAuth: (state, payload) => state.auth = payload,
+    setUser: (state, payload) => state.user = payload,
   },
   actions: {
-    loginAsync: async ({ commit }, payload) => {
+    signInAsync: async ({ commit }, payload) => {
       try {
-        const user = api.auth(payload);
-        commit('setAuth', user);
+        const user = api.signIn(payload);
+        commit('setUser', user);
         setToken(user.token);
       } catch (e) {
         console.error(e);
       }
+    },
+    clear: ({ commit }) => {
+      commit('setUser', null);
     },
   },
   modules: {},

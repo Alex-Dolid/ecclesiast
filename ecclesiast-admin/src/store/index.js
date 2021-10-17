@@ -9,25 +9,28 @@ import { setToken } from '@/helpers';
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: {
-    user: null,
-  },
-  mutations: {
-    setUser: (state, payload) => state.user = payload,
-  },
-  actions: {
-    signInAsync: async ({ commit }, payload) => {
-      try {
-        const user = api.signIn(payload);
-        commit('setUser', user);
-        setToken(user.token);
-      } catch (e) {
-        console.error(e);
-      }
+  modules: {
+    user: {
+      state: {
+        user: null,
+      },
+      mutations: {
+        setUser: (state, payload) => state.user = payload,
+      },
+      actions: {
+        signInAsync: async ({ commit }, payload) => {
+          try {
+            const user = api.signIn(payload);
+            commit('setUser', user);
+            setToken(user.token);
+          } catch (e) {
+            console.error(e);
+          }
+        },
+        clear: ({ commit }) => {
+          commit('setUser', null);
+        },
+      },
     },
-    clear: ({ commit }) => {
-      commit('setUser', null);
-    },
   },
-  modules: {},
 });

@@ -62,7 +62,7 @@ instance.interceptors.response.use((response) => response.data, (error) => {
   if (status === 403) {
     const { clearAll } = LocalStorage();
     clearAll();
-    this.$store.dispatch('clear');
+    this.$store.dispatch('user/clear');
     this.$router.push({ name: PAGES.LOGIN.name });
   }
 

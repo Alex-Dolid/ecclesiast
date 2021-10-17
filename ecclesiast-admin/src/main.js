@@ -1,7 +1,7 @@
 // Core
 import Vue from 'vue';
 // App
-import App from './App.vue';
+import App from './App';
 // Router
 import router from './router';
 // Store

@@ -1,3 +1,3 @@
-export { default as ThemeSwitcher } from './ThemeSwitcher.vue';
-export { default as AppBarUserMenu } from './AppBarUserMenu.vue';
-export { default as VerticalNavMenu } from './VerticalNavMenu/VerticalNavMenu.vue';
+export { default as ThemeSwitcher } from './ThemeSwitcher';
+export { default as AppBarUserMenu } from './AppBarUserMenu';
+export { default as VerticalNavMenu } from './VerticalNavMenu/VerticalNavMenu';

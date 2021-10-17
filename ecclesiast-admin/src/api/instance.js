@@ -6,6 +6,7 @@ import { getToken, setToken } from '@/helpers';
 import { LocalStorage } from '@/init';
 // Constants
 import { PAGES } from '@/router/constants';
+import { Statuses } from '@/constants';
 // Config
 import { baseURL, timeout, headers } from './config';
 
@@ -32,7 +33,7 @@ instance.interceptors.response.use((response) => response.data, (error) => {
   const originalRequest = error.config;
   const { status } = error.response ?? error;
 
-  if (status === 401 && !originalRequest._retry) {
+  if (status === Statuses.Unauthorized && !originalRequest._retry) {
     if (isRefreshingToken) {
       return new Promise((resolve, reject) => reqQueue.push({ resolve, reject }))
         .then(() => instance(originalRequest))
@@ -43,7 +44,8 @@ instance.interceptors.response.use((response) => response.data, (error) => {
     isRefreshingToken = true;
 
     return new Promise(((resolve, reject) => {
-      instance.post('auth/refresh')
+      const { user } = LocalStorage();
+      instance.post(`auth/refresh/${user?.data?._id}`)
         .then((data) => {
           setToken(data.token);
           processQueue(null);
@@ -59,10 +61,10 @@ instance.interceptors.response.use((response) => response.data, (error) => {
     }));
   }
 
-  if (status === 403) {
+  if (status === Statuses.Forbidden) {
     const { clearAll } = LocalStorage();
     clearAll();
-    this.$store.dispatch('user/clear');
+    this.$store.dispatch('auth/clear');
     this.$router.push({ name: PAGES.LOGIN.name });
   }
 

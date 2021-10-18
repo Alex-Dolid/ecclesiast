@@ -6,7 +6,7 @@ import { JsonWebTokenError } from "jsonwebtoken";
 // Models
 import { Model as UsersModel } from "../modules/users/model";
 // Utils
-import { ValidationError } from "../utils";
+import { PermissionError } from "../utils";
 // Helpers
 import { AccessToken, generatePrivateKey, getToken } from "../helpers";
 // Constants
@@ -21,7 +21,7 @@ export const authorize = (roles: ROLES[]): ExpressMiddleware => {
     const token = req.headers.authorization && getToken(req.headers.authorization);
 
     if (!token) {
-      throw new ValidationError("User is unauthorized", Statuses.Unauthorized);
+      throw new PermissionError("User is unauthorized", Statuses.Unauthorized);
     }
 
     jwt.verify(
@@ -31,23 +31,27 @@ export const authorize = (roles: ROLES[]): ExpressMiddleware => {
         const { user } = _decodedAccessToken as AccessToken;
 
         if (error) {
-          next(new ValidationError(error.message, Statuses.Unauthorized));
+          return next(new PermissionError(error.message, Statuses.Unauthorized));
         }
 
         const model = new UsersModel();
         model.getById(user._id)
           .then((_user) => {
-            if (_user.accessRole._id.toString() !== user.accessRole._id
+            const { _id } = req.params;
+
+            if (_user._id !== user._id
+              || (_id && _user._id !== _id)
+              || _user.accessRole._id.toString() !== user.accessRole._id
               || _user.accessRole.name !== user.accessRole.name
               || !accessRoles.includes(_user.accessRole.name)
             ) {
-              next(new ValidationError("Access denied", Statuses.Forbidden));
+              return next(new PermissionError("Access denied", Statuses.Forbidden));
             }
 
-            next();
+            return next();
           })
           .catch((_error) => {
-            next(_error);
+            return next(new PermissionError(`Access denied: ${ _error.message }`, Statuses.Forbidden));
           });
       }
     );

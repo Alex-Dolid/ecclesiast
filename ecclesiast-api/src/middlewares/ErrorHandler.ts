@@ -1,25 +1,33 @@
 // Core
 import { NextFunction, Request, Response } from "express";
 // Utils
-import { errorLogger, notFoundLogger, validationLogger } from "../utils";
+import { errorLogger, notFoundLogger, validationLogger, permissionLogger, serverLogger } from "../utils";
 // Helpers
 import { sendResponse } from "../helpers";
 // Constants
-import { Statuses } from "../constants";
+import { Statuses, ErrorNames } from "../constants";
 // Types
-import { IErrorHandler } from "../types";
+import { IError } from "../types";
 
-export const ErrorHandler = (error: Error & IErrorHandler, req: Request, res: Response, next: NextFunction): void => {
-  const { name, message, statusCode = Statuses.ServerError } = error;
+export const ErrorHandler = (error: Error & IError, req: Request, res: Response, next: NextFunction): void => {
+  const { name, message, errors, statusCode = Statuses.ServerError } = error;
   const errorMessage = `${ name }: ${ message }`;
 
-  switch (error.name) {
-    case "NotFoundError":
+  switch (name) {
+    case ErrorNames.NotFoundError:
       notFoundLogger.error(errorMessage);
       break;
 
-    case "ValidationError":
+    case ErrorNames.ValidationError:
       validationLogger.error(errorMessage);
+      break;
+
+    case ErrorNames.PermissionError:
+      permissionLogger.error(errorMessage);
+      break;
+
+    case ErrorNames.ServerError:
+      serverLogger.error(errorMessage);
       break;
 
     default:
@@ -27,5 +35,5 @@ export const ErrorHandler = (error: Error & IErrorHandler, req: Request, res: Re
       break;
   }
 
-  sendResponse(res, { type: "error", name: error.name, message }, { statusCode });
+  sendResponse(res, { type: "error", name, message, errors }, { statusCode });
 };

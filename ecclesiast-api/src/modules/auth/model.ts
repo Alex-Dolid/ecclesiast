@@ -4,7 +4,7 @@ import { omit } from "lodash";
 // Odm
 import { User, UsersModel } from "../users";
 // Utils
-import { NotFoundError, ServerError, ValidationError } from "../../utils";
+import { NotFoundError, ServerError, PermissionError } from "../../utils";
 // Helpers
 import { createToken } from "../../helpers";
 // Constants
@@ -20,13 +20,13 @@ export class Model extends UsersModel {
       const user = await this.findOne({ email }, { populate });
 
       if (!user) {
-        throw new NotFoundError("No user found in users data");
+        throw new NotFoundError("User with this email not found");
       }
 
       const isValidPassword = await bcrypt.compare(password, user.password);
 
       if (!isValidPassword) {
-        throw new ValidationError("Credentials not valid");
+        throw new PermissionError("Credentials not valid");
       }
 
       const token = await createToken(omit(user, [ "password", "token" ]));

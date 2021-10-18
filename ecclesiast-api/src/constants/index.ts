@@ -4,3 +4,4 @@ export { Statuses, DEFAULT_STATUS, STATUS_CODES } from "./statuses";
 export { DOC_VERSION, TIMESTAMPS, RAWS } from "./db";
 export { Token } from "./token";
 export { ENV } from "./env";
+export { ErrorNames } from "./errors";

@@ -6,6 +6,7 @@ export const signIn: AuthSignInScheme = {
   properties: {
     email: {
       type: "string",
+      format: "email",
       minLength: 7
     },
     password: {

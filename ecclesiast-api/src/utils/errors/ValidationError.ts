@@ -1,15 +1,14 @@
 // Utils
 import { CommonError } from "./CommonError";
+// Constants
+import { ErrorNames, Statuses } from "../../constants";
 // Types
-import { ErrorArgsType } from "../../types";
+import { ErrorArgs } from "../../types";
 
 export class ValidationError extends CommonError {
-  constructor(...args: ErrorArgsType) {
-    super({ args: [ ...args ], type: "ValidationError" });
-    const [ , statusCode = 400 ] = args;
+  constructor(message: ErrorArgs["message"], errors?: ErrorArgs["errors"]) {
+    super({ name: ErrorNames.ValidationError, message, statusCode: Statuses.BadRequest, errors });
 
     Error.captureStackTrace(this, ValidationError);
-    this.name = "ValidationError";
-    this.statusCode = statusCode;
   }
 }

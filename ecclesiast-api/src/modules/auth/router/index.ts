@@ -82,7 +82,7 @@ router.post("/sign-up", [ validator<UserS, UserSchemas>(createSchema) ], signUp)
  *                - $ref: '#/components/schemas/ID'
  *                - $ref: '#/components/schemas/User'
  */
-router.post("/refresh/:_id", [ authenticate ], refresh); // TODO переглянути логіку
+router.post("/refresh/:_id", [ authenticate ], refresh);
 
 /**
  * @swagger
@@ -97,6 +97,6 @@ router.post("/refresh/:_id", [ authenticate ], refresh); // TODO перегля�
  *      '200':
  *        description: Success
  */
-router.post("/sign-out/:_id", [ authenticate ], signOut); // TODO переглянути логіку
+router.post("/sign-out/:_id", [ authenticate ], signOut);
 
 export { router as authRouter };

@@ -1,15 +1,14 @@
 // Utils
 import { CommonError } from "./CommonError";
+// Constants
+import { Statuses, ErrorNames } from "../../constants";
 // Types
-import { ErrorArgsType } from "../../types";
+import { ErrorArgs } from "../../types";
 
 export class ServerError extends CommonError {
-  constructor(...args: ErrorArgsType) {
-    super({ args: [ ...args ], type: "ServerError" });
-    const [ , statusCode = 500 ] = args;
+  constructor(message: Required<ErrorArgs["message"]>) {
+    super({ name: ErrorNames.ServerError, message, statusCode: Statuses.ServerError });
 
     Error.captureStackTrace(this, ServerError);
-    this.name = "ServerError";
-    this.statusCode = statusCode;
   }
 }

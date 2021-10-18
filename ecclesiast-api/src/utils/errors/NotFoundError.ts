@@ -1,15 +1,14 @@
 // Utils
 import { CommonError } from "./CommonError";
+// Constants
+import { Statuses, ErrorNames } from "../../constants";
 // Types
-import { ErrorArgsType } from "../../types";
+import { ErrorArgs } from "../../types";
 
 export class NotFoundError extends CommonError {
-  constructor(...args: ErrorArgsType) {
-    super({ args: [ ...args ], type: "NotFoundError" });
-    const [ , statusCode = 404 ] = args;
+  constructor(message: ErrorArgs["message"]) {
+    super({ name: ErrorNames.NotFoundError, message, statusCode: Statuses.NotFound });
 
     Error.captureStackTrace(this, NotFoundError);
-    this.name = "NotFoundError";
-    this.statusCode = statusCode;
   }
 }

@@ -1,7 +1,7 @@
 // Pages
 import App from '@/App';
-// Init
-import { LocalStorage } from '@/init';
+// Plugins
+import { LocalStorage } from '@/plugins';
 // Constants
 import { PAGES } from '@/router/constants';
 

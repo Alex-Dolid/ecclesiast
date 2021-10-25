@@ -8,11 +8,15 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "axios": "^0.21.1",
+    "@casl/ability": "^5.4.3",
+    "@casl/vue": "1.x",
     "@mdi/js": "^5.9.55",
+    "@vue/composition-api": "^1.2.4",
     "@vuetify/cli-plugin-utils": "^0.0.9",
+    "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "vue": "^2.6.11",
+    "vue-i18n": "^8.24.5",
     "vue-router": "^3.2.0",
     "vuetify": "^2.4.0",
     "vuex": "^3.4.0"

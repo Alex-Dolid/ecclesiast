@@ -1,7 +1,7 @@
 // Api
 import api from '@/app/Auth/api';
-// Init
-import { LocalStorage } from '@/init';
+// Plugins
+import { LocalStorage } from '@/plugins';
 
 export default {
   namespace: true,

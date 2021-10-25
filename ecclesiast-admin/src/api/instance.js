@@ -1,9 +1,9 @@
 // Core
 import axios from 'axios';
+// Plugins
+import { LocalStorage } from '@/plugins';
 // Helpers
 import { getToken, setToken } from '@/helpers';
-// Init
-import { LocalStorage } from '@/init';
 // Constants
 import { PAGES } from '@/router/constants';
 import { Statuses } from '@/constants';

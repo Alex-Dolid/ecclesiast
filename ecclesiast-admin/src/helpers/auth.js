@@ -1,5 +1,5 @@
-// Init
-import { LocalStorage } from '@/init';
+// Plugins
+import { LocalStorage } from '@/plugins';
 
 export const getToken = () => {
   const { user } = LocalStorage();

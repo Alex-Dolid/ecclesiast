@@ -7,17 +7,17 @@ import router from './router';
 // Store
 import store from './store';
 // Plugins
-import { vuetify, localStorage } from './plugins';
+import { vuetify, i18n } from './plugins';
 // Init
-import { LocalStorage } from '@/init';
+import '@/init';
 
 // configure...
 Vue.config.productionTip = false;
-Vue.use(localStorage, { useLocalStorage: LocalStorage });
 
 new Vue({
   router,
   store,
+  i18n,
   vuetify,
   render: (h) => h(App),
 }).$mount('#app');

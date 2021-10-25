@@ -1,5 +1,12 @@
+// Hooks
+import { useLocalStorage } from '@/hooks';
+// Constants
+import { LOCAL_USER, USER_ABILITY } from '@/constants';
+
+export const LocalStorage = () => useLocalStorage([LOCAL_USER, USER_ABILITY]);
+
 export default {
-  install(Vue, { useLocalStorage }) {
+  install(Vue, { MyLocalStorage }) {
     // // 1. add global method or property
     // Vue.myGlobalMethod = function () {
     //   // some logic ...
@@ -22,7 +29,7 @@ export default {
 
     // 4. add an instance method
     // eslint-disable-next-line no-param-reassign
-    Vue.prototype.$localStorage = useLocalStorage;
+    Vue.prototype.$localStorage = MyLocalStorage;
     console.log('connected to [localStorage]');
   },
 };

@@ -28,7 +28,8 @@ export const useLocalStorage = (keys) => {
     }
 
     if (typeof item !== typeof payload) {
-      return throw new TypeError(`You can't update ${key}! Type ${key}: ${typeof item}, but you push payload with type of ${typeof payload}`);
+      return throw new TypeError(`You can't update ${key}! Type ${key}: ${typeof item}, but
+      you push payload with type of ${typeof payload}`);
     }
 
     if (typeof payload !== 'object') {

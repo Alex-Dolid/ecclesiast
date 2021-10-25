@@ -10,6 +10,8 @@ import store from './store';
 import { vuetify, i18n } from './plugins';
 // Init
 import '@/init';
+// Styles
+import '@/styles/index.scss';
 
 // configure...
 Vue.config.productionTip = false;

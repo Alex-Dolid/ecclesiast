@@ -2,7 +2,7 @@
 import Vue from 'vue';
 import Vuetify from 'vuetify/lib/framework';
 // Presets
-import preset from './default-preset/preset';
+import preset from '@/@core/preset/preset';
 
 Vue.use(Vuetify);
 

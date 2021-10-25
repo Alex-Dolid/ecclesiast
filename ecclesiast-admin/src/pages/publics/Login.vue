@@ -9,7 +9,7 @@
             class="d-flex align-center"
           >
             <v-img
-              :src="require('@/assets/img/logos/logo.svg')"
+              :src="require('@/assets/images/logos/logo.svg')"
               max-height="30px"
               max-width="30px"
               alt="logo"
@@ -130,7 +130,7 @@
     <img
       class="auth-mask-bg"
       height="173"
-      :src="require(`@/assets/img/misc/mask-${$vuetify.theme.dark ? 'dark':'light'}.png`)"
+      :src="require(`@/assets/images/misc/mask-${$vuetify.theme.dark ? 'dark':'light'}.png`)"
     >
 
     <!-- tree -->
@@ -138,7 +138,7 @@
       class="auth-tree"
       width="247"
       height="185"
-      src="@/assets/img/misc/tree.png"
+      src="@/assets/images/misc/tree.png"
     ></v-img>
 
     <!-- tree  -->
@@ -146,7 +146,7 @@
       class="auth-tree-3"
       width="377"
       height="289"
-      src="@/assets/img/misc/tree-3.png"
+      src="@/assets/images/misc/tree-3.png"
     ></v-img>
   </div>
 </template>
@@ -221,5 +221,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import 'src/plugins/vuetify/default-preset/preset/pages/auth.scss';
+@import 'src/@core/preset/preset/pages/auth.scss';
 </style>

@@ -1,5 +1,5 @@
 // Core
-// const path = require('path');
+const path = require('path');
 // Utils
 const { mergeSassVariables } = require('@vuetify/cli-plugin-utils');
 
@@ -9,14 +9,13 @@ module.exports = {
   productionSourceMap: false,
 
   configureWebpack: {
-    // resolve: {
-    //   alias: {
-    //     '@themeConfig': path.resolve(__dirname, 'themeConfig.js'),
-    //     '@core': path.resolve(__dirname, 'src/@core'),
-    //     '@axios': path.resolve(__dirname, 'src/plugins/axios.js'),
-    //     '@user-variables': path.resolve(__dirname, 'src/styles/variables.scss'),
-    //   },
-    // },
+    resolve: {
+      alias: {
+        '@themeConfig': path.resolve(__dirname, 'themeConfig.js'),
+        '@core': path.resolve(__dirname, 'src/@core'),
+        '@user-variables': path.resolve(__dirname, 'src/styles/variables.scss'),
+      },
+    },
     optimization: {
       splitChunks: {
         chunks: 'all',

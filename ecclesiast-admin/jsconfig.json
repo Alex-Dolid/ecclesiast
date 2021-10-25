@@ -4,6 +4,15 @@
         "paths": {
             "@/*": [
                 "src/*"
+            ],
+            "@core/*": [
+                "src/@core/*"
+            ],
+            "@themeConfig": [
+                "themeConfig.js"
+            ],
+            "@user-variables": [
+                "src/styles/variables.scss"
             ]
         }
     }

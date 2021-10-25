@@ -15,7 +15,7 @@
         class="d-flex align-center text-decoration-none"
       >
         <v-img
-          :src="require('@/assets/img/logos/logo.svg')"
+          :src="require('@/assets/images/logos/logo.svg')"
           max-height="30px"
           max-width="30px"
           alt="logo"
@@ -50,7 +50,7 @@
     >
       <v-img
         :src="(
-          require(`@/assets/img/pro/upgrade-banner-${$vuetify.theme.dark ? 'dark' : 'light'}.png`)
+          require(`@/assets/images/pro/upgrade-banner-${$vuetify.theme.dark ? 'dark' : 'light'}.png`)
         )"
         alt="upgrade-banner"
         transition="scale-transition"

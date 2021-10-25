@@ -13,8 +13,9 @@ module.exports = {
     parser: 'babel-eslint',
   },
   rules: {
+    'max-len': ['error', { 'code': 120 }],
     'import/no-unresolved': [2, { ignore: ['\.external'] }],
-    'import/extensions': ['error', 'never'],
+    'import/extensions': 0,
     'no-underscore-dangle': 0,
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',

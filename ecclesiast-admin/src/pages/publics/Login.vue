@@ -38,13 +38,18 @@
 
         <!-- login form -->
         <v-card-text>
-          <v-form>
+          <v-form
+            ref="loginForm"
+            @submit.prevent="handleLogin"
+          >
             <v-text-field
               v-model="email"
               outlined
               label="Email"
               placeholder="john@example.com"
-              hide-details
+              :error-messages="errorMessages.email"
+              :rules="[validators.required, validators.emailValidator]"
+              hide-details="auto"
               class="mb-3"
             ></v-text-field>
 
@@ -53,9 +58,11 @@
               outlined
               :type="isPasswordVisible ? 'text' : 'password'"
               label="Password"
+              :error-messages="errorMessages.password"
               placeholder="············"
+              :rules="[validators.required]"
               :append-icon="isPasswordVisible ? icons.mdiEyeOffOutline : icons.mdiEyeOutline"
-              hide-details
+              hide-details="auto"
               @click:append="isPasswordVisible = !isPasswordVisible"
             ></v-text-field>
 
@@ -82,8 +89,9 @@
             <v-btn
               block
               color="primary"
+              type="submit"
               class="mt-6"
-              @click="login"
+              :loading="isLoading"
             >
               Login
             </v-btn>
@@ -113,7 +121,7 @@
         <!-- social links -->
         <v-card-actions v-if="isSocialLogin" class="d-flex justify-center">
           <v-btn
-            v-for="link in socialLink"
+            v-for="link in socialLinks"
             :key="link.icon"
             icon
             class="ms-1"
@@ -152,25 +160,45 @@
 </template>
 
 <script>
-// Store
+// Core
 import { mapActions } from 'vuex';
+import { ref, reactive } from '@vue/composition-api';
 // Icons
 import {
   mdiFacebook, mdiTwitter, mdiGithub, mdiGoogle, mdiEyeOutline, mdiEyeOffOutline,
 } from '@mdi/js';
+// @Core Utils
+import { useRouter } from '@core/utils';
+import { required, emailValidator } from '@core/utils/validation';
+// Theme Config
+// import themeConfig from '@themeConfig';
 // Constants
 import { PAGES } from '@/router/constants';
 
 export default {
   name: 'Login',
 
-  data: () => ({
-    isSocialLogin: false,
-    isShowRegister: false,
-    isPasswordVisible: false,
-    email: '',
-    password: '',
-    socialLink: [
+  setup() {
+    const { router } = useRouter();
+
+    // const vm = getCurrentInstance().proxy;
+    // Template Ref
+    const loginForm = ref(null);
+
+    // Flags
+    const isSocialLogin = ref(false);
+    const isShowRegister = ref(false);
+    const isPasswordVisible = ref(false);
+    const isLoading = ref(false);
+
+    // Properties
+    const email = ref('');
+    const password = ref('');
+    const errorMessages = reactive({
+      email: null,
+      password: null,
+    });
+    const socialLinks = [
       {
         icon: mdiFacebook,
         color: '#4267b2',
@@ -191,27 +219,55 @@ export default {
         color: '#db4437',
         colorInDark: '#db4437',
       },
-    ],
-    icons: {
+    ];
+    const icons = {
       mdiEyeOutline,
       mdiEyeOffOutline,
-    },
-  }),
+    };
+
+    async function handleLogin() {
+      const isFormValid = loginForm.value.validate();
+
+      if (!isFormValid) return;
+
+      try {
+        isLoading.value = true;
+        await this.signInAsync({ email: email.value, password: password.value });
+        await router.push({ name: PAGES.HOME.name });
+      } catch (error) {
+        Object.entries(error.response.data.errors).forEach(([key, valueObj]) => {
+          errorMessages[key] = Object.values(valueObj).join(',');
+        });
+      } finally {
+        isLoading.value = false;
+      }
+    }
+
+    return {
+      isSocialLogin,
+      isPasswordVisible,
+      isShowRegister,
+      isLoading,
+
+      email,
+      password,
+      errorMessages,
+      socialLinks,
+      icons,
+
+      loginForm,
+
+      validators: {
+        required,
+        emailValidator,
+      },
+
+      handleLogin,
+    };
+  },
 
   methods: {
     ...mapActions(['signInAsync', 'signOutAsync']),
-    async login() {
-      const { email, password } = this;
-
-      if (email && password) {
-        try {
-          await this.signInAsync({ email, password });
-          await this.$router.push({ name: PAGES.HOME.name });
-        } catch (error) {
-          console.error(error);
-        }
-      }
-    },
   },
 
   created() {
@@ -220,6 +276,6 @@ export default {
 };
 </script>
 
-<style lang="scss">
-@import 'src/@core/preset/preset/pages/auth.scss';
+<style lang="scss" scoped>
+@import 'src/@core/preset/preset/pages/auth';
 </style>

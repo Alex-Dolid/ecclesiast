@@ -47,6 +47,23 @@ export const useRouter = () => {
   return { ...toRefs(state), router: vm.$router };
 };
 
+export const useStore = () => {
+  const vm = getCurrentInstance().proxy
+
+  const state = reactive({
+    store: vm.$store,
+  })
+
+  watch(
+    () => vm.$store,
+    s => {
+      state.store = s
+    },
+  )
+
+  return { ...toRefs(state) }
+}
+
 export const isEmpty = (value) => {
   if (value === null || value === undefined || value === '') {
     return true;

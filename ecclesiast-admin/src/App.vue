@@ -58,20 +58,5 @@ export default {
       appRouteTransition,
     };
   },
-
-  // data: () => ({
-  //   //
-  // }),
-  //
-  // computed: {
-  //   resolveLayout() {
-  //     // Handles initial route
-  //     if (this.$route.name === null) return null;
-  //
-  //     if (this.$route.meta.layout === 'blank') return 'LayoutBlank';
-  //
-  //     return 'LayoutDefault';
-  //   },
-  // },
 };
 </script>

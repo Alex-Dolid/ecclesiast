@@ -1,5 +1,5 @@
 // Pages
-import App from '@/App';
+// import App from '@/App';
 // Plugins
 import { LocalStorage } from '@/plugins';
 // Constants
@@ -8,32 +8,23 @@ import { PAGES } from '@/router/constants';
 export default [
   {
     path: '/',
-    component: () => import(/* webpackChunkName: "layout-content" */ '../layouts/Content'),
-    children: [
-      {
-        ...PAGES.HOME,
-        component: () => import(/* webpackChunkName: "home" */ '../pages/privates/Home'),
-      },
-    ],
-    // eslint-disable-next-line consistent-return
-    beforeEnter(to, from, next) {
+    redirect: () => {
       const { user } = LocalStorage();
       if (!user.data) {
-        return next({ name: PAGES.LOGIN.name });
+        return { name: PAGES.LOGIN.name };
       }
+      // const userData = JSON.parse(localStorage.getItem('userData'))
+      // const userRole = userData && userData.role ? userData.role : null
 
-      next();
+      // if (userRole === 'admin') return { name: 'dashboard-crm' }
+      // if (userRole === 'client') return { name: 'page-access-control' }
+
+      return { name: PAGES.LOGIN.name };
     },
   },
   {
-    path: '/public',
-    component: App,
-    children: [
-      {
-        ...PAGES.LOGIN,
-        component: () => import(/* webpackChunkName: "login" */ '../pages/publics/Login'),
-      },
-    ],
+    component: () => import(/* webpackChunkName: "login" */ '../pages/publics/Login'),
+    ...PAGES.LOGIN,
   },
   {
     ...PAGES.ERROR,

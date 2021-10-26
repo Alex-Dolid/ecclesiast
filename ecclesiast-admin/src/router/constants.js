@@ -1,13 +1,11 @@
 export const PAGES = {
-  HOME: {
-    path: '',
-    name: 'Home',
-  },
   LOGIN: {
-    path: 'login',
+    path: '/login',
     name: 'Login',
     meta: {
       layout: 'blank',
+      resource: 'Public',
+      redirectIfLoggedIn: true,
     },
   },
   ERROR: {
@@ -15,6 +13,8 @@ export const PAGES = {
     name: 'Error',
     meta: {
       layout: 'blank',
+      resource: 'Public',
+      redirectIfLoggedIn: true,
     },
   },
 };

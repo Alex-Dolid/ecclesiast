@@ -1,10 +1,14 @@
-/// Core
+// Core
 import { NextFunction, Request, Response } from "express";
 import dg from "debug";
+// Common
+import { getValidationSchemaRoutes } from "../../../core";
 // Controllers
 import { Controller } from "../controller";
 // Helpers
 import { clearFromSecrets, sendResponse } from "../../../helpers";
+// Schema
+import { signInSchema } from "../schemas";
 // Constants
 import { ROUTER } from "../../../constants";
 import { COLLECTION_NAME } from "../constants";
@@ -51,4 +55,14 @@ export const { signIn, signOut, signUp, refresh } = Object.values(Routes)
     ...acc,
     [route]: constructRoute(route, clearFromSecrets<User, typeof excludedProps>(excludedProps))
   }), {} as RoutesFn);
+
+enum ValidationSchemasRoutes {
+  SIGN_IN = "getSignInValidationSchema"
+}
+const routesSchemasMap = {
+  [ValidationSchemasRoutes.SIGN_IN]: signInSchema
+};
+export const {
+  getSignInValidationSchema
+} = getValidationSchemaRoutes<ValidationSchemasRoutes>({ collectionName: COLLECTION_NAME, routesSchemasMap });
 

@@ -104,3 +104,21 @@ export const alphaDashValidator = (value) => {
 
   return /^[0-9A-Z_-]*$/i.test(valueAsString) || 'All Character is not valid';
 };
+
+export const minLength = (value, length) => {
+  if (isEmpty(value)) {
+    return true;
+  }
+
+  return value.length >= length || `The Min Character field must be at least ${length} characters`;
+}
+
+export const typeValidator = (value, type) => { // TODO перевірити на доцільність в майб
+  if (isEmpty(value) || typeof value === type) {
+    return true;
+  }
+
+  const errorMessage = `Type of field must be ${type}`;
+
+  return Array.isArray(value) || errorMessage;
+}

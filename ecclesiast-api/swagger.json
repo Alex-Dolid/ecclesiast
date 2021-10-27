@@ -740,6 +740,20 @@
         }
       }
     },
+    "/auth/sign-in/validation-schema": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Get sign in validation schema",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/auth/sign-up": {
       "post": {
         "tags": [

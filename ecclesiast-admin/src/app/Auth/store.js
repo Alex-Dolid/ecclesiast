@@ -2,6 +2,8 @@
 import api from '@/app/Auth/api';
 // Plugins
 import { LocalStorage } from '@/plugins';
+// Constants
+import { METHODS } from './constants';
 
 export default {
   namespace: true,
@@ -24,6 +26,14 @@ export default {
         const data = await api.signIn(payload);
         commit('setUser', data);
         user.set(data);
+      } catch (error) {
+        console.error(error);
+        throw error;
+      }
+    },
+    [METHODS.SIGN_IN_SCHEMA_VALIDATION]: async () => {
+      try {
+        return await api.getSignInValidationSchema();
       } catch (error) {
         console.error(error);
         throw error;

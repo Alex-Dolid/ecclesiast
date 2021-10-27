@@ -1,15 +1,14 @@
 // Core
 import * as express from "express";
 // Routes
-import { signIn, signUp, refresh, signOut } from "./route";
+import { signIn, signUp, refresh, signOut, getSignInValidationSchema } from "./route";
 // Utils
 import { authenticate, limiter, validator } from "../../../middlewares";
 // Schema
-import { signInSchema } from "../schemas";
+import { signInSchema, AuthSchemas } from "../schemas";
 // Constants
 import { LIMIT_REQUEST } from "../../../constants";
 // Types
-import { AuthSchemas } from "../schemas/types";
 import { SignInPayload } from "../model";
 import { UserS, UserSchemas, createSchema } from "../../users";
 
@@ -45,6 +44,20 @@ router.use([ limiter(LIMIT_REQUEST.MAX, LIMIT_REQUEST.RESET_IN) ]);
  *                 - $ref: '#/components/schemas/User'
  */
 router.post("/sign-in", [ validator<SignInPayload, AuthSchemas>(signInSchema) ], signIn);
+
+/**
+ * @swagger
+ * /auth/sign-in/validation-schema:
+ *  get:
+ *    tags:
+ *      - Auth
+ *    summary: Get sign in validation schema
+ *    security: []
+ *    responses:
+ *      '200':
+ *        description: Success
+ */
+router.get("/sign-in/validation-schema", getSignInValidationSchema);
 
 /**
  * @swagger

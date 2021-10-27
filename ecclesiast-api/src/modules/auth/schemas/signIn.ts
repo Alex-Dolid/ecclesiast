@@ -11,6 +11,7 @@ export const signIn: AuthSignInScheme = {
     },
     password: {
       type: "string",
+      format: "password",
       minLength: 8
     }
   },

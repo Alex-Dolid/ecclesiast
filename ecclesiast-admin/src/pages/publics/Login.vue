@@ -48,7 +48,7 @@
               label="Email"
               placeholder="john@example.com"
               :error-messages="errorMessages.email"
-              :rules="[validators.required, validators.emailValidator]"
+              :rules="rules.email || []"
               hide-details="auto"
               class="mb-3"
             ></v-text-field>
@@ -60,7 +60,7 @@
               label="Password"
               :error-messages="errorMessages.password"
               placeholder="············"
-              :rules="[validators.required]"
+              :rules="rules.password || []"
               :append-icon="isPasswordVisible ? icons.mdiEyeOffOutline : icons.mdiEyeOutline"
               hide-details="auto"
               @click:append="isPasswordVisible = !isPasswordVisible"
@@ -167,16 +167,24 @@ import { ref, reactive } from '@vue/composition-api';
 import {
   mdiFacebook, mdiTwitter, mdiGithub, mdiGoogle, mdiEyeOutline, mdiEyeOffOutline,
 } from '@mdi/js';
+// @Core Components
+import AppCardActions from '@core/components/app-card-actions/AppCardActions';
 // @Core Utils
 import { useRouter } from '@core/utils';
-import { required, emailValidator } from '@core/utils/validation';
+// Hooks
+import { useValidation } from '@/hooks';
 // Theme Config
 // import themeConfig from '@themeConfig';
 // Constants
 import { PAGES } from '@/router/constants';
+import { METHODS } from '@/app/Auth';
 
 export default {
   name: 'Login',
+
+  components: {
+    AppCardActions, // TODO доробити
+  },
 
   setup() {
     const { router } = useRouter();
@@ -225,6 +233,9 @@ export default {
       mdiEyeOffOutline,
     };
 
+    const { rules, isLoading: isSchemaLoading } = useValidation(METHODS.SIGN_IN_SCHEMA_VALIDATION);
+    // TODO зробити снекбар компонент і підключити до інтерсептора, і лоадер і підключити сюди поки схема загружається
+
     async function handleLogin() {
       const isFormValid = loginForm.value.validate();
 
@@ -248,19 +259,16 @@ export default {
       isPasswordVisible,
       isShowRegister,
       isLoading,
+      isSchemaLoading,
 
       email,
       password,
       errorMessages,
       socialLinks,
       icons,
+      rules,
 
       loginForm,
-
-      validators: {
-        required,
-        emailValidator,
-      },
 
       handleLogin,
     };

@@ -1,13 +1,14 @@
 // Core
 import { ref, onMounted } from '@vue/composition-api';
 // @Core Utils
-import { useStore } from '@core/utils';
+import { useSnackbar, useStore } from '@core/utils';
 // @Core Utils Validators
 import {
   required, emailValidator, minLength, typeValidator, passwordValidator,
 } from '@core/utils/validation';
 
 export const useValidation = (fetchValidationSchemaName) => { // TODO дописати
+  const { snackbar } = useSnackbar(); // TODO видалити звідси
   const { store } = useStore();
   const schema = ref(null);
   const rules = ref({});
@@ -51,8 +52,9 @@ export const useValidation = (fetchValidationSchemaName) => { // TODO допис
       const result = handleSchema(schema.value);
       console.log('result', result);
       rules.value = result;
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
+      console.log(error);
+      snackbar.value(error.message);
     } finally {
       isLoading.value = false;
     }

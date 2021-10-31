@@ -64,6 +64,23 @@ export const useStore = () => {
   return { ...toRefs(state) }
 }
 
+export const useSnackbar = () => {
+  const vm = getCurrentInstance().proxy
+
+  const state = reactive({
+    snackbar: vm.$snackbar,
+  })
+
+  watch(
+    () => vm.$snackbar,
+    s => {
+      state.snackbar = s
+    },
+  )
+
+  return { ...toRefs(state) }
+}
+
 export const isEmpty = (value) => {
   if (value === null || value === undefined || value === '') {
     return true;

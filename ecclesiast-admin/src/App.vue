@@ -10,6 +10,7 @@
     >
       <router-view></router-view>
     </transition>
+    <app-snackbar />
   </component>
 </template>
 
@@ -26,6 +27,8 @@ import { useLayout } from '@core/layouts/composable/useLayout';
 import LayoutContentVerticalNav from '@/layouts/variants/content/vertical-nav/LayoutContentVerticalNav';
 import LayoutContentHorizontalNav from '@/layouts/variants/content/horizontal-nav/LayoutContentHorizontalNav';
 import LayoutBlank from '@/layouts/variants/blank/LayoutBlank';
+// Components
+import { AppSnackbar } from '@/components';
 
 export default {
   name: 'App',
@@ -34,6 +37,7 @@ export default {
     LayoutContentVerticalNav,
     LayoutContentHorizontalNav,
     LayoutBlank,
+    AppSnackbar,
   },
 
   setup() {

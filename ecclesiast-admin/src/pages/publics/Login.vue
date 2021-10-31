@@ -168,7 +168,7 @@ import {
   mdiFacebook, mdiTwitter, mdiGithub, mdiGoogle, mdiEyeOutline, mdiEyeOffOutline,
 } from '@mdi/js';
 // @Core Components
-import AppCardActions from '@core/components/app-card-actions/AppCardActions';
+// import AppCardActions from '@core/components/app-card-actions/AppCardActions';
 // @Core Utils
 import { useRouter } from '@core/utils';
 // Hooks
@@ -183,7 +183,7 @@ export default {
   name: 'Login',
 
   components: {
-    AppCardActions, // TODO доробити
+    // AppCardActions, // TODO доробити
   },
 
   setup() {
